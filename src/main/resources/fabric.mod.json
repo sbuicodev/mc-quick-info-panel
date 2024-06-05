@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "simplecoordinatestools",
+  "version": "${version}",
+  "name": "simplecoordinatestools",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/hawkelele/simplecoordinatestools"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/simplecoordinatestools/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.hawkelele.simplecoordinatestools.SimpleCoordinatesTools"
+    ]
+  },
+  "mixins": [
+    "simplecoordinatestools.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
