@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "quick-info-panel",
   "version": "${version}",
-  "name": "quick-info-panel",
+  "name": "Quick Info Panel",
   "description": "",
   "authors": [],
   "contact": {
