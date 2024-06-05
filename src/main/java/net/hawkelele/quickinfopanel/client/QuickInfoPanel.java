@@ -41,7 +41,7 @@ public class QuickInfoPanel implements ClientModInitializer {
 
             // Apply a time delay before showing the coordinates overlay again
             timeDelay = scheduler.schedule(() -> panel.show(), 3, TimeUnit.SECONDS);
-            return overlay;
+            return true;
         });
     }
 
