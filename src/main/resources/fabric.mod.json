@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
-  "id": "simplecoordinatestools",
+  "id": "quick-info-panel",
   "version": "${version}",
-  "name": "simplecoordinatestools",
+  "name": "quick-info-panel",
   "description": "",
   "authors": [],
   "contact": {
-    "repo": "https://github.com/hawkelele/simplecoordinatestools"
+    "repo": "https://github.com/hawkelele/mc-quick-info-panel"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/simplecoordinatestools/icon.png",
+  "icon": "assets/quickinfopanel/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.hawkelele.simplecoordinatestools.SimpleCoordinatesTools"
+      "net.hawkelele.quickinfopanel.client.QuickInfoPanel"
     ]
   },
   "mixins": [
-    "simplecoordinatestools.mixins.json"
+    "quickinfopanel.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
