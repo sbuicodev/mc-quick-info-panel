@@ -59,10 +59,11 @@ public class CoordinatesOverlay implements HudRenderCallback {
                 getCurrentClock());
 
         // Initial vertical position for the overlay
-        int startingPosY = client.player.isInCreativeMode() ? 35 : 50;
+        int startingPosY = client.player.isInCreativeMode() ? 12 : 60;
 
         // Number of HUD rows the text should be pushed up based on what elements are displayed
-        int modifier = (int) Math.floor(client.player.getHealth() / 10.0) + (int) Math.floor(client.player.getAbsorptionAmount() / 10.0) + (client.player.getArmor() > 0 ? 1 : 0);
+        int modifier = (int) Math.floor(client.player.getHealth() / 10.0)
+                + (int) Math.floor(client.player.getAbsorptionAmount() / 10.0);
 
         // Overlay placement
         int textPosX = Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) client.textRenderer.getWidth(content) / 2));
