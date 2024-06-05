@@ -1,4 +1,4 @@
-package net.hawkelele.simplecoordinatestools.ui;
+package net.hawkelele.quickinfopanel.client.gui.hud;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
@@ -6,7 +6,7 @@ import net.minecraft.client.gui.DrawContext;
 import org.apache.commons.lang3.StringUtils;
 
 
-public class CoordinatesOverlay implements HudRenderCallback {
+public class PanelHud implements HudRenderCallback {
     private final MinecraftClient client = MinecraftClient.getInstance();
     private boolean display = true;
 

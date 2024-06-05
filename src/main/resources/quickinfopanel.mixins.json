@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.hawkelele.simplecoordinatestools.mixin",
+  "package": "net.hawkelele.quickinfopanel.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],
