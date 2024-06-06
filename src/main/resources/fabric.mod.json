@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.hawkelele.quickinfopanel.client.QuickInfoPanel"
+      "net.hawkelele.quickinfopanel.QuickInfoPanel"
     ]
   },
   "mixins": [

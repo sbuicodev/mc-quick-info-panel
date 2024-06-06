@@ -1,28 +1,33 @@
-package net.hawkelele.quickinfopanel.client.gui.hud;
+package net.hawkelele.quickinfopanel.gui.mixins;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.hawkelele.quickinfopanel.config.Config;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.apache.commons.lang3.StringUtils;
 
+import java.awt.Color;
 
-public class PanelHud implements HudRenderCallback {
+
+public class PanelHudMixin implements HudRenderCallback {
     private final MinecraftClient client = MinecraftClient.getInstance();
-    private boolean display = true;
+    private boolean displayed = true;
 
     /**
      * Translates in-game ticks to a human-readable 24h clock format
      *
      * @return The current time of the day in a 24h hh:mm format
      */
-    protected String getCurrentClock() {
+    private String getCurrentClock() {
         assert client.world != null;
         long ticks = client.world.getTimeOfDay();
         float hours = (((float) ticks / 1000) + 6) % 24;
         float minutes = (hours * 60) % 60;
 
-        return StringUtils.leftPad(String.valueOf((int) Math.floor(hours)), 2, "0") + ":" + StringUtils.leftPad(String.valueOf((int) Math.floor(minutes)), 2, "0");
-
+        return String.format("%s:%s",
+                StringUtils.leftPad(String.valueOf((int) Math.floor(hours)), 2, "0"),
+                StringUtils.leftPad(String.valueOf((int) Math.floor(minutes)), 2, "0")
+        );
     }
 
     /**
@@ -30,13 +35,11 @@ public class PanelHud implements HudRenderCallback {
      *
      * @return N, S, E, W according to the current player's facing cardinal direction
      */
-    protected String getCurrentFacingOrdinal() {
+    private String getCurrentFacingOrdinal() {
         assert client.player != null;
-        return StringUtils.capitalize(client.player.getHorizontalFacing().getName()).substring(0, 1);
-    }
-
-    protected void setDisplay(boolean value) {
-        display = value;
+        return StringUtils
+                .capitalize(client.player.getHorizontalFacing().getName())
+                .substring(0, 1);
     }
 
     /**
@@ -47,7 +50,7 @@ public class PanelHud implements HudRenderCallback {
      */
     @Override
     public void onHudRender(DrawContext drawContext, float tickDelta) {
-        if (client.options.hudHidden || client.player == null || client.world == null || !display) {
+        if (client.options.hudHidden || client.player == null || client.world == null || !Config.get().displayPanel || !displayed) {
             return;
         }
 
@@ -84,8 +87,25 @@ public class PanelHud implements HudRenderCallback {
         int linePosY = textPosY + (client.textRenderer.fontHeight);
 
         // Render the overlay
-        drawContext.drawText(client.textRenderer, content, textPosX, linePosY, 0xEEEEEE, true);
-        drawContext.drawText(client.textRenderer, otherDimensionContent, altTextPosX, linePosY - 10, 0xAAAAAA, true);
+        drawContext.drawText(
+                client.textRenderer,
+                content,
+                textPosX,
+                linePosY,
+                Color.decode("#EEEEEE").hashCode(),
+                true
+        );
+
+        if (Config.get().showNetherCoordinates) {
+            drawContext.drawText(
+                    client.textRenderer,
+                    otherDimensionContent,
+                    altTextPosX,
+                    linePosY - 10,
+                    Color.decode("#AAAAAA").hashCode(),
+                    true
+            );
+        }
 
     }
 
@@ -93,14 +113,14 @@ public class PanelHud implements HudRenderCallback {
      * Hide the overlay
      */
     public void hide() {
-        setDisplay(false);
+        displayed = false;
     }
 
     /**
      * Show the overlay
      */
     public void show() {
-        setDisplay(true);
+        displayed = true;
     }
 
 }
