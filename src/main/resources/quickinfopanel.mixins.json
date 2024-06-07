@@ -4,9 +4,10 @@
   "package": "net.hawkelele.quickinfopanel.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-
   ],
   "client": [
+    "HidePanelOnOverlayMessageMixin",
+    "PanelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
