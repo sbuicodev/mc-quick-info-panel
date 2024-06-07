@@ -27,7 +27,7 @@ public class PositionCommand extends Command {
                         .then(argument("value", StringArgumentType.greedyString())
                                 .executes(context -> {
                                     String value = StringArgumentType.getString(context, "value");
-                                    if (!ArrayUtils.contains(new String[]{"default", "top-left"}, value)) {
+                                    if (!ArrayUtils.contains(new String[]{"default", "top-left", "top-right", "bottom-left", "bottom-right"}, value)) {
                                         throw INVALID_VALUE.create();
                                     }
 
