@@ -1,7 +1,7 @@
 package net.hawkelele.quickinfopanel.registries;
 
 
-import net.hawkelele.quickinfopanel.commands.CommandInterface;
+import net.hawkelele.quickinfopanel.commands.Command;
 
 public class CommandsRegistry {
 
@@ -10,8 +10,8 @@ public class CommandsRegistry {
      *
      * @param handlers The list of handlers for which the "register" method will be executed
      */
-    public static void register(CommandInterface... handlers) {
-        for (CommandInterface handler : handlers) {
+    public static void register(Command... handlers) {
+        for (Command handler : handlers) {
             handler.register();
         }
     }
