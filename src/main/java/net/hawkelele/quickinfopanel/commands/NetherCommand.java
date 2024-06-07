@@ -1,13 +1,13 @@
 package net.hawkelele.quickinfopanel.commands;
 
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.hawkelele.quickinfopanel.config.Config;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
 
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class NetherCommand extends Command {
     public static final SimpleCommandExceptionType INVALID_VALUE = new SimpleCommandExceptionType(Text.literal("Invalid value"));
@@ -18,8 +18,8 @@ public class NetherCommand extends Command {
      * ---------------------------
      * Enables/disables the display of coordinates from the opposite dimension when the player is in the Overworld/Nether
      */
-    public CommandRegistrationCallback handle() {
-        return (dispatcher, registryAccess, environment) -> dispatcher.register(
+    public ClientCommandRegistrationCallback handle() {
+        return (dispatcher, registryAccess) -> dispatcher.register(
                 literal("qip").then(literal("nether")
                         .executes(context -> {
                             try {
@@ -28,7 +28,7 @@ public class NetherCommand extends Command {
                                 throw INVALID_VALUE.create();
                             }
 
-                            context.getSource().sendFeedback(() -> Text.literal("[QIP] Toggled Nether Coordinates"), false);
+                            context.getSource().sendFeedback(Text.literal("[QIP] Toggled Nether Coordinates"));
                             return 1;
                         })
                 )
