@@ -1,14 +1,14 @@
 package net.hawkelele.quickinfopanel.commands;
 
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.Event;
 
 public abstract class Command {
-    private final Event<CommandRegistrationCallback> event = CommandRegistrationCallback.EVENT;
+    private final Event<ClientCommandRegistrationCallback> event = ClientCommandRegistrationCallback.EVENT;
 
     public void register() {
         event.register(handle());
     }
 
-    public abstract CommandRegistrationCallback handle();
+    public abstract ClientCommandRegistrationCallback handle();
 }
