@@ -1,6 +1,6 @@
-package net.hawkelele.quickinfopanel.registries;
+package net.hawkelele.quickinfopanel.registry;
 
-import net.hawkelele.quickinfopanel.services.Service;
+import net.hawkelele.quickinfopanel.service.Service;
 
 import java.util.HashMap;
 

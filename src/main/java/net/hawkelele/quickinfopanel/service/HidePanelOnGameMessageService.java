@@ -1,4 +1,4 @@
-package net.hawkelele.quickinfopanel.services;
+package net.hawkelele.quickinfopanel.service;
 
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.event.Event;

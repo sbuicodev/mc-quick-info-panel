@@ -1,4 +1,4 @@
-package net.hawkelele.quickinfopanel.commands;
+package net.hawkelele.quickinfopanel.command;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
