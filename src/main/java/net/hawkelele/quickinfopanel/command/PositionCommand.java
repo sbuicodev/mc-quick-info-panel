@@ -32,7 +32,7 @@ public class PositionCommand extends Command {
                                     }
 
                                     try {
-                                        Config.update((config) -> config.position = value);
+                                        Config.update((config) -> config.position.applyPreset(value));
                                     } catch (IOException e) {
                                         throw INVALID_VALUE.create();
                                     }
