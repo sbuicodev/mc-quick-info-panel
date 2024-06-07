@@ -1,6 +1,7 @@
 package net.hawkelele.quickinfopanel.config;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.io.FileUtils;
 
@@ -24,7 +25,8 @@ public class Config {
 
     public static void update(UpdateCallback updateCallback) throws IOException {
         updateCallback.run(configData);
-        FileUtils.writeStringToFile(configFile, new Gson().toJson(configData), "utf-8");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        FileUtils.writeStringToFile(configFile, gson.toJson(configData), "utf-8");
         updateFromFile();
     }
 

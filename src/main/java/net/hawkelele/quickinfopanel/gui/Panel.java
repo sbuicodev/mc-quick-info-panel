@@ -1,6 +1,7 @@
 package net.hawkelele.quickinfopanel.gui;
 
 import net.hawkelele.quickinfopanel.config.Config;
+import net.hawkelele.quickinfopanel.config.ConfigData;
 import net.minecraft.client.MinecraftClient;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -42,24 +43,18 @@ public class Panel {
     public static int[] getTextPosition(String text) {
         assert client.player != null;
 
-        int startingPosY;
-        int textPosX;
-        int textPosY;
-
-        // Number of HUD rows the text should be pushed up based on what elements are displayed
         // Overlay placement
-        switch (Config.get().position) {
-            case "top-left":
-                textPosY = 5;
-                textPosX = 5;
-                break;
-            case "default":
-            default:
-                int modifier = client.player.isInCreativeMode() ? 0 :
-                        (int) Math.floor(client.player.getHealth() / 10.0) - 1
-                                + (int) Math.floor(client.player.getAbsorptionAmount() / 10.0);
-                textPosY = client.getWindow().getScaledHeight() - (70 + (modifier * 10)) + (client.textRenderer.fontHeight);
-                textPosX = Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) client.textRenderer.getWidth(text) / 2));
+        int textPosX = Config.get().position.x;
+        int textPosY = Config.get().position.y;
+
+        // Default position: above inventory, with special behaviour
+        if (Config.get().position.useDefault) {
+            // Number of HUD rows the text should be pushed up based on what elements are displayed
+            int modifier = client.player.isInCreativeMode() ? 0 :
+                    (int) Math.floor(client.player.getHealth() / 10.0) - 1
+                            + (int) Math.floor(client.player.getAbsorptionAmount() / 10.0);
+            textPosY = client.getWindow().getScaledHeight() - (70 + (modifier * 10)) + (client.textRenderer.fontHeight);
+            textPosX = Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) client.textRenderer.getWidth(text) / 2));
         }
 
         return new int[]{textPosX, textPosY};
@@ -67,16 +62,17 @@ public class Panel {
 
     public static int[] getAltTextPosition(String text) {
         int[] position = getTextPosition(text);
-        switch (Config.get().position) {
-            case "top-left":
-                position[0] = position[0] - 5;
-                position[1] = position[1] + 10;
-                break;
-            case "default":
-            default:
-                position[0] = position[0] - 10;
-                position[1] = position[1] - 10;
+        int lineHeight = 10;
+
+        if (!Config.get().position.invertLines) {
+            lineHeight = -lineHeight;
         }
+
+        if (Config.get().position.useDefault) {
+            position[0] -= 10;
+        }
+
+        position[1] += lineHeight;
 
         return position;
     }
