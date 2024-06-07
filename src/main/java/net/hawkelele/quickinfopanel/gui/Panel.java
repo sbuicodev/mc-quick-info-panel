@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class Panel {
-    private static boolean displayed = true;
+    private static boolean hidden = false;
     public static final MinecraftClient client = MinecraftClient.getInstance();
 
 
@@ -47,14 +47,16 @@ public class Panel {
         int textPosX = Config.get().position.x;
         int textPosY = Config.get().position.y;
 
-        // Default position: above inventory, with special behaviour
-        if (Config.get().position.useDefault) {
+        if (Config.get().position.centered) {
+            textPosX = Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) client.textRenderer.getWidth(text) / 2));
+        }
+
+        if (Config.get().position.moveWithInventory) {
             // Number of HUD rows the text should be pushed up based on what elements are displayed
             int modifier = client.player.isInCreativeMode() ? 0 :
                     (int) Math.floor(client.player.getHealth() / 10.0) - 1
                             + (int) Math.floor(client.player.getAbsorptionAmount() / 10.0);
-            textPosY = client.getWindow().getScaledHeight() - (70 + (modifier * 10)) + (client.textRenderer.fontHeight);
-            textPosX = Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) client.textRenderer.getWidth(text) / 2));
+            textPosY -= modifier * 10;
         }
 
         return new int[]{textPosX, textPosY};
@@ -68,7 +70,7 @@ public class Panel {
             lineHeight = -lineHeight;
         }
 
-        if (Config.get().position.useDefault) {
+        if (Config.get().position.centered) {
             position[0] -= 10;
         }
 
@@ -107,20 +109,20 @@ public class Panel {
                 && client.world != null
                 && !client.getDebugHud().shouldShowDebugHud()
                 && Config.get().displayPanel
-                && displayed;
+                && (!hidden || !Config.get().position.hideWithActionbar);
     }
 
     /**
      * Hide the overlay
      */
     public static void hide() {
-        displayed = false;
+        hidden = true;
     }
 
     /**
      * Show the overlay
      */
     public static void show() {
-        displayed = true;
+        hidden = false;
     }
 }
