@@ -47,6 +47,13 @@ public class Panel {
         int textPosX = Config.get().position.x;
         int textPosY = Config.get().position.y;
 
+        if (Config.get().position.invertedX) {
+            textPosX = client.getWindow().getScaledWidth() - textPosX;
+        }
+        if (Config.get().position.invertedY) {
+            textPosY = client.getWindow().getScaledHeight() - textPosY;
+        }
+
         if (Config.get().position.centered) {
             textPosX = Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) client.textRenderer.getWidth(text) / 2));
         }
