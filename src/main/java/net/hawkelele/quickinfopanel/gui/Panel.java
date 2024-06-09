@@ -1,10 +1,12 @@
 package net.hawkelele.quickinfopanel.gui;
 
 import net.hawkelele.quickinfopanel.config.Config;
-import net.hawkelele.quickinfopanel.config.ConfigData;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.world.dimension.DimensionType;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
 
 public class Panel {
     private static boolean hidden = false;
@@ -58,18 +60,10 @@ public class Panel {
             textPosX = Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) client.textRenderer.getWidth(text) / 2));
         }
 
-        if (Config.get().position.moveWithInventory) {
-            // Number of HUD rows the text should be pushed up based on what elements are displayed
-            int modifier = client.player.isInCreativeMode() ? 0 :
-                    (int) Math.floor(client.player.getHealth() / 10.0) - 1
-                            + (int) Math.floor(client.player.getAbsorptionAmount() / 10.0);
-            textPosY -= modifier * 10;
-        }
-
         return new int[]{textPosX, textPosY};
     }
 
-    public static int[] getAltTextPosition(String text) {
+    public static int[] getAlternateDimensionTextPosition(String text) {
         int[] position = getTextPosition(text);
         int lineHeight = 10;
 
@@ -86,25 +80,24 @@ public class Panel {
         return position;
     }
 
-    public static @NotNull String getAltPanelText() {
+    public static @NotNull String getAlternateDimensionPanelText() {
         assert client.player != null;
         assert client.world != null;
-        return String.format("        (%s %s %s)        ",
-                Math.round(client.player.getX() * (client.world.getDimension().coordinateScale() == 1.0 ? 0.125 : 8.0)),
-                Math.round(client.player.getY() * (client.world.getDimension().coordinateScale() == 1.0 ? 0.125 : 8.0)),
-                Math.round(client.player.getZ() * (client.world.getDimension().coordinateScale() == 1.0 ? 0.125 : 8.0))
-        );
+
+        Coordinates coordinates = Coordinates.getForAlternateDimension();
+
+        return String.format("        (%s %s %s)        ", coordinates.x, coordinates.y, coordinates.z);
     }
 
     public static @NotNull String getPanelText() {
         assert client.player != null;
+        Coordinates coordinates = Coordinates.get();
+
         return String.format("%s     %s %s %s     %s",
                 // Cardinal/Ordinal facing direction
                 getCurrentFacingCardinalDirection(),
                 // Coordinates
-                Math.round(client.player.getX()),
-                Math.round(client.player.getY()),
-                Math.round(client.player.getZ()),
+                coordinates.x, coordinates.y, coordinates.z,
                 // Clock
                 getCurrentClock()
         );

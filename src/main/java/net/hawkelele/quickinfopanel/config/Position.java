@@ -57,7 +57,7 @@ public class Position {
                 break;
             case "default":
             default:
-                y = 61;
+                y = 71;
                 centered = true;
                 moveWithInventory = true;
                 hideWithActionbar = true;

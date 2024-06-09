@@ -37,9 +37,9 @@ public class PanelMixin {
                 true
         );
 
-        if (Config.get().showNetherCoordinates) {
-            String altPanelText = Panel.getAltPanelText();
-            int[] altTextPosition = Panel.getAltTextPosition(altPanelText);
+        if (Config.get().showNetherCoordinates && client.world != null && !client.world.getDimensionEntry().getIdAsString().equals("the_end")) {
+            String altPanelText = Panel.getAlternateDimensionPanelText();
+            int[] altTextPosition = Panel.getAlternateDimensionTextPosition(altPanelText);
             context.drawText(
                     client.textRenderer,
                     altPanelText,
