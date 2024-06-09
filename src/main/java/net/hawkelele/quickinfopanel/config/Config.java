@@ -14,20 +14,24 @@ public class Config {
     }
 
     private static final File configFile = FabricLoader.getInstance().getConfigDir().resolve("quick-info-panel.json").toFile();
-    private static ConfigData configData = new ConfigData();
+    private static ConfigData configData = updateFromFile();
 
-    private static void updateFromFile() throws IOException {
-        if (!configFile.exists()) {
-            configFile.createNewFile();
+    private static ConfigData updateFromFile() {
+        try {
+            if (!configFile.exists()) {
+                configFile.createNewFile();
+            }
+            return new Gson().fromJson(FileUtils.readFileToString(configFile, "utf-8"), ConfigData.class);
+        } catch (IOException e) {
+            return new ConfigData(); // Returns the default config (emergency fallback)
         }
-        configData = new Gson().fromJson(FileUtils.readFileToString(configFile, "utf-8"), ConfigData.class);
     }
 
-    public static void update(UpdateCallback updateCallback) throws IOException {
+    public static ConfigData update(UpdateCallback updateCallback) throws IOException {
         updateCallback.run(configData);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileUtils.writeStringToFile(configFile, gson.toJson(configData), "utf-8");
-        updateFromFile();
+        return updateFromFile();
     }
 
     public static ConfigData get() {
