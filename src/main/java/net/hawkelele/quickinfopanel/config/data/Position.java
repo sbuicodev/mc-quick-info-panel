@@ -1,6 +1,4 @@
-package net.hawkelele.quickinfopanel.config;
-
-import net.minecraft.client.MinecraftClient;
+package net.hawkelele.quickinfopanel.config.data;
 
 public class Position {
     public int x = 0;

@@ -9,11 +9,10 @@ import net.hawkelele.quickinfopanel.service.TogglePanelOnKeypressService;
 
 
 public class QuickInfoPanel implements ClientModInitializer {
+
     @Override
     public void onInitializeClient() {
         ServicesRegistry.register(
-//                new PanelHudRenderCallbackProvider(),
-//                new HidePanelOnGameMessageService(),
                 new TogglePanelOnKeypressService()
         );
 
@@ -22,6 +21,4 @@ public class QuickInfoPanel implements ClientModInitializer {
                 new PositionCommand()
         );
     }
-
-
 }

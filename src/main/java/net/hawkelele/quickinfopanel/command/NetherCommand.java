@@ -3,6 +3,7 @@ package net.hawkelele.quickinfopanel.command;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.hawkelele.quickinfopanel.config.Config;
+import net.hawkelele.quickinfopanel.provider.ConfigProvider;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
@@ -19,11 +20,12 @@ public class NetherCommand extends Command {
      * Enables/disables the display of coordinates from the opposite dimension when the player is in the Overworld/Nether
      */
     public ClientCommandRegistrationCallback handle() {
+
         return (dispatcher, registryAccess) -> dispatcher.register(
                 literal("qip").then(literal("nether")
                         .executes(context -> {
                             try {
-                                Config.update((config) -> config.showNetherCoordinates = !config.showNetherCoordinates);
+                                config.update((config) -> config.showNetherCoordinates = !config.showNetherCoordinates);
                             } catch (IOException e) {
                                 throw INVALID_VALUE.create();
                             }

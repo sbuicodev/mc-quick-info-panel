@@ -5,7 +5,7 @@ import net.hawkelele.quickinfopanel.service.Service;
 import java.util.HashMap;
 
 public class ServicesRegistry {
-    public static HashMap<String, Service<?>> providersMap = new HashMap<>();
+    public static final HashMap<String, Service<?>> providersMap = new HashMap<>();
 
     /**
      * Registers the provided list of event handlers
