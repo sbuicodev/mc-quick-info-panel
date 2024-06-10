@@ -34,7 +34,7 @@ public class TogglePanelOnKeypressService extends Service<ClientTickEvents.EndTi
 
             while (keyBinding.wasPressed()) {
                 try {
-                    Config.update((config) -> config.displayPanel = !config.displayPanel);
+                    config.update((config) -> config.displayPanel = !config.displayPanel);
                 } catch (IOException e) {
                     client.player.sendMessage(Text.literal("[QIP] Something went wrong, please retry"));
                 }

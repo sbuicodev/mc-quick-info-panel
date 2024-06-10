@@ -3,6 +3,7 @@ package net.hawkelele.quickinfopanel.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import net.hawkelele.quickinfopanel.config.data.ConfigData;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -13,10 +14,14 @@ public class Config {
         void run(ConfigData configData);
     }
 
-    private static final File configFile = FabricLoader.getInstance().getConfigDir().resolve("quick-info-panel.json").toFile();
-    private static ConfigData configData = updateFromFile();
+    private final File configFile = FabricLoader.getInstance().getConfigDir().resolve("quick-info-panel.json").toFile();
+    private final ConfigData configData;
 
-    private static ConfigData updateFromFile() {
+    public Config() {
+        configData = fetchFromFile();
+    }
+
+    private ConfigData fetchFromFile() {
         try {
             if (!configFile.exists()) {
                 configFile.createNewFile();
@@ -27,14 +32,14 @@ public class Config {
         }
     }
 
-    public static ConfigData update(UpdateCallback updateCallback) throws IOException {
+    public ConfigData update(UpdateCallback updateCallback) throws IOException {
         updateCallback.run(configData);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileUtils.writeStringToFile(configFile, gson.toJson(configData), "utf-8");
-        return updateFromFile();
+        return fetchFromFile();
     }
 
-    public static ConfigData get() {
+    public ConfigData get() {
         return configData;
     }
 }
