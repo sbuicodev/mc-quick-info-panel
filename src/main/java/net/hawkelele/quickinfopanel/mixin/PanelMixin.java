@@ -2,7 +2,6 @@ package net.hawkelele.quickinfopanel.mixin;
 
 import net.hawkelele.quickinfopanel.gui.panel.AlternateDimensionPanel;
 import net.hawkelele.quickinfopanel.gui.panel.Panel;
-import net.hawkelele.quickinfopanel.provider.PanelProvider;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -24,7 +23,7 @@ public class PanelMixin {
 
     @Inject(method = "renderMiscOverlays", at = @At("HEAD"))
     public void render(DrawContext context, float tickDelta, CallbackInfo ci) {
-        Panel panel = PanelProvider.getPanel();
+        Panel panel = Panel.getInstance();
         if (panel.shouldBeHidden()) {
             return;
         }
@@ -39,7 +38,7 @@ public class PanelMixin {
                 true
         );
 
-        AlternateDimensionPanel alternateDimensionPanel = PanelProvider.getAlternateDimensionPanel();
+        AlternateDimensionPanel alternateDimensionPanel = AlternateDimensionPanel.getInstance();
         if (alternateDimensionPanel.shouldBeHidden()) {
             return;
         }

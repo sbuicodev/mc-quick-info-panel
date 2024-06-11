@@ -1,9 +1,8 @@
-package net.hawkelele.quickinfopanel.service;
+package net.hawkelele.quickinfopanel.event;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.event.Event;
-import net.hawkelele.quickinfopanel.config.Config;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
@@ -12,7 +11,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.io.IOException;
 
-public class TogglePanelOnKeypressService extends Service<ClientTickEvents.EndTick> {
+public class TogglePanelOnKeypress extends EventHandler<ClientTickEvents.EndTick> {
     private static final KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.quickinfopanel.toggle", // The translation key of the keybinding's name
             InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
@@ -33,11 +32,7 @@ public class TogglePanelOnKeypressService extends Service<ClientTickEvents.EndTi
             }
 
             while (keyBinding.wasPressed()) {
-                try {
-                    config.update((config) -> config.displayPanel = !config.displayPanel);
-                } catch (IOException e) {
-                    client.player.sendMessage(Text.literal("[QIP] Something went wrong, please retry"));
-                }
+                config.update((config) -> config.displayPanel = !config.displayPanel);
             }
         };
     }
