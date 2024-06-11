@@ -3,20 +3,20 @@ package net.hawkelele.quickinfopanel;
 import net.fabricmc.api.ClientModInitializer;
 import net.hawkelele.quickinfopanel.command.NetherCommand;
 import net.hawkelele.quickinfopanel.command.PositionCommand;
-import net.hawkelele.quickinfopanel.registry.CommandsRegistry;
-import net.hawkelele.quickinfopanel.registry.ServicesRegistry;
-import net.hawkelele.quickinfopanel.service.TogglePanelOnKeypressService;
+import net.hawkelele.quickinfopanel.registry.Commands;
+import net.hawkelele.quickinfopanel.registry.Services;
+import net.hawkelele.quickinfopanel.event.TogglePanelOnKeypress;
 
 
 public class QuickInfoPanel implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ServicesRegistry.register(
-                new TogglePanelOnKeypressService()
+        Services.register(
+                new TogglePanelOnKeypress()
         );
 
-        CommandsRegistry.register(
+        Commands.register(
                 new NetherCommand(),
                 new PositionCommand()
         );

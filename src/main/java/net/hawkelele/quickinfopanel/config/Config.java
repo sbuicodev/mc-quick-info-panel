@@ -3,43 +3,71 @@ package net.hawkelele.quickinfopanel.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.hawkelele.quickinfopanel.config.data.ConfigData;
+import net.hawkelele.quickinfopanel.config.data.Settings;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Config {
-    public interface UpdateCallback {
-        void run(ConfigData configData);
+    public interface Update {
+        void run(Settings settings);
+
     }
 
-    private final File configFile = FabricLoader.getInstance().getConfigDir().resolve("quick-info-panel.json").toFile();
-    private final ConfigData configData;
+    private static Config instance;
 
-    public Config() {
-        configData = fetchFromFile();
+    private Settings settings;
+
+    private Config() {
+        load();
     }
 
-    private ConfigData fetchFromFile() {
+    private void load() {
         try {
-            if (!configFile.exists()) {
-                configFile.createNewFile();
-            }
-            return new Gson().fromJson(FileUtils.readFileToString(configFile, "utf-8"), ConfigData.class);
+            String json = FileUtils.readFileToString(getFile(), "UTF-8");
+            settings = new Gson().fromJson(json, Settings.class);
         } catch (IOException e) {
-            return new ConfigData(); // Returns the default config (emergency fallback)
+            settings = defaults();
+            write(settings);
         }
     }
 
-    public ConfigData update(UpdateCallback updateCallback) throws IOException {
-        updateCallback.run(configData);
+    private void write(Settings settings) {
+        this.settings = settings;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        FileUtils.writeStringToFile(configFile, gson.toJson(configData), "utf-8");
-        return fetchFromFile();
+        String json = gson.toJson(settings);
+        try {
+            FileUtils.writeStringToFile(getFile(), json, "UTF-8");
+        } catch (IOException e) {
+            assert MinecraftClient.getInstance().player != null;
+            MinecraftClient.getInstance().player.sendMessage(Text.literal(e.toString()).formatted(Formatting.RED));
+        }
     }
 
-    public ConfigData get() {
-        return configData;
+    private File getFile() {
+        return FileUtils.getFile(FabricLoader.getInstance().getConfigDir().toString(), "quick-info-panel.json");
+    }
+
+    private Settings defaults() {
+        Settings data = new Settings();
+        data.position.applyPreset("default");
+        return data;
+    }
+
+    public static Config getInstance() {
+        return instance == null ? instance = new Config() : instance;
+    }
+
+    public Settings settings() {
+        return settings;
+    }
+
+    public void update(Update update) {
+        update.run(settings);
+        write(settings);
     }
 }

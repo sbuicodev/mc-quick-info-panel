@@ -17,6 +17,7 @@ public class AlternateDimensionCoordinates extends Coordinates {
         double[] coordinates = fetchRawCoordinates();
 
         double scaleFactor = 0.125; // Overworld -> Nether
+        assert client.world != null;
         if (client.world.getDimensionEntry().getIdAsString().equals("minecraft:the_nether")) {
             scaleFactor = 8; // Nether -> Overworld
         }

@@ -31,11 +31,7 @@ public class PositionCommand extends Command {
                                         throw INVALID_VALUE.create();
                                     }
 
-                                    try {
-                                        config.update((config) -> config.position.applyPreset(value));
-                                    } catch (IOException e) {
-                                        throw INVALID_VALUE.create();
-                                    }
+                                    config.update((config) -> config.position.applyPreset(value));
                                     return 1;
                                 })
                         )

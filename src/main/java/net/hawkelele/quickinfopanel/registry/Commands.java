@@ -3,7 +3,7 @@ package net.hawkelele.quickinfopanel.registry;
 
 import net.hawkelele.quickinfopanel.command.Command;
 
-public class CommandsRegistry {
+public class Commands {
 
     /**
      * Registers the provided list of commands

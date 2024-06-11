@@ -1,5 +1,6 @@
 package net.hawkelele.quickinfopanel.gui.panel;
 
+import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.coordinates.AlternateDimensionCoordinates;
 import net.hawkelele.quickinfopanel.gui.coordinates.Coordinates;
 import net.minecraft.text.Text;
@@ -9,6 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 
 public class AlternateDimensionPanel extends Panel {
+    private static AlternateDimensionPanel instance;
+
+    public static AlternateDimensionPanel getInstance() {
+        return instance == null ? instance = new AlternateDimensionPanel() : instance;
+    }
+
     public Text getAlternateDimensionIcon() {
         assert client.world != null;
         String dimension = client.world.getDimensionEntry().getIdAsString();
@@ -24,11 +31,11 @@ public class AlternateDimensionPanel extends Panel {
         int[] position = super.getTextPosition(text);
         int lineHeight = 10;
 
-        if (!config.get().position.invertLines) {
+        if (!Config.getInstance().settings().position.invertLines) {
             lineHeight = -lineHeight;
         }
 
-        if (config.get().position.centered) {
+        if (Config.getInstance().settings().position.centered) {
             position[0] -= 10;
         }
 
@@ -48,16 +55,16 @@ public class AlternateDimensionPanel extends Panel {
                    .append(getAlternateDimensionIcon())
                    .append(" ")
                    .append(Text.literal("XZ: ").formatted(Formatting.YELLOW))
-                   .append(Text.literal(String.valueOf(coordinates.x)).withColor(Color.decode("#888888").hashCode()))
+                   .append(Text.literal(String.valueOf(coordinates.x)).withColor(Color.decode("#AAAAAA").hashCode()))
                    .append(" ")
-                   .append(Text.literal(String.valueOf(coordinates.z)).withColor(Color.decode("#888888").hashCode()));
+                   .append(Text.literal(String.valueOf(coordinates.z)).withColor(Color.decode("#AAAAAA").hashCode()));
     }
 
     @Override
     public boolean shouldBeHidden() {
         return super.shouldBeHidden()
                 || client.world == null
-                || !config.get().showNetherCoordinates
+                || !Config.getInstance().settings().showNetherCoordinates
                 || client.world.getDimensionEntry().getIdAsString().equals("the_end");
     }
 }

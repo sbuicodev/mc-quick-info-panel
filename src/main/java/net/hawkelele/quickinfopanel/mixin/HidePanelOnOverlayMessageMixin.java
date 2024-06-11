@@ -1,6 +1,7 @@
 package net.hawkelele.quickinfopanel.mixin;
 
-import net.hawkelele.quickinfopanel.provider.PanelProvider;
+import net.hawkelele.quickinfopanel.gui.panel.AlternateDimensionPanel;
+import net.hawkelele.quickinfopanel.gui.panel.Panel;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,11 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class HidePanelOnOverlayMessageMixin {
     @Inject(method = "renderOverlayMessage", at = @At("TAIL"))
     public void hide(DrawContext context, float tickDelta, CallbackInfo ci) {
-        PanelProvider.getPanel().hide();
+        Panel.getInstance().hide();
+        AlternateDimensionPanel.getInstance().hide();
     }
 
     @Inject(method = "renderOverlayMessage", at = @At("HEAD"))
     public void show(DrawContext context, float tickDelta, CallbackInfo ci) {
-        PanelProvider.getPanel().show();
+        Panel.getInstance().show();
+        AlternateDimensionPanel.getInstance().show();
     }
 }
