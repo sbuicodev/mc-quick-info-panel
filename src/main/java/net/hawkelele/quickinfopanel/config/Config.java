@@ -3,7 +3,7 @@ package net.hawkelele.quickinfopanel.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.hawkelele.quickinfopanel.config.data.Settings;
+import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -14,13 +14,13 @@ import java.io.IOException;
 
 public class Config {
     public interface Update {
-        void run(Settings settings);
+        void run(GeneralSettings settings);
 
     }
 
     private static Config instance;
 
-    private Settings settings;
+    private GeneralSettings settings;
 
     private Config() {
         load();
@@ -29,14 +29,14 @@ public class Config {
     private void load() {
         try {
             String json = FileUtils.readFileToString(getFile(), "UTF-8");
-            settings = new Gson().fromJson(json, Settings.class);
+            settings = new Gson().fromJson(json, GeneralSettings.class);
         } catch (IOException e) {
             settings = defaults();
             write(settings);
         }
     }
 
-    private void write(Settings settings) {
+    public void write(GeneralSettings settings) {
         this.settings = settings;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(settings);
@@ -52,8 +52,8 @@ public class Config {
         return FileUtils.getFile(FabricLoader.getInstance().getConfigDir().toString(), "quick-info-panel.json");
     }
 
-    private Settings defaults() {
-        Settings data = new Settings();
+    private GeneralSettings defaults() {
+        GeneralSettings data = new GeneralSettings();
         data.position.applyPreset("default");
         return data;
     }
@@ -62,7 +62,7 @@ public class Config {
         return instance == null ? instance = new Config() : instance;
     }
 
-    public Settings settings() {
+    public GeneralSettings settings() {
         return settings;
     }
 
