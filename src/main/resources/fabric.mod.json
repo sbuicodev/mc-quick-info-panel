@@ -14,7 +14,8 @@
   "entrypoints": {
     "client": [
       "net.hawkelele.quickinfopanel.QuickInfoPanel"
-    ]
+    ],
+    "modmenu": [ "net.hawkelele.quickinfopanel.config.modmenu.ModMenuIntegration" ]
   },
   "mixins": [
     "quickinfopanel.mixins.json"

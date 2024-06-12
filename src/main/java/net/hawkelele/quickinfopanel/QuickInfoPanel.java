@@ -9,6 +9,7 @@ import net.hawkelele.quickinfopanel.event.TogglePanelOnKeypress;
 
 
 public class QuickInfoPanel implements ClientModInitializer {
+    public static final String MOD_ID = "quickinfopanel";
 
     @Override
     public void onInitializeClient() {
@@ -20,5 +21,7 @@ public class QuickInfoPanel implements ClientModInitializer {
                 new NetherCommand(),
                 new PositionCommand()
         );
+
+
     }
 }

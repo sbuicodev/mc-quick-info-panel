@@ -16,7 +16,7 @@ public class TogglePanelOnKeypress extends EventHandler<ClientTickEvents.EndTick
             "key.quickinfopanel.toggle", // The translation key of the keybinding's name
             InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
             GLFW.GLFW_KEY_N, // The keycode of the key
-            "category.quickinfopanel.test" // The translation key of the keybinding's category.
+            "category.quickinfopanel.text" // The translation key of the keybinding's category.
     ));
 
     @Override

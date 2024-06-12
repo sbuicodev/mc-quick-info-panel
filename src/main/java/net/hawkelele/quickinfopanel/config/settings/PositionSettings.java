@@ -1,8 +1,9 @@
-package net.hawkelele.quickinfopanel.config.data;
+package net.hawkelele.quickinfopanel.config.settings;
 
-public class Position {
+public class PositionSettings extends Settings {
+    public String currentPreset = "default";
     public int x = 0;
-    public int y = 0;
+    public int y = 71;
     public boolean centered = true;
     public boolean moveWithInventory = true;
     public boolean hideWithActionbar = true;
@@ -63,5 +64,6 @@ public class Position {
                 invertedX = false;
                 invertedY = true;
         }
+        currentPreset = presetName;
     }
 }
