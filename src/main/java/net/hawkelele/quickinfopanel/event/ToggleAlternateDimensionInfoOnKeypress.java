@@ -5,15 +5,11 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
-
-import java.io.IOException;
-
-public class TogglePanelOnKeypress extends EventHandler<ClientTickEvents.EndTick> {
-    private static final KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.quickinfopanel.toggle", // The translation key of the keybinding's name
+public class ToggleAlternateDimensionInfoOnKeypress extends EventHandler<ClientTickEvents.EndTick> {
+    private static KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.quickinfopanel.togglealtinfo", // The translation key of the keybinding's name
             InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
             GLFW.GLFW_KEY_N, // The keycode of the key
             "category.quickinfopanel.text" // The translation key of the keybinding's category.
@@ -32,7 +28,7 @@ public class TogglePanelOnKeypress extends EventHandler<ClientTickEvents.EndTick
             }
 
             while (keyBinding.wasPressed()) {
-                config.update((config) -> config.displayPanel = !config.displayPanel);
+                config.update((config) -> config.displayAlternateDimensionInfo = !config.displayAlternateDimensionInfo);
             }
         };
     }

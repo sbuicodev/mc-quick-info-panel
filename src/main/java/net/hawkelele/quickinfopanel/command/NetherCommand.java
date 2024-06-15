@@ -4,8 +4,6 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.minecraft.text.Text;
 
-import java.io.IOException;
-
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class NetherCommand extends Command {
@@ -22,9 +20,7 @@ public class NetherCommand extends Command {
         return (dispatcher, registryAccess) -> dispatcher.register(
                 literal("qip").then(literal("nether")
                         .executes(context -> {
-                            config.update((config) -> config.showNetherCoordinates = !config.showNetherCoordinates);
-
-                            context.getSource().sendFeedback(Text.literal("[QIP] Toggled Nether Coordinates"));
+                            config.update((config) -> config.displayAlternateDimensionInfo = !config.displayAlternateDimensionInfo);
                             return 1;
                         })
                 )

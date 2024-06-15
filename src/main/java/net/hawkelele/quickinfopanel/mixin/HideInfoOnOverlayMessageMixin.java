@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public class HidePanelOnOverlayMessageMixin {
+public class HideInfoOnOverlayMessageMixin {
     @Inject(method = "renderOverlayMessage", at = @At("TAIL"))
     public void hide(DrawContext context, float tickDelta, CallbackInfo ci) {
         Panel.getInstance().hide();

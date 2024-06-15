@@ -64,7 +64,7 @@ public class AlternateDimensionPanel extends Panel {
     public boolean shouldBeHidden() {
         return super.shouldBeHidden()
                 || client.world == null
-                || !Config.getInstance().settings().showNetherCoordinates
+                || !Config.getInstance().settings().displayAlternateDimensionInfo
                 || client.world.getDimensionEntry().getIdAsString().equals("the_end");
     }
 }

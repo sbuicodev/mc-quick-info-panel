@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.awt.*;
 
 @Mixin(InGameHud.class)
-public class PanelMixin {
+public class InfoPanelMixin {
     @Shadow
     @Final
     private MinecraftClient client;

@@ -34,11 +34,11 @@ public class ModMenuIntegration implements ModMenuApi {
 
             ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
-            // showNetherCoordinates
-            general.addEntry(entryBuilder.startBooleanToggle(Text.literal("Show Nether coordinates"), settings.showNetherCoordinates)
+            // displayPanel
+            general.addEntry(entryBuilder.startBooleanToggle(Text.literal("Enable Quick Info Panel"), settings.displayPanel)
                                          .setDefaultValue(true) // Recommended: Used when user click "Reset"
-                                         .setTooltip(Text.literal("Show the alternate dimension's coordinates")) // Optional: Shown when the user hover over this option
-                                         .setSaveConsumer(newValue -> settings.showNetherCoordinates = newValue) // Recommended: Called when user save the config
+                                         .setTooltip(Text.literal("Display quick access info about the player's coordinates and time above the inventory")) // Optional: Shown when the user hover over this option
+                                         .setSaveConsumer(newValue -> settings.displayPanel = newValue) // Recommended: Called when user save the config
                                          .build()); // Builds the option entry for cloth config
 
             // position (preset)
