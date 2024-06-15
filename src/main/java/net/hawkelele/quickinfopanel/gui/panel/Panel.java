@@ -3,7 +3,6 @@ package net.hawkelele.quickinfopanel.gui.panel;
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.coordinates.Coordinates;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.apache.commons.lang3.StringUtils;

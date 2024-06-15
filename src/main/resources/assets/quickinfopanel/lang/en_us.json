@@ -1,5 +1,10 @@
 {
   "title.quickinfopanel.config": "Quick Info Panel - Config",
   "category.quickinfopanel.text": "Quick Info Panel",
-  "key.quickinfopanel.toggle": "Toggle Quick Info Panel (QIP)"
+  "key.quickinfopanel.toggle": "Toggle Quick Info Panel (QIP)",
+  "position.quickinfopanel.default": "Default",
+  "position.quickinfopanel.top-left": "Top Left",
+  "position.quickinfopanel.top-right": "Top Right",
+  "position.quickinfopanel.bottom-left": "Bottom Left",
+  "position.quickinfopanel.bottom-right": "Bottom Right"
 }

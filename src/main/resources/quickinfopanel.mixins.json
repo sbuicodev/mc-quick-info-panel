@@ -6,8 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "HidePanelOnOverlayMessageMixin",
-    "PanelMixin"
+    "HideInfoOnOverlayMessageMixin",
+    "InfoPanelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
