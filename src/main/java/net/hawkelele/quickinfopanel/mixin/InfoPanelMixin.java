@@ -5,6 +5,7 @@ import net.hawkelele.quickinfopanel.gui.panel.Panel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +23,7 @@ public class InfoPanelMixin {
     private MinecraftClient client;
 
     @Inject(method = "renderMiscOverlays", at = @At("HEAD"))
-    public void render(DrawContext context, float tickDelta, CallbackInfo ci) {
+    public void render(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         Panel panel = Panel.getInstance();
         if (panel.shouldBeHidden()) {
             return;
