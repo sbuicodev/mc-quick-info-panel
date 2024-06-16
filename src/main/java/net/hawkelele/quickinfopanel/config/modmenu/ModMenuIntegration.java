@@ -5,17 +5,9 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
-import net.hawkelele.quickinfopanel.config.settings.PositionSettings;
-import net.hawkelele.quickinfopanel.config.settings.Settings;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
-import org.lwjgl.glfw.GLFW;
-
-import java.util.Collections;
-import java.util.List;
 
 public class ModMenuIntegration implements ModMenuApi {
 
@@ -46,10 +38,10 @@ public class ModMenuIntegration implements ModMenuApi {
                     .startSelector(
                             Text.literal("Position (preset)"),
                             new String[]{"default", "top-left", "top-right", "bottom-left", "bottom-right"},
-                            settings.position.currentPreset
+                            settings.position.code != null ? settings.position.code : "default"
                     )
                     .setDefaultValue("default")
-                    .setSaveConsumer(settings.position::applyPreset)
+                    .setSaveConsumer(newValue -> settings.position = GeneralSettings.Position.preset(newValue))
                     .build()
             );
 

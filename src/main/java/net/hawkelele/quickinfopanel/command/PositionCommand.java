@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.hawkelele.quickinfopanel.config.Config;
+import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
 import net.minecraft.text.Text;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -31,7 +32,7 @@ public class PositionCommand extends Command {
                                         throw INVALID_VALUE.create();
                                     }
 
-                                    config.update((config) -> config.position.applyPreset(value));
+                                    config.update((config) -> config.position = GeneralSettings.Position.preset(value));
                                     return 1;
                                 })
                         )
