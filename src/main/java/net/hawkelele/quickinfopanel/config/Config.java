@@ -45,7 +45,7 @@ public class Config {
             FileUtils.writeStringToFile(getFile(), json, "UTF-8");
         } catch (IOException e) {
             assert MinecraftClient.getInstance().player != null;
-            MinecraftClient.getInstance().player.sendMessage(Text.literal(e.toString()).formatted(Formatting.RED));
+            MinecraftClient.getInstance().player.sendMessage(Text.literal(e.toString()).formatted(Formatting.RED), false);
         }
     }
 
