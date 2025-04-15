@@ -2,6 +2,7 @@ package net.hawkelele.quickinfopanel.gui;
 
 import net.hawkelele.quickinfopanel.QuickInfoPanel;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 
 public class Icon {
@@ -32,6 +33,6 @@ public class Icon {
     }
 
     public void draw(DrawContext context) {
-        context.drawTexture(Identifier.of(QuickInfoPanel.MOD_ID, path), x, y, width, height, width, height, width, height);
+        context.drawTexture(RenderLayer::getGuiTextured, Identifier.of(QuickInfoPanel.MOD_ID, path), x, y, 0, 0, width, height, width, height);
     }
 }

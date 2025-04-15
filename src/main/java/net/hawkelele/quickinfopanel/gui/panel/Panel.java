@@ -53,7 +53,7 @@ public class Panel {
         assert client.player != null;
 
         return String.valueOf(StringUtils
-                .capitalize(client.player.getHorizontalFacing().getName())
+                .capitalize(client.player.getHorizontalFacing().toString())
                 .charAt(0));
     }
 
