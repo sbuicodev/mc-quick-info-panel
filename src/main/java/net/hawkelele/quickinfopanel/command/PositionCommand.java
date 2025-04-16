@@ -1,17 +1,16 @@
 package net.hawkelele.quickinfopanel.command;
 
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.hawkelele.quickinfopanel.config.Config;
-import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
-import net.minecraft.text.Text;
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.io.IOException;
-
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
+import net.minecraft.text.Text;
 
 public class PositionCommand extends Command {
     public static final SimpleCommandExceptionType INVALID_VALUE = new SimpleCommandExceptionType(Text.literal("Invalid value"));
