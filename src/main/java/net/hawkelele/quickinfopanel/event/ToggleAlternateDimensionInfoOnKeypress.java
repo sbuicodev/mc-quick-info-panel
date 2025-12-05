@@ -1,5 +1,7 @@
 package net.hawkelele.quickinfopanel.event;
 
+import net.hawkelele.quickinfopanel.QuickInfoPanel;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -9,11 +11,10 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 
 public class ToggleAlternateDimensionInfoOnKeypress extends EventHandler<ClientTickEvents.EndTick> {
-    private static KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.quickinfopanel.togglealtinfo", // The translation key of the keybinding's name
+    private static final KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.quickinfopanel.togglealtinfo", // The translation key of the keybinding's name
             InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
             GLFW.GLFW_KEY_N, // The keycode of the key
-            "category.quickinfopanel.text" // The translation key of the keybinding's category.
+            QuickInfoPanel.KEYBINDCATEGORY // The translation key of the keybinding's category.
     ));
 
     @Override
