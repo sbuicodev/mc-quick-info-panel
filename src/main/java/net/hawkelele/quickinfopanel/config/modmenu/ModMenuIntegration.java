@@ -20,23 +20,29 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigBuilder builder = ConfigBuilder
                     .create()
                     .setParentScreen(parent)
-                    .setTitle(Text.literal("Quick Info Panel"));
+                    .setTitle(Text.translatable("title.quickinfopanel.config"));
 
             ConfigCategory general = builder.getOrCreateCategory(Text.literal("General"));
 
             ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
             // displayPanel
-            general.addEntry(entryBuilder.startBooleanToggle(Text.literal("Enable Quick Info Panel"), settings.displayPanel)
-                                         .setDefaultValue(true) // Recommended: Used when user click "Reset"
-                                         .setTooltip(Text.literal("Display quick access info about the player's coordinates and time above the inventory")) // Optional: Shown when the user hover over this option
-                                         .setSaveConsumer(newValue -> settings.displayPanel = newValue) // Recommended: Called when user save the config
-                                         .build()); // Builds the option entry for cloth config
+            general.addEntry(entryBuilder.startBooleanToggle(Text.translatable("settings.quickinfopanel.enable"), settings.displayPanel)
+                    .setDefaultValue(true) // Recommended: Used when user click "Reset"
+                    .setTooltip(Text.translatable("settings.quickinfopanel.enable.description"))
+                    .setSaveConsumer(newValue -> settings.displayPanel = newValue) // Recommended: Called when user save the config
+                    .build()); // Builds the option entry for cloth config
+
+            general.addEntry(entryBuilder.startBooleanToggle(Text.translatable("settings.quickinfopanel.enable-alt-info"), settings.displayPanel)
+                    .setDefaultValue(true) // Recommended: Used when user click "Reset"
+                    .setTooltip(Text.translatable("settings.quickinfopanel.enable-alt-info.description"))
+                    .setSaveConsumer(newValue -> settings.displayAlternateDimensionInfo = newValue) // Recommended: Called when user save the config
+                    .build()); // Builds the option entry for cloth config
 
             // position (preset)
             general.addEntry(entryBuilder
                     .startSelector(
-                            Text.literal("Position (preset)"),
+                            Text.translatable("position.quickinfopanel.label"),
                             new String[]{"default", "top-left", "top-right", "bottom-left", "bottom-right"},
                             settings.position.code != null ? settings.position.code : "default"
                     )

@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 
 public class QuickInfoPanel implements ClientModInitializer {
     public static final String MOD_ID = "quickinfopanel";
-    public static final KeyBinding.Category KEYBINDCATEGORY = KeyBinding.Category.create(Identifier.of("category.quickinfopanel.text"));
+    public static final KeyBinding.Category KEYBINDCATEGORY = KeyBinding.Category.create(Identifier.of(MOD_ID, "main"));
 
     @Override
     public void onInitializeClient() {
