@@ -21,6 +21,7 @@ public class GeneralSettings extends Settings {
 
         public static Position preset(String code) {
             try {
+                // Get the position values from the PositionPresets enum (a bit ugly, but it's ok at this stage)
                 return ((PositionPresets) PositionPresets.class.getField(StringUtils.upperCase(StringUtils.replace(code, "-", "_"))).get(null)).position;
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 return PositionPresets.DEFAULT.position;
