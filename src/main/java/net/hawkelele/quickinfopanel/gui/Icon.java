@@ -1,6 +1,8 @@
 package net.hawkelele.quickinfopanel.gui;
 
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.hawkelele.quickinfopanel.QuickInfoPanel;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
@@ -24,15 +26,11 @@ public class Icon {
         return new Icon(path, x, y - 3, 12, 12);
     }
 
-    public int getWidth() {
-        return width;
-    }
-
     public void offsetX(int x) {
         this.x += x;
     }
 
     public void draw(DrawContext context) {
-        context.drawTexture(RenderLayer::getGuiTextured, Identifier.of(QuickInfoPanel.MOD_ID, path), x, y, 0, 0, width, height, width, height);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, Identifier.of(QuickInfoPanel.MOD_ID, path), x, y, 0, 0, width, height, width, height);
     }
 }
