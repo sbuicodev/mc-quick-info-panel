@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
-public class NetherCommand extends Command {
+public class ExtraCommand extends Command {
     public static final SimpleCommandExceptionType INVALID_VALUE = new SimpleCommandExceptionType(Component.literal("Invalid value"));
 
     /*
@@ -18,7 +18,7 @@ public class NetherCommand extends Command {
     public ClientCommandRegistrationCallback handle() {
 
         return (dispatcher, registryAccess) -> dispatcher.register(
-                literal("qip").then(literal("nether")
+                literal("qip").then(literal("extra")
                         .executes(context -> {
                             config.update((config) -> config.displayAlternateDimensionInfo = !config.displayAlternateDimensionInfo);
                             return 1;

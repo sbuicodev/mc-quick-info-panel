@@ -43,7 +43,7 @@ public class ModMenuIntegration implements ModMenuApi {
             general.addEntry(entryBuilder
                     .startSelector(
                             Component.translatable("position.quickinfopanel.label"),
-                            new String[]{"default", "top-left", "top-right", "bottom-left", "bottom-right"},
+                            new String[]{"default"},
                             settings.position.code != null ? settings.position.code : "default"
                     )
                     .setDefaultValue("default")
