@@ -1,9 +1,9 @@
 package net.hawkelele.quickinfopanel.gui.coordinates;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class Coordinates {
-    protected static final MinecraftClient client = MinecraftClient.getInstance();
+    protected static final Minecraft client = Minecraft.getInstance();
 
     public final int x;
     public final int y;

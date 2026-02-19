@@ -2,12 +2,12 @@ package net.hawkelele.quickinfopanel.command;
 
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class NetherCommand extends Command {
-    public static final SimpleCommandExceptionType INVALID_VALUE = new SimpleCommandExceptionType(Text.literal("Invalid value"));
+    public static final SimpleCommandExceptionType INVALID_VALUE = new SimpleCommandExceptionType(Component.literal("Invalid value"));
 
     /*
      * ---------------------------
