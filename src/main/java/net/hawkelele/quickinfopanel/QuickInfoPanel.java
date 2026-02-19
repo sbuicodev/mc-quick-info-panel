@@ -1,7 +1,7 @@
 package net.hawkelele.quickinfopanel;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.hawkelele.quickinfopanel.command.NetherCommand;
+import net.hawkelele.quickinfopanel.command.ExtraCommand;
 import net.hawkelele.quickinfopanel.command.PositionCommand;
 import net.hawkelele.quickinfopanel.event.ToggleAlternateDimensionInfoOnKeypress;
 import net.hawkelele.quickinfopanel.registry.Commands;
@@ -25,7 +25,7 @@ public class QuickInfoPanel implements ClientModInitializer {
         );
 
         Commands.register(
-                new NetherCommand(),
+                new ExtraCommand(),
                 new PositionCommand()
         );
 
