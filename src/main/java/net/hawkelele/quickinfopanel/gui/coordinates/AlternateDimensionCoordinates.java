@@ -1,9 +1,9 @@
 package net.hawkelele.quickinfopanel.gui.coordinates;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class AlternateDimensionCoordinates extends Coordinates {
-    private static final MinecraftClient client = MinecraftClient.getInstance();
+    private static final Minecraft client = Minecraft.getInstance();
 
     public int x;
     public int y;
@@ -17,8 +17,8 @@ public class AlternateDimensionCoordinates extends Coordinates {
         double[] coordinates = fetchRawCoordinates();
 
         double scaleFactor = 0.125; // Overworld -> Nether
-        assert client.world != null;
-        if (client.world.getDimensionEntry().getIdAsString().equals("minecraft:the_nether")) {
+        assert client.level != null;
+        if (client.level.dimensionTypeRegistration().getRegisteredName().equals("minecraft:the_nether")) {
             scaleFactor = 8; // Nether -> Overworld
         }
         return new AlternateDimensionCoordinates(

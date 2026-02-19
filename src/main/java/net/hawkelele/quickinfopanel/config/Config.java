@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
 import net.hawkelele.quickinfopanel.config.settings.PositionPresets;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -44,8 +44,8 @@ public class Config {
         try {
             FileUtils.writeStringToFile(getFile(), json, "UTF-8");
         } catch (IOException e) {
-            assert MinecraftClient.getInstance().player != null;
-            MinecraftClient.getInstance().player.sendMessage(Text.literal(e.toString()).formatted(Formatting.RED), false);
+            assert Minecraft.getInstance().player != null;
+            Minecraft.getInstance().player.displayClientMessage(Component.literal(e.toString()).withStyle(ChatFormatting.RED), false);
         }
     }
 

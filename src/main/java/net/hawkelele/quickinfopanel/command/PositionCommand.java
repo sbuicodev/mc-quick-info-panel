@@ -10,10 +10,10 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public class PositionCommand extends Command {
-    public static final SimpleCommandExceptionType INVALID_VALUE = new SimpleCommandExceptionType(Text.literal("Invalid value"));
+    public static final SimpleCommandExceptionType INVALID_VALUE = new SimpleCommandExceptionType(Component.literal("Invalid value"));
 
     /*
      * ---------------------------

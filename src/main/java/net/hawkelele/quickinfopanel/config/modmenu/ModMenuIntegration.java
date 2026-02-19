@@ -7,7 +7,7 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 public class ModMenuIntegration implements ModMenuApi {
 
@@ -20,29 +20,29 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigBuilder builder = ConfigBuilder
                     .create()
                     .setParentScreen(parent)
-                    .setTitle(Text.translatable("title.quickinfopanel.config"));
+                    .setTitle(Component.translatable("title.quickinfopanel.config"));
 
-            ConfigCategory general = builder.getOrCreateCategory(Text.literal("General"));
+            ConfigCategory general = builder.getOrCreateCategory(Component.literal("General"));
 
             ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
             // displayPanel
-            general.addEntry(entryBuilder.startBooleanToggle(Text.translatable("settings.quickinfopanel.enable"), settings.displayPanel)
+            general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("settings.quickinfopanel.enable"), settings.displayPanel)
                     .setDefaultValue(true) // Recommended: Used when user click "Reset"
-                    .setTooltip(Text.translatable("settings.quickinfopanel.enable.description"))
+                    .setTooltip(Component.translatable("settings.quickinfopanel.enable.description"))
                     .setSaveConsumer(newValue -> settings.displayPanel = newValue) // Recommended: Called when user save the config
                     .build()); // Builds the option entry for cloth config
 
-            general.addEntry(entryBuilder.startBooleanToggle(Text.translatable("settings.quickinfopanel.enable-alt-info"), settings.displayPanel)
+            general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("settings.quickinfopanel.enable-alt-info"), settings.displayPanel)
                     .setDefaultValue(true) // Recommended: Used when user click "Reset"
-                    .setTooltip(Text.translatable("settings.quickinfopanel.enable-alt-info.description"))
+                    .setTooltip(Component.translatable("settings.quickinfopanel.enable-alt-info.description"))
                     .setSaveConsumer(newValue -> settings.displayAlternateDimensionInfo = newValue) // Recommended: Called when user save the config
                     .build()); // Builds the option entry for cloth config
 
             // position (preset)
             general.addEntry(entryBuilder
                     .startSelector(
-                            Text.translatable("position.quickinfopanel.label"),
+                            Component.translatable("position.quickinfopanel.label"),
                             new String[]{"default", "top-left", "top-right", "bottom-left", "bottom-right"},
                             settings.position.code != null ? settings.position.code : "default"
                     )

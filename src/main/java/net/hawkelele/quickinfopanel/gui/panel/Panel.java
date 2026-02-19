@@ -3,11 +3,13 @@ package net.hawkelele.quickinfopanel.gui.panel;
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.Icon;
 import net.hawkelele.quickinfopanel.gui.coordinates.Coordinates;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.text.Text;
-import net.minecraft.util.Colors;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.CommonColors;
+import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +18,9 @@ public class Panel {
 
     protected boolean hidden = false;
 
-    public final MinecraftClient client = MinecraftClient.getInstance();
+    public final Minecraft client = Minecraft.getInstance();
 
-    private final Text SEPARATOR = Text.literal("   ");
+    private final Component SEPARATOR = Component.literal("   ");
 
 
     /**
@@ -36,8 +38,8 @@ public class Panel {
     }
 
     private int[] getCurrentTime() {
-        assert client.world != null;
-        long ticks = client.world.getTimeOfDay();
+        assert client.level != null;
+        long ticks = client.level.getDayTime();
         float hours = (((float) ticks / 1000) + 6) % 24;
         float minutes = (hours * 60) % 60;
 
@@ -53,7 +55,7 @@ public class Panel {
         assert client.player != null;
 
         return String.valueOf(StringUtils
-                .capitalize(client.player.getHorizontalFacing().toString())
+                .capitalize(client.player.getDirection().toString())
                 .charAt(0));
     }
 
@@ -68,10 +70,10 @@ public class Panel {
         int textPosY = Config.getInstance().settings().position.y;
 
         if (Config.getInstance().settings().position.invertedX) {
-            textPosX = client.getWindow().getScaledWidth() - textPosX;
+            textPosX = client.getWindow().getGuiScaledWidth() - textPosX;
         }
         if (Config.getInstance().settings().position.invertedY) {
-            textPosY = client.getWindow().getScaledHeight() - textPosY;
+            textPosY = client.getWindow().getGuiScaledHeight() - textPosY;
         }
 
         return new int[]{textPosX, textPosY};
@@ -89,12 +91,14 @@ public class Panel {
     }
 
     private int getCenteredTextHorizontalPosition(int width) {
-        return Math.round(((float) client.getWindow().getScaledWidth() / 2) - ((float) width / 2));
+        return Math.round(((float) client.getWindow().getGuiScaledWidth() / 2) - ((float) width / 2));
     }
 
-    public @NotNull void draw(DrawContext context) {
+    public @NotNull void draw(GuiGraphics context) {
         assert client.player != null;
-        Text text = Text.empty();
+        assert client.level != null;
+
+        Component text = Component.empty();
 
         int[] position = getTextPosition();
         int x = position[0];
@@ -108,9 +112,9 @@ public class Panel {
 
         Icon compassIcon = Icon.of("texture/gui/compass/compass_" + StringUtils.lowerCase(direction) + ".png", x, y);
 
-        text = Text.empty().append(text)
+        text = Component.empty().append(text)
                    .append("    ")
-                   .append(Text.literal(direction))
+                   .append(Component.literal(direction))
                    .append(SEPARATOR);
 
 
@@ -121,9 +125,9 @@ public class Panel {
          */
         Coordinates coordinates = Coordinates.get();
 
-        text = Text.empty().append(text)
-                   .append(Text.literal("XYZ: ").formatted(Formatting.YELLOW))
-                   .append(Text.literal(String.format("%s %s %s", coordinates.x, coordinates.y, coordinates.z)))
+        text = Component.empty().append(text)
+                   .append(Component.literal("XYZ: ").withStyle(ChatFormatting.YELLOW))
+                   .append(Component.literal(String.format("%s %s %s", coordinates.x, coordinates.y, coordinates.z)))
                    .append(SEPARATOR);
 
         /* ---------------------------------------------
@@ -131,14 +135,14 @@ public class Panel {
          * --------------------------------------------
          */
         String clock = getCurrentClock();
-        Icon clockIcon = Icon.of("texture/gui/clock/clock_" + (getCurrentTime()[0] >= 18 ? "night" : "day") + ".png", x + client.textRenderer.getWidth(text), y);
+        Icon clockIcon = Icon.of("texture/gui/clock/clock_" + (getCurrentTime()[0] >= 18 ? "night" : "day") + ".png", x + client.font.width(text), y);
 
-        text = Text.empty().append(text)
+        text = Component.empty().append(text)
                    .append("  ")
-                   .append(Text.literal(" " + clock));
+                   .append(Component.literal(" " + clock));
 
         if (Config.getInstance().settings().position.centered) {
-            x = getCenteredTextHorizontalPosition(client.textRenderer.getWidth(text));
+            x = getCenteredTextHorizontalPosition(client.font.width(text));
             compassIcon.offsetX(x);
             clockIcon.offsetX(x);
         }
@@ -146,18 +150,18 @@ public class Panel {
         compassIcon.draw(context);
         clockIcon.draw(context);
 
-        context.drawText(client.textRenderer,
+        context.drawString(client.font,
                 text,
-                x, y, Colors.WHITE, true
+                x, y, CommonColors.WHITE, true
         );
 
     }
 
     public boolean shouldBeHidden() {
-        return client.options.hudHidden
+        return client.options.hideGui
                 || client.player == null
-                || client.world == null
-                || client.getDebugHud().shouldShowDebugHud()
+                || client.level == null
+                || client.debugEntries.isOverlayVisible()
                 || !Config.getInstance().settings().displayPanel
                 || (hidden && Config.getInstance().settings().position.hideWithActionbar);
     }

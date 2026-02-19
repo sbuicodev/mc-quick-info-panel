@@ -2,10 +2,9 @@ package net.hawkelele.quickinfopanel.gui;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.hawkelele.quickinfopanel.QuickInfoPanel;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
 
 public class Icon {
     private final String path;
@@ -30,7 +29,7 @@ public class Icon {
         this.x += x;
     }
 
-    public void draw(DrawContext context) {
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, Identifier.of(QuickInfoPanel.MOD_ID, path), x, y, 0, 0, width, height, width, height);
+    public void draw(GuiGraphics context) {
+        context.blit(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath(QuickInfoPanel.MOD_ID, path), x, y, 0, 0, width, height, width, height);
     }
 }
