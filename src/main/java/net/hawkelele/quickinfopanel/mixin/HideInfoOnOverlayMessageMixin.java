@@ -1,7 +1,7 @@
 package net.hawkelele.quickinfopanel.mixin;
 
-import net.hawkelele.quickinfopanel.gui.panel.SecondaryPanel;
-import net.hawkelele.quickinfopanel.gui.panel.Panel;
+import net.hawkelele.quickinfopanel.legacy.gui.panel.SecondaryPanel;
+import net.hawkelele.quickinfopanel.legacy.gui.panel.Panel;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
