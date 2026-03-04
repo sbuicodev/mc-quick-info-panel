@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.event.Event;
 
 public class ToggleAlternateDimensionInfoOnKeypress extends EventHandler<ClientTickEvents.EndTick> {
-    private static final KeyMapping keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.quickinfopanel.togglealtinfo", // The translation key of the keybinding's name
+    private static final KeyMapping keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping("key." + QuickInfoPanel.MOD_ID + ".togglealtinfo", // The translation key of the keybinding's name
             InputConstants.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
             GLFW.GLFW_KEY_N, // The keycode of the key
             QuickInfoPanel.KEYBINDCATEGORY // The translation key of the keybinding's category.

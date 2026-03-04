@@ -9,7 +9,7 @@
     "repo": "https://github.com/hawkelele/mc-quick-info-panel"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/quickinfopanel/icon.png",
+  "icon": "assets/quick-info-panel/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -18,7 +18,7 @@
     "modmenu": [ "net.hawkelele.quickinfopanel.config.modmenu.ModMenuIntegration" ]
   },
   "mixins": [
-    "quickinfopanel.mixins.json"
+    "quick-info-panel.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

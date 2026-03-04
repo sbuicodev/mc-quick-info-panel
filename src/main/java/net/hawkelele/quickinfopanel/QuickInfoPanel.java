@@ -12,7 +12,7 @@ import net.hawkelele.quickinfopanel.event.ToggleInfoOnKeypress;
 
 
 public class QuickInfoPanel implements ClientModInitializer {
-    public static final String MOD_ID = "quickinfopanel";
+    public static final String MOD_ID = "quick-info-panel";
     public static final KeyMapping.Category KEYBINDCATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(MOD_ID, "main"));
 
     @Override
