@@ -111,13 +111,13 @@ public class SecondaryPanel extends Panel {
                     5);
 
             String dynamicEmptySpace = StringUtils.repeat(' ',
-                    22 - Weather.getIcon(weather).getString().length() - translatedWeather.length());
+                    22 - Weather.getIcon().getString().length() - translatedWeather.length());
 
             Component text = Component.empty()
                     .append(dynamicEmptySpace)
                     .append(translatedWeather)
                     .append(" ")
-                    .append(Weather.getIcon(weather));
+                    .append(Weather.getIcon());
 
             int[] position = getTextPosition(client.font.width(text) - 90);
 
