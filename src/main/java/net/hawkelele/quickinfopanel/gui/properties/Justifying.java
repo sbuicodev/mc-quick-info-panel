@@ -1,7 +1,8 @@
 package net.hawkelele.quickinfopanel.gui.properties;
 
-public enum Alignment {
+public enum Justifying {
     START,
     CENTER,
-    END
+    END,
+    SPACE_BETWEEN
 }

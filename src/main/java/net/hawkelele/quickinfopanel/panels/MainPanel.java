@@ -2,17 +2,12 @@ package net.hawkelele.quickinfopanel.panels;
 
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.elements.Panel;
-import net.hawkelele.quickinfopanel.gui.elements.Text;
 import net.hawkelele.quickinfopanel.gui.properties.Alignment;
+import net.hawkelele.quickinfopanel.gui.properties.Justifying;
 import net.hawkelele.quickinfopanel.gui.properties.Direction;
-import net.hawkelele.quickinfopanel.panels.components.ClockPanel;
-import net.hawkelele.quickinfopanel.panels.components.CompassPanel;
-import net.hawkelele.quickinfopanel.panels.components.CoordinatesPanel;
-import net.hawkelele.quickinfopanel.services.Coordinates;
-import net.minecraft.ChatFormatting;
+import net.hawkelele.quickinfopanel.panels.components.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.network.chat.Component;
 
 public class MainPanel extends Panel {
     private final Minecraft client = Minecraft.getInstance();
@@ -33,27 +28,31 @@ public class MainPanel extends Panel {
 
         if (shouldBeHidden()) return;
 
+
         new Panel()
-                .size(client.getWindow().getGuiScaledWidth(), -1)
+                .gap(2)
+                .direction(Direction.VERTICAL)
                 .align(Alignment.CENTER)
+                .size(client.getWindow().getGuiScaledWidth(), -1)
+                .reverse()
                 .children(
                         new Panel()
-                                .gap(2)
-                                .direction(Direction.VERTICAL)
-                                .reverse()
+                                .gap(5)
+                                .justify(Justifying.SPACE_BETWEEN)
                                 .children(
-                                        new Panel()
-                                                .gap(5)
-                                                .align(Alignment.SPACE_BETWEEN)
-                                                .children(
-                                                        new CompassPanel(),
-                                                        new CoordinatesPanel(),
-                                                        new ClockPanel()
-                                                )
-                                                .size(160, -1)
+                                        new CompassPanel(),
+                                        new CoordinatesPanel(),
+                                        new ClockPanel()
                                 )
-                )
-                .render(0, client.getWindow().getGuiScaledHeight() - (font.lineHeight * 7));
+                                .size(160, -1),
+                        new Panel()
+                                .gap(5)
+                                .justify(Justifying.SPACE_BETWEEN)
+                                .children(
+                                        new OppositeCoordinatesPanel(),
+                                        new BiomeAndWeatherPanel()
+                                ).size(160, -1)
+                ).render(0, client.getWindow().getGuiScaledHeight() - (font.lineHeight * 7));
 
     }
 }

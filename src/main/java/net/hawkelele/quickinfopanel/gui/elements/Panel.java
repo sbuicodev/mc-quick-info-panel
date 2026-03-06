@@ -1,6 +1,7 @@
 package net.hawkelele.quickinfopanel.gui.elements;
 
 import net.hawkelele.quickinfopanel.gui.properties.Alignment;
+import net.hawkelele.quickinfopanel.gui.properties.Justifying;
 import net.hawkelele.quickinfopanel.gui.properties.Direction;
 
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ public class Panel extends Element {
     protected final List<Element> children = new ArrayList<>();
 
     protected Direction direction = Direction.HORIZONTAL;
+    protected Justifying justifying = Justifying.START;
     protected Alignment alignment = Alignment.START;
+    protected Alignment contentAlignment = Alignment.START;
 
     protected int preferredWidth = -1;
     protected int preferredHeight = -1;
@@ -26,6 +29,11 @@ public class Panel extends Element {
 
     public Panel gap(int gap) {
         this.gap = gap;
+        return this;
+    }
+
+    public Panel justify(Justifying justifying) {
+        this.justifying = justifying;
         return this;
     }
 
@@ -86,19 +94,21 @@ public class Panel extends Element {
         int currentGap = gap;
 
         if (direction == Direction.HORIZONTAL) {
-            if (alignment == Alignment.END) currentX = getWidth() - getContentWidth();
-            if (alignment == Alignment.CENTER) currentX = (getWidth() / 2) - (getContentWidth() / 2);
-            if (alignment == Alignment.SPACE_BETWEEN) {
+            if (justifying == Justifying.END) currentX = getWidth() - getContentWidth();
+            if (justifying == Justifying.CENTER) currentX = (getWidth() / 2) - (getContentWidth() / 2);
+            if (justifying == Justifying.SPACE_BETWEEN) {
                 int blankSpace = getWidth() - children.stream().mapToInt(Element::getWidth).sum();
 
                 if (blankSpace > currentGap) {
                     currentGap = children.size() > 1 ? blankSpace / (children.size() - 1) : currentGap;
                 }
             }
+
         } else {
-            if (alignment == Alignment.END) currentY = getHeight() - getContentHeight();
-            if (alignment == Alignment.CENTER) currentX = (getHeight() / 2) - (getContentHeight() / 2);
-            if (alignment == Alignment.SPACE_BETWEEN) {
+            if (justifying == Justifying.END) currentY = getHeight() - getContentHeight();
+            if (justifying == Justifying.CENTER) currentY = (getHeight() / 2) - (getContentHeight() / 2);
+            if (alignment == Alignment.CENTER) currentX = (getWidth() / 2) - (getContentWidth() / 2);
+            if (justifying == Justifying.SPACE_BETWEEN) {
                 int blankSpace = getHeight() - children.stream().mapToInt(Element::getHeight).sum();
 
                 if (blankSpace > currentGap) {
@@ -108,6 +118,11 @@ public class Panel extends Element {
         }
 
         for (Element child : children) {
+            if (alignment == Alignment.CENTER) {
+                currentX = (getWidth() / 2) - (child.getWidth() / 2);
+            }
+
+
             child.render(currentX, currentY);
 
             if (direction == Direction.HORIZONTAL) {
