@@ -58,7 +58,7 @@ public class Coordinates {
 
         double scaleFactor = 0.125; // Overworld -> Nether
         assert client.level != null;
-        if (client.level.dimensionTypeRegistration().getRegisteredName().equals("minecraft:the_nether")) {
+        if (getOppositeDimensionId().equals("minecraft:overworld")) {
             scaleFactor = 8; // Nether -> Overworld
         }
 
@@ -98,6 +98,6 @@ public class Coordinates {
     }
 
     public String toString() {
-        return Strings.join(Coordinates.get().toArrayOfStrings(), " ");
+        return Strings.join(toArrayOfStrings(), " ");
     }
 }
