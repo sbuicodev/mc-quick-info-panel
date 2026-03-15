@@ -1,5 +1,7 @@
 package net.hawkelele.quickinfopanel.mixin;
 
+import net.hawkelele.quickinfopanel.PanelManager;
+import net.hawkelele.quickinfopanel.gui.elements.Panel;
 import net.hawkelele.quickinfopanel.panels.MainPanel;
 import net.hawkelele.quickinfopanel.gui.Context;
 import net.minecraft.client.DeltaTracker;
@@ -25,8 +27,11 @@ public class PanelRenderMixin {
 
         Context.set(context);
 
-        new MainPanel()
-                .render();
+        Panel panel = new MainPanel();
+
+        PanelManager.register(panel, "main");
+
+        panel.render();
 
 //        return;
 //        Panel panel = Panel.getInstance();

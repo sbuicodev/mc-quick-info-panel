@@ -21,7 +21,7 @@ public class Weather {
     private final static HashMap<String, Component> icons = new HashMap<>() {{
         put("unknown", Component.literal("  "));
         put("clear", Component.literal("☀").withStyle(ChatFormatting.YELLOW));
-        put("rain", Component.literal("\uD83D\uDCA7").withStyle(ChatFormatting.AQUA));
+        put("rain", Component.literal("☔").withStyle(ChatFormatting.AQUA));
         put("thunder", Component.literal("⚡").withStyle(ChatFormatting.GOLD));
         put("thunder:snow", Component.literal("⚡").withStyle(ChatFormatting.GOLD));
         put("snow", Component.literal("❄").withStyle(ChatFormatting.WHITE));
@@ -72,7 +72,11 @@ public class Weather {
         return weather;
     }
 
+    public static Component getIcon(String weather) {
+        return icons.getOrDefault(weather, Component.empty());
+    }
+
     public static Component getIcon() {
-        return icons.getOrDefault(getCurrent(), Component.empty());
+        return getIcon(getCurrent());
     }
 }
