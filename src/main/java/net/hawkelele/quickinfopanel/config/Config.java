@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
-import net.hawkelele.quickinfopanel.config.settings.PositionPresets;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -55,7 +54,7 @@ public class Config {
 
     private GeneralSettings defaults() {
         GeneralSettings data = new GeneralSettings();
-        data.position = PositionPresets.DEFAULT.position;
+        data.layout = "default";
         return data;
     }
 

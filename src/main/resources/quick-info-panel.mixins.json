@@ -6,8 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "HideInfoOnOverlayMessageMixin",
-    "PanelRenderMixin"
+    "OverlayRenderMixin",
+    "GuiRenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

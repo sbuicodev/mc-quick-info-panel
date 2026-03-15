@@ -1,14 +1,14 @@
 package net.hawkelele.quickinfopanel;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.hawkelele.quickinfopanel.command.ExtraCommand;
-import net.hawkelele.quickinfopanel.command.PositionCommand;
-import net.hawkelele.quickinfopanel.event.ToggleAlternateDimensionInfoOnKeypress;
-import net.hawkelele.quickinfopanel.registry.Commands;
-import net.hawkelele.quickinfopanel.registry.Services;
+import net.hawkelele.quickinfopanel.events.command.ExtraCommand;
+import net.hawkelele.quickinfopanel.events.command.PositionCommand;
+import net.hawkelele.quickinfopanel.events.keybinds.SecondaryToggleKeybindPressed;
+import net.hawkelele.quickinfopanel.registry.CommandRegistry;
+import net.hawkelele.quickinfopanel.registry.KeybindRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.Identifier;
-import net.hawkelele.quickinfopanel.event.ToggleInfoOnKeypress;
+import net.hawkelele.quickinfopanel.events.keybinds.MainToggleKeybindPressed;
 
 
 public class QuickInfoPanel implements ClientModInitializer {
@@ -19,12 +19,12 @@ public class QuickInfoPanel implements ClientModInitializer {
     public void onInitializeClient() {
 
 
-        Services.register(
-                new ToggleInfoOnKeypress(),
-                new ToggleAlternateDimensionInfoOnKeypress()
+        KeybindRegistry.register(
+                new MainToggleKeybindPressed(),
+                new SecondaryToggleKeybindPressed()
         );
 
-        Commands.register(
+        CommandRegistry.register(
                 new ExtraCommand(),
                 new PositionCommand()
         );
