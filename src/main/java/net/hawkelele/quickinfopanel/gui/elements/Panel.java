@@ -16,11 +16,22 @@ public class Panel extends Element {
     protected Alignment alignment = Alignment.START;
     protected Alignment contentAlignment = Alignment.START;
 
+    protected boolean visible = true;
+
     protected int preferredWidth = -1;
     protected int preferredHeight = -1;
 
     protected int gap = 0;
     protected boolean reverse = false;
+
+    public void hide() {
+        this.visible = false;
+    }
+
+    public void show()
+    {
+        this.visible = true;
+    }
 
     public Panel direction(Direction direction) {
         this.direction = direction;
@@ -90,6 +101,8 @@ public class Panel extends Element {
 
     @Override
     public void render(int x, int y) {
+        if (!this.visible) return;
+
         int currentX = x, currentY = y;
         int currentGap = gap;
 

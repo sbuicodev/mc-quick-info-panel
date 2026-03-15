@@ -1,7 +1,9 @@
 package net.hawkelele.quickinfopanel.mixin;
 
-import net.hawkelele.quickinfopanel.legacy.gui.panel.SecondaryPanel;
-import net.hawkelele.quickinfopanel.legacy.gui.panel.Panel;
+
+import net.hawkelele.quickinfopanel.PanelManager;
+import net.hawkelele.quickinfopanel.gui.elements.Panel;
+import net.hawkelele.quickinfopanel.panels.MainPanel;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,13 +16,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class HideInfoOnOverlayMessageMixin {
     @Inject(method = "renderOverlayMessage", at = @At("TAIL"))
     public void hide(GuiGraphics context, DeltaTracker tickCounter, CallbackInfo ci) {
-        Panel.getInstance().hide();
-        SecondaryPanel.getInstance().hide();
+        Panel main = PanelManager.get("main");
+
+        if (main != null) {
+            main.hide();
+        }
     }
 
     @Inject(method = "renderOverlayMessage", at = @At("HEAD"))
     public void show(GuiGraphics context, DeltaTracker tickCounter, CallbackInfo ci) {
-        Panel.getInstance().show();
-        SecondaryPanel.getInstance().show();
+        Panel main = PanelManager.get("main");
+
+        if (main != null) {
+            main.show();
+        }
     }
 }
