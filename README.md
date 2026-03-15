@@ -2,8 +2,8 @@
 
 A simple client-only Fabric mod for Minecraft **1.21.x** that adds a little heads-up display with info about
 **directions**, **coordinates** and **time of the day**.     
-It also displays the corresponding coordinates in the Nether while you're in the Overworld, and vice versa while you're
-in the Nether.
+It also displays the current biome, weather, and the corresponding coordinates in the Nether while you're in the Overworld, 
+and vice versa while you're in the Nether.
 
 ## Installation
 
@@ -17,7 +17,7 @@ change the panel's position between a couple of presets.
 
 It also comes with a few keybindings to quickly access a couple of features:
 
-- Press `N` to toggle the opposite dimension's corresponding coordinates
+- Press `N` to toggle the opposite dimension's corresponding coordinates and weather/biome info
 - Press `B` to toggle the mod on or off
 
 > All keybindings can be configured in the game's own Key Binds settings page under the Quick Info Panel section.
