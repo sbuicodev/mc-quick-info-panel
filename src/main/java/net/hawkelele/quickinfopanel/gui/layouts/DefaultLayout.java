@@ -32,6 +32,6 @@ public class DefaultLayout extends Layout {
                                 .justify(Justifying.SPACE_BETWEEN)
                                 .size(160, -1)
                 )
-                .render(0, client.getWindow().getGuiScaledHeight() - (font.lineHeight * 7));
+                .render(0, client.getWindow().getGuiScaledHeight() - (font.lineHeight * 8));
     }
 }
