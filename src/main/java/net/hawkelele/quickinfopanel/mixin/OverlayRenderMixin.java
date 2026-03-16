@@ -18,7 +18,7 @@ public class OverlayRenderMixin {
         Layout main = PanelRegistry.get("main");
 
         if (main != null) {
-            main.show();
+            main.hide();
         }
     }
 
@@ -27,7 +27,7 @@ public class OverlayRenderMixin {
         Layout main = PanelRegistry.get("main");
 
         if (main != null) {
-            main.hide();
+            main.show();
         }
     }
 }
