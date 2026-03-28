@@ -16,6 +16,13 @@ public class OppositeCoordinates extends Layout {
     );
 
     public OppositeCoordinates() {
+        String oppositeDimension = CoordinatesService.getOppositeDimensionId();
+
+        if (oppositeDimension == null) {
+            return;
+        }
+
+
         this.children(
                 new Text(Component.literal(CoordinatesService.getOppositeDimensionIcon()).withStyle(colors.getOrDefault(CoordinatesService.getOppositeDimensionId(), ChatFormatting.WHITE))),
                 new Text(Component.literal(CoordinatesService.opposite().toString()).withStyle(ChatFormatting.GRAY))
