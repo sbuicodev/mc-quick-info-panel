@@ -102,7 +102,7 @@ public class CoordinatesService {
         int[] coords = this.toArray();
         return Strings.join(new String[]{
                 String.valueOf(coords[0]),
-                String.valueOf(coords[1])
+                String.valueOf(coords[2])
         }, " ");
     }
 }
