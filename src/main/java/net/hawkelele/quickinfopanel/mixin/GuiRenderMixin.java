@@ -7,7 +7,7 @@ import net.hawkelele.quickinfopanel.gui.core.Context;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,8 +21,8 @@ public class GuiRenderMixin {
     @Final
     private Minecraft minecraft;
 
-    @Inject(method = "renderCameraOverlays", at = @At("HEAD"))
-    public void render(GuiGraphics context, DeltaTracker tickCounter, CallbackInfo ci) {
+    @Inject(method = "extractCameraOverlays", at = @At("HEAD"))
+    public void render(GuiGraphicsExtractor context, DeltaTracker tickCounter, CallbackInfo ci) {
         // Main panel
 
         Context.set(context);

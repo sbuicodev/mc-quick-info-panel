@@ -2,7 +2,7 @@ package net.hawkelele.quickinfopanel.events.keybinds;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.event.Event;
 import net.hawkelele.quickinfopanel.QuickInfoPanel;
 import net.hawkelele.quickinfopanel.events.EventHandler;
@@ -10,7 +10,7 @@ import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 
 public class MainToggleKeybindPressed extends EventHandler<ClientTickEvents.EndTick> {
-    private static final KeyMapping keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.quickinfopanel.toggle", // The translation key of the keybinding's name
+    private static final KeyMapping keyBinding = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.quickinfopanel.toggle", // The translation key of the keybinding's name
             InputConstants.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
             GLFW.GLFW_KEY_B, // The keycode of the key
             QuickInfoPanel.KEYBINDCATEGORY // The translation key of the keybinding's category.
