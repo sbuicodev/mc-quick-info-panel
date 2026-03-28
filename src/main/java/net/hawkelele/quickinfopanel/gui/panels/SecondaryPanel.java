@@ -15,6 +15,6 @@ public class SecondaryPanel extends Layout {
 
     @Override
     public boolean shouldBeHidden() {
-        return Config.getInstance().settings().displaySecondaryPanel;
+        return !Config.getInstance().settings().displaySecondaryPanel;
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
+
 import static java.util.Map.entry;
 
 public class CoordinatesService {
@@ -88,16 +89,20 @@ public class CoordinatesService {
         return new int[]{x, y, z};
     }
 
-    public String[] toArrayOfStrings() {
-        int[] numbers = this.toArray();
-        return new String[]{
-                String.valueOf(numbers[0]),
-                String.valueOf(numbers[1]),
-                String.valueOf(numbers[2])
-        };
+    public String toString() {
+        int[] coords = this.toArray();
+        return Strings.join(new String[]{
+                String.valueOf(coords[0]),
+                String.valueOf(coords[1]),
+                String.valueOf(coords[2])
+        }, " ");
     }
 
-    public String toString() {
-        return Strings.join(toArrayOfStrings(), " ");
+    public String toShortString() {
+        int[] coords = this.toArray();
+        return Strings.join(new String[]{
+                String.valueOf(coords[0]),
+                String.valueOf(coords[1])
+        }, " ");
     }
 }
