@@ -6,16 +6,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.HashMap;
 
 public class WeatherService {
     private static final Minecraft client = Minecraft.getInstance();
-    private static final Level level = client.level;
-    private static final Player player = client.player;
 
 
     private final static HashMap<String, Component> icons = new HashMap<>() {{
@@ -28,19 +24,19 @@ public class WeatherService {
     }};
 
     public static BlockPos getPlayerPosition() {
-        assert player != null;
-        return player.blockPosition();
+        assert client.player != null;
+        return client.player.blockPosition();
     }
 
     public static Biome getBiome() {
-        assert level != null;
-        Holder<Biome> biomeHolder = level.getBiome(getPlayerPosition());
+        assert client.level != null;
+        Holder<Biome> biomeHolder = client.level.getBiome(getPlayerPosition());
         return biomeHolder.value();
     }
 
     public static String getBiomeId() {
-        assert level != null;
-        Holder<Biome> biomeHolder = level.getBiome(getPlayerPosition());
+        assert client.level != null;
+        Holder<Biome> biomeHolder = client.level.getBiome(getPlayerPosition());
         return biomeHolder.getRegisteredName();
     }
 
@@ -50,19 +46,19 @@ public class WeatherService {
     }
 
     public static String getCurrent() {
-        assert level != null;
-        assert player != null;
+        assert client.level != null;
+        assert client.player != null;
 
         BlockPos blockPos = getPlayerPosition();
         Biome biome = getBiome();
-        int currentHeight = player.getBlockY();
+        int currentHeight = client.player.getBlockY();
 
         String weather = "unknown";
-        if (level.canHaveWeather()) {
+        if (client.level.canHaveWeather()) {
             boolean isSnowing = biome.coldEnoughToSnow(blockPos, currentHeight);
-            if (level.isThundering()) {
+            if (client.level.isThundering()) {
                 weather = isSnowing ? "thunder:snow" : "thunder";
-            } else if (level.isRaining()) {
+            } else if (client.level.isRaining()) {
                 weather = isSnowing ? "snow" : "rain";
             } else {
                 weather = "clear";

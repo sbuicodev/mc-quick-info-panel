@@ -81,7 +81,7 @@ public class CoordinatesService {
 
     public static String getOppositeDimensionIcon() {
         assert client.level != null;
-        return icons.getOrDefault(getOppositeDimensionId(), "");
+        return icons.getOrDefault(getOppositeDimensionId(), null);
     }
 
     public int[] toArray() {
