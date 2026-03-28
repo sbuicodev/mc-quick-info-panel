@@ -1,15 +1,15 @@
 package net.hawkelele.quickinfopanel.gui.core;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class Context {
-    private static GuiGraphics context;
+    private static GuiGraphicsExtractor context;
 
-    public static void set(GuiGraphics context) {
+    public static void set(GuiGraphicsExtractor context) {
         Context.context = context;
     }
 
-    public static GuiGraphics get() {
+    public static GuiGraphicsExtractor get() {
         return context;
     }
 

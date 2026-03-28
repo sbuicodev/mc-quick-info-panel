@@ -4,7 +4,7 @@ import net.hawkelele.quickinfopanel.QuickInfoPanel;
 import net.hawkelele.quickinfopanel.gui.core.Context;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 
 import static net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED;
@@ -13,7 +13,7 @@ import static net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED;
 public class Image extends Element {
     protected final Minecraft client = Minecraft.getInstance();
     protected final Font font = client.font;
-    protected final GuiGraphics context = Context.get();
+    protected final GuiGraphicsExtractor context = Context.get();
 
     protected int width = font.lineHeight;
     protected int height = font.lineHeight;
