@@ -8,7 +8,7 @@ public class ClockService {
 
     private static int[] getCurrentTime() {
         assert client.level != null;
-        long ticks = client.level.getGameTime();
+        long ticks = client.level.getOverworldClockTime();
         float hours = (((float) ticks / 1000) + 6) % 24;
         float minutes = (hours * 60) % 60;
 
