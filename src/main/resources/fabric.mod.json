@@ -3,19 +3,23 @@
   "id": "quick-info-panel",
   "version": "${version}",
   "name": "Quick Info Panel",
-  "description": "",
-  "authors": [],
+  "description": "A simple info panel that display coordinates and stuff.\n\nNOTE: If the settings button does not appear or no screen opens, the Cloth Config API is missing! Please install it to configure this mod.",
+  "authors": [
+    "hawkelele"
+  ],
   "contact": {
     "repo": "https://github.com/hawkelele/mc-quick-info-panel"
   },
-  "license": "All-Rights-Reserved",
+  "license": "MIT",
   "icon": "assets/quick-info-panel/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
       "net.hawkelele.quickinfopanel.QuickInfoPanel"
     ],
-    "modmenu": [ "net.hawkelele.quickinfopanel.config.modmenu.ModMenuIntegration" ]
+    "modmenu": [
+      "net.hawkelele.quickinfopanel.config.modmenu.ModMenuIntegration"
+    ]
   },
   "mixins": [
     "quick-info-panel.mixins.json"
@@ -24,5 +28,10 @@
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "update_checker": false
+    }
   }
 }

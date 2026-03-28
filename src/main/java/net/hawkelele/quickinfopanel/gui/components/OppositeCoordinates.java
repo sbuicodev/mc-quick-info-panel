@@ -25,7 +25,7 @@ public class OppositeCoordinates extends Layout {
 
         this.children(
                 new Text(Component.literal(CoordinatesService.getOppositeDimensionIcon()).withStyle(colors.getOrDefault(CoordinatesService.getOppositeDimensionId(), ChatFormatting.WHITE))),
-                new Text(Component.literal(CoordinatesService.opposite().toString()).withStyle(ChatFormatting.GRAY))
+                new Text(Component.literal(CoordinatesService.opposite().toShortString()).withStyle(ChatFormatting.GRAY))
         ).gap(2);
     }
 }
