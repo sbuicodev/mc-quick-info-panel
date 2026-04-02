@@ -3,14 +3,13 @@ package net.hawkelele.quickinfopanel.events.command;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
 
-import net.hawkelele.quickinfopanel.registry.LayoutRegistry;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.hawkelele.quickinfopanel.config.settings.GeneralSettings;
+import net.hawkelele.quickinfopanel.registry.LayoutRegistry;
 import net.minecraft.network.chat.Component;
 
 public class PositionCommand extends Command {

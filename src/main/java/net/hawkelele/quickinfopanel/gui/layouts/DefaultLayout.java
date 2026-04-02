@@ -1,6 +1,5 @@
 package net.hawkelele.quickinfopanel.gui.layouts;
 
-import net.hawkelele.quickinfopanel.gui.components.*;
 import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
 import net.hawkelele.quickinfopanel.gui.core.properties.Alignment;
 import net.hawkelele.quickinfopanel.gui.core.properties.Direction;
