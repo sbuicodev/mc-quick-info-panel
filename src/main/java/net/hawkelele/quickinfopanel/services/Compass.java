@@ -1,29 +1,38 @@
 package net.hawkelele.quickinfopanel.services;
 
-import net.minecraft.client.Minecraft;
+import net.hawkelele.quickinfopanel.providers.DirectionProvider;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
+
 public class Compass {
-    private static final Minecraft client = Minecraft.getInstance();
+    private final String[] allowedDirections = {"north", "south", "east", "west"};
+
+    public DirectionProvider directionProvider;
+
+    public Compass(DirectionProvider directionProvider) {
+        this.directionProvider = directionProvider;
+    }
 
     /**
      * Shows the current facing direction as a single uppercase letter
      *
      * @return N, S, E, W according to the current player's facing cardinal direction
      */
-    private static String getCurrentFacingCardinalDirection() {
-        assert client.player != null;
+    public String getCurrentFacingCardinalDirection() {
+        String direction = directionProvider.getDirection();
+
+        if (!Arrays.asList(allowedDirections).contains(direction)) {
+            // Fallback for invalid directions
+            return "?";
+        }
 
         return String.valueOf(StringUtils
-                .capitalize(client.player.getDirection().toString())
+                .capitalize(direction)
                 .charAt(0));
     }
 
-    public static String string() {
-        return getCurrentFacingCardinalDirection();
-    }
-
-    public static String icon() {
+    public String getIconPath() {
         return "texture/gui/compass/compass_" + getCurrentFacingCardinalDirection().toLowerCase() + ".png";
     }
 }

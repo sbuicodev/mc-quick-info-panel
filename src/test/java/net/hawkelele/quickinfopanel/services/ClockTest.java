@@ -89,5 +89,22 @@ public class ClockTest {
 
         timeProvider.setCurrentTicks(MockTimeProvider.DAY);
         Assertions.assertEquals("texture/gui/clock/clock_day.png", clock.getIconPath());
+
+        timeProvider.setCurrentTicks(MockTimeProvider.NIGHT);
+        Assertions.assertEquals("texture/gui/clock/clock_night.png", clock.getIconPath());
+
+        timeProvider.setCurrentTicks(MockTimeProvider.MIDNIGHT);
+        Assertions.assertEquals("texture/gui/clock/clock_night.png", clock.getIconPath());
+
+        timeProvider.setCurrentTicks(MockTimeProvider.SUNRISE);
+        Assertions.assertEquals("texture/gui/clock/clock_night.png", clock.getIconPath());
+
+        timeProvider.setCurrentTicks(MockTimeProvider.SUNSET);
+        Assertions.assertEquals("texture/gui/clock/clock_night.png", clock.getIconPath());
+
+        timeProvider.setCurrentTicks(MockTimeProvider.NOON);
+        Assertions.assertEquals("texture/gui/clock/clock_day.png", clock.getIconPath());
+
+
     }
 }

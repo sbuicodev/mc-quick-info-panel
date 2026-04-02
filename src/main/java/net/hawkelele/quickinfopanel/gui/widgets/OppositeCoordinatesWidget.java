@@ -2,11 +2,14 @@ package net.hawkelele.quickinfopanel.gui.widgets;
 
 import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
 import net.hawkelele.quickinfopanel.gui.core.elements.Text;
+import net.hawkelele.quickinfopanel.providers.client.PlayerDimensionProvider;
+import net.hawkelele.quickinfopanel.providers.client.PlayerPositionProvider;
 import net.hawkelele.quickinfopanel.services.Coordinates;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
 import java.util.Map;
+
 import static java.util.Map.entry;
 
 public class OppositeCoordinatesWidget extends Layout {
@@ -16,16 +19,21 @@ public class OppositeCoordinatesWidget extends Layout {
     );
 
     public OppositeCoordinatesWidget() {
-        String oppositeDimension = Coordinates.getOppositeDimensionId();
+        Coordinates coordinates = new Coordinates(new PlayerPositionProvider(), new PlayerDimensionProvider());
 
-        if (oppositeDimension == null) {
+        if (!coordinates.hasOppositeDimension()) {
             return;
         }
 
-
         this.children(
-                new Text(Component.literal(Coordinates.getOppositeDimensionIcon()).withStyle(colors.getOrDefault(Coordinates.getOppositeDimensionId(), ChatFormatting.WHITE))),
-                new Text(Component.literal(Coordinates.opposite().toShortString()).withStyle(ChatFormatting.GRAY))
+                new Text(
+                        Component.literal(coordinates.getDimensionIcon(coordinates.getOppositeDimension()))
+                                .withStyle(colors.getOrDefault(coordinates.getOppositeDimension(), ChatFormatting.WHITE))
+                ),
+                new Text(
+                        Component.literal(Coordinates.toShortString(coordinates.getOppositeDimensionPosition()))
+                                .withStyle(ChatFormatting.GRAY)
+                )
         ).gap(2);
     }
 }

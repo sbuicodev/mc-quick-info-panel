@@ -4,7 +4,7 @@ package net.hawkelele.quickinfopanel.gui.widgets;
 import net.hawkelele.quickinfopanel.gui.core.elements.Image;
 import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
 import net.hawkelele.quickinfopanel.gui.core.elements.Text;
-import net.hawkelele.quickinfopanel.providers.minecraft.InGameTimeProvider;
+import net.hawkelele.quickinfopanel.providers.client.InGameTimeProvider;
 
 public class ClockWidget extends Layout {
     public ClockWidget() {

@@ -1,19 +1,21 @@
 package net.hawkelele.quickinfopanel.services;
 
 import joptsimple.internal.Strings;
-import net.minecraft.client.Minecraft;
-import org.jspecify.annotations.Nullable;
+import net.hawkelele.quickinfopanel.providers.DimensionProvider;
+import net.hawkelele.quickinfopanel.providers.PositionProvider;
 
 import java.util.Map;
 
 import static java.util.Map.entry;
 
 public class Coordinates {
-    protected static final Minecraft client = Minecraft.getInstance();
+    private final PositionProvider positionProvider;
+    private final DimensionProvider dimensionProvider;
 
-    public final int x;
-    public final int y;
-    public final int z;
+    public Coordinates(PositionProvider positionProvider, DimensionProvider dimensionProvider) {
+        this.positionProvider = positionProvider;
+        this.dimensionProvider = dimensionProvider;
+    }
 
     private static final Map<String, String> oppositeDimensions = Map.ofEntries(
             entry("minecraft:overworld", "minecraft:the_nether"),
@@ -26,83 +28,62 @@ public class Coordinates {
     );
 
 
-    protected Coordinates(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public String getCurrentDimension() {
+        return dimensionProvider.getDimension();
     }
 
-    protected static double[] fetchRawCoordinates() {
-        assert client.player != null;
-        return new double[]{
-                client.player.getX(),
-                client.player.getY(),
-                client.player.getZ()
-        };
+
+    public boolean hasOppositeDimension() {
+        return oppositeDimensions.containsKey(getCurrentDimension());
     }
 
-    public static Coordinates get() {
-        double[] coordinates = fetchRawCoordinates();
-        return new Coordinates(
+
+    public String getOppositeDimension() {
+        return oppositeDimensions.get(getCurrentDimension());
+    }
+
+    public int[] getCurrentPosition() {
+        double[] coordinates = positionProvider.getPosition();
+        return new int[]{
                 (int) Math.floor(coordinates[0]),
                 (int) Math.floor(coordinates[1]),
                 (int) Math.floor(coordinates[2])
-        );
+        };
     }
 
-    public static String string() {
-        return get().toString();
-    }
+    public int[] getOppositeDimensionPosition() {
+        assert hasOppositeDimension();
 
-    public static Coordinates opposite() {
-        double[] coordinates = fetchRawCoordinates();
+        double[] coordinates = positionProvider.getPosition();
+        String oppositeDimension = getOppositeDimension();
 
         double scaleFactor = 0.125; // Overworld -> Nether
-        assert client.level != null;
-        if (getOppositeDimensionId().equals("minecraft:overworld")) {
+        if (oppositeDimension.equals("minecraft:overworld")) {
             scaleFactor = 8; // Nether -> Overworld
         }
-
-        return new Coordinates(
+        return new int[]{
                 (int) Math.floor(coordinates[0] * scaleFactor),
                 (int) Math.floor(coordinates[1]),
                 (int) Math.floor(coordinates[2] * scaleFactor)
-        );
+        };
     }
 
-    public static String getCurrentDimensionId() {
-        assert client.level != null;
-        return client.level.dimensionTypeRegistration().getRegisteredName();
+    public String getDimensionIcon(String dimension) {
+        return icons.getOrDefault(dimension, "");
     }
 
-    @Nullable
-    public static String getOppositeDimensionId() {
-        return oppositeDimensions.getOrDefault(getCurrentDimensionId(), null);
-    }
-
-    public static String getOppositeDimensionIcon() {
-        assert client.level != null;
-        return icons.getOrDefault(getOppositeDimensionId(), null);
-    }
-
-    public int[] toArray() {
-        return new int[]{x, y, z};
-    }
-
-    public String toString() {
-        int[] coords = this.toArray();
+    public static String toString(int[] coordinates) {
         return Strings.join(new String[]{
-                String.valueOf(coords[0]),
-                String.valueOf(coords[1]),
-                String.valueOf(coords[2])
+                String.valueOf(coordinates[0]),
+                String.valueOf(coordinates[1]),
+                String.valueOf(coordinates[2])
         }, " ");
     }
 
-    public String toShortString() {
-        int[] coords = this.toArray();
+    public static String toShortString(int[] coordinates) {
         return Strings.join(new String[]{
-                String.valueOf(coords[0]),
-                String.valueOf(coords[2])
+                String.valueOf(coordinates[0]),
+                String.valueOf(coordinates[2])
         }, " ");
     }
 }

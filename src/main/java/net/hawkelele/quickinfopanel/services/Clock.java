@@ -29,7 +29,8 @@ public class Clock {
     }
 
     public String getDayPeriod() {
-        return getCurrentTime()[0] >= 18 ? "night" : "day";
+        int currentHour = getCurrentTime()[0];
+        return currentHour < 6 || currentHour >= 18 ? "night" : "day";
     }
 
     public String getIconPath() {
