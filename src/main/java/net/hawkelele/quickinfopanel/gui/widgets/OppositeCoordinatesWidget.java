@@ -21,7 +21,7 @@ public class OppositeCoordinatesWidget extends Layout {
     public OppositeCoordinatesWidget() {
         Coordinates coordinates = new Coordinates(new PlayerPositionProvider(), new PlayerDimensionProvider());
 
-        if (!coordinates.hasOppositeDimension()) {
+        if (coordinates.hasNoOppositeDimension()) {
             return;
         }
 

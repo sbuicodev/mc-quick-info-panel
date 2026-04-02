@@ -33,8 +33,8 @@ public class Coordinates {
     }
 
 
-    public boolean hasOppositeDimension() {
-        return oppositeDimensions.containsKey(getCurrentDimension());
+    public boolean hasNoOppositeDimension() {
+        return !oppositeDimensions.containsKey(getCurrentDimension());
     }
 
 
@@ -52,7 +52,10 @@ public class Coordinates {
     }
 
     public int[] getOppositeDimensionPosition() {
-        assert hasOppositeDimension();
+        if (hasNoOppositeDimension()) {
+            // Fallback to origin since it's of no use
+            return new int[]{0, 0, 0};
+        }
 
         double[] coordinates = positionProvider.getPosition();
         String oppositeDimension = getOppositeDimension();

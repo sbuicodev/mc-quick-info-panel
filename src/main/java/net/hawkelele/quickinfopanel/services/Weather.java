@@ -4,6 +4,7 @@ import net.hawkelele.quickinfopanel.providers.WeatherProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Weather {
@@ -23,9 +24,18 @@ public class Weather {
         this.weatherProvider = weatherProvider;
     }
 
-
     public String getCurrent() {
-        return weatherProvider.getWeather();
+        String[] allowed = new String[]{
+                "unknown", "clear", "rain", "thunder", "thunder:snow", "snow"
+        };
+
+        String weather = weatherProvider.getWeather();
+
+        if (weather == null || !Arrays.asList(allowed).contains(weather)) {
+            return "unknown";
+        }
+
+        return weather;
     }
 
     public static Component getIcon(String weather) {
