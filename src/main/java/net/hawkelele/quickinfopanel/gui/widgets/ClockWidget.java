@@ -11,7 +11,7 @@ public class ClockWidget extends Layout {
         net.hawkelele.quickinfopanel.services.Clock clock = new net.hawkelele.quickinfopanel.services.Clock(new InGameTimeProvider());
         this.children(
                 new Text(clock.getCurrentTimeAsClockString()),
-                new Image(clock.icon())
+                new Image(clock.getIconPath())
         ).gap(2);
     }
 }

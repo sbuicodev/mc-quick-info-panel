@@ -14,7 +14,7 @@ public class Clock {
         long ticks = timeProvider.getCurrentTicks();
 
         float hours = (((float) ticks / timeProvider.getTicksPerHour()) + 6) % 24;
-        float minutes = ((float) ticks / timeProvider.getTicksPerHour() / 60) % 60;
+        float minutes = ((float) ticks / ((float)timeProvider.getTicksPerHour() / 60)) % 60;
 
         return new int[]{(int) Math.floor(hours), (int) Math.floor(minutes)};
     }
@@ -22,13 +22,17 @@ public class Clock {
     public String getCurrentTimeAsClockString() {
         int[] time = getCurrentTime();
 
-        return String.format(" %s:%s",
+        return String.format("%s:%s",
                 StringUtils.leftPad(String.valueOf(time[0]), 2, "0"),
                 StringUtils.leftPad(String.valueOf(time[1]), 2, "0")
         );
     }
 
-    public String icon() {
-        return "texture/gui/clock/clock_" + (getCurrentTime()[0] >= 18 ? "night" : "day") + ".png";
+    public String getDayPeriod() {
+        return getCurrentTime()[0] >= 18 ? "night" : "day";
+    }
+
+    public String getIconPath() {
+        return "texture/gui/clock/clock_" + getDayPeriod() + ".png";
     }
 }
