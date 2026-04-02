@@ -3,7 +3,7 @@ package net.hawkelele.quickinfopanel.services;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.lang3.StringUtils;
 
-public class CompassService {
+public class Compass {
     private static final Minecraft client = Minecraft.getInstance();
 
     /**

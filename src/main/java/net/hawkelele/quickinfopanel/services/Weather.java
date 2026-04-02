@@ -10,7 +10,7 @@ import net.minecraft.world.level.biome.Biome;
 
 import java.util.HashMap;
 
-public class WeatherService {
+public class Weather {
     private static final Minecraft client = Minecraft.getInstance();
 
 

@@ -1,22 +1,22 @@
-package net.hawkelele.quickinfopanel.gui.components;
+package net.hawkelele.quickinfopanel.gui.widgets;
 
 import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
 import net.hawkelele.quickinfopanel.gui.core.elements.Text;
-import net.hawkelele.quickinfopanel.services.CoordinatesService;
+import net.hawkelele.quickinfopanel.services.Coordinates;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
 import java.util.Map;
 import static java.util.Map.entry;
 
-public class OppositeCoordinates extends Layout {
+public class OppositeCoordinatesWidget extends Layout {
     private static final Map<String, ChatFormatting> colors = Map.ofEntries(
             entry("minecraft:overworld", ChatFormatting.GREEN),
             entry("minecraft:the_nether", ChatFormatting.GOLD)
     );
 
-    public OppositeCoordinates() {
-        String oppositeDimension = CoordinatesService.getOppositeDimensionId();
+    public OppositeCoordinatesWidget() {
+        String oppositeDimension = Coordinates.getOppositeDimensionId();
 
         if (oppositeDimension == null) {
             return;
@@ -24,8 +24,8 @@ public class OppositeCoordinates extends Layout {
 
 
         this.children(
-                new Text(Component.literal(CoordinatesService.getOppositeDimensionIcon()).withStyle(colors.getOrDefault(CoordinatesService.getOppositeDimensionId(), ChatFormatting.WHITE))),
-                new Text(Component.literal(CoordinatesService.opposite().toShortString()).withStyle(ChatFormatting.GRAY))
+                new Text(Component.literal(Coordinates.getOppositeDimensionIcon()).withStyle(colors.getOrDefault(Coordinates.getOppositeDimensionId(), ChatFormatting.WHITE))),
+                new Text(Component.literal(Coordinates.opposite().toShortString()).withStyle(ChatFormatting.GRAY))
         ).gap(2);
     }
 }

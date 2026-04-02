@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class CoordinatesService {
+public class Coordinates {
     protected static final Minecraft client = Minecraft.getInstance();
 
     public final int x;
@@ -26,7 +26,7 @@ public class CoordinatesService {
     );
 
 
-    protected CoordinatesService(int x, int y, int z) {
+    protected Coordinates(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -41,9 +41,9 @@ public class CoordinatesService {
         };
     }
 
-    public static CoordinatesService get() {
+    public static Coordinates get() {
         double[] coordinates = fetchRawCoordinates();
-        return new CoordinatesService(
+        return new Coordinates(
                 (int) Math.floor(coordinates[0]),
                 (int) Math.floor(coordinates[1]),
                 (int) Math.floor(coordinates[2])
@@ -54,7 +54,7 @@ public class CoordinatesService {
         return get().toString();
     }
 
-    public static CoordinatesService opposite() {
+    public static Coordinates opposite() {
         double[] coordinates = fetchRawCoordinates();
 
         double scaleFactor = 0.125; // Overworld -> Nether
@@ -63,7 +63,7 @@ public class CoordinatesService {
             scaleFactor = 8; // Nether -> Overworld
         }
 
-        return new CoordinatesService(
+        return new Coordinates(
                 (int) Math.floor(coordinates[0] * scaleFactor),
                 (int) Math.floor(coordinates[1]),
                 (int) Math.floor(coordinates[2] * scaleFactor)
