@@ -49,6 +49,7 @@ jobs:
         with:
           name: Version ${{ github.ref_name }}
           body_path: CHANGELOG.md
+          files: build/libs/quick-info-panel-${{ github.ref_name }}.jar
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
