@@ -49,12 +49,21 @@ jobs:
         with:
           name: Artifacts
           path: artifacts
+      - name: Locate jar
+        id: jar
+        run: |
+          jar_path="$(find artifacts -type f -name '*.jar' ! -name '*-sources.jar' -print -quit)"
+          if [ -z "$jar_path" ]; then
+            echo "No jar found under artifacts/" >&2
+            exit 1
+          fi
+          echo "path=$jar_path" >> "$GITHUB_OUTPUT"
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           name: Version ${{ github.ref_name }}
           body_path: CHANGELOG.md
-          files: artifacts/*.jar
+          files: ${{ steps.jar.outputs.path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Load game versions
@@ -79,4 +88,4 @@ jobs:
           changelog: ${{ steps.load-changelog.outputs.contents }}
           loaders: fabric
           game-versions: ${{ steps.load-versions.outputs.contents }}
-          files: artifacts/*.jar
+          files: ${{ steps.jar.outputs.path }}
