@@ -48,12 +48,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Artifacts
+          path: artifacts
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           name: Version ${{ github.ref_name }}
           body_path: CHANGELOG.md
-          files: Artifacts/*.jar
+          files: artifacts/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Load game versions
@@ -78,4 +79,4 @@ jobs:
           changelog: ${{ steps.load-changelog.outputs.contents }}
           loaders: fabric
           game-versions: ${{ steps.load-versions.outputs.contents }}
-          files: Artifacts/*.jar
+          files: artifacts/*.jar
