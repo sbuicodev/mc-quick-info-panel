@@ -1,1 +1,1 @@
-- Updated to Minecraft 26.1.1
+- Now the mod hides the panel when any kind of server/game message is received

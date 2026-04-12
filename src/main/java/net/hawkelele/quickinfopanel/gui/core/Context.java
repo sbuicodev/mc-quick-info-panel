@@ -3,14 +3,14 @@ package net.hawkelele.quickinfopanel.gui.core;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class Context {
-    private static GuiGraphicsExtractor context;
+    private static GuiGraphicsExtractor graphics;
 
     public static void set(GuiGraphicsExtractor context) {
-        Context.context = context;
+        Context.graphics = context;
     }
 
     public static GuiGraphicsExtractor get() {
-        return context;
+        return graphics;
     }
 
 }
