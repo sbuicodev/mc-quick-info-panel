@@ -1,4 +1,4 @@
-package net.hawkelele.quickinfopanel.events.command;
+package net.hawkelele.quickinfopanel.commands;
 
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;

@@ -1,4 +1,4 @@
-package net.hawkelele.quickinfopanel.events.command;
+package net.hawkelele.quickinfopanel.commands;
 
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;

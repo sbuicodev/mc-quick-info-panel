@@ -1,7 +1,7 @@
 package net.hawkelele.quickinfopanel.registry;
 
 
-import net.hawkelele.quickinfopanel.events.command.Command;
+import net.hawkelele.quickinfopanel.commands.Command;
 
 public class CommandRegistry {
 
