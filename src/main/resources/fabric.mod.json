@@ -21,9 +21,6 @@
       "net.hawkelele.quickinfopanel.config.modmenu.ModMenuIntegration"
     ]
   },
-  "mixins": [
-    "quick-info-panel.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",

@@ -1,4 +1,4 @@
-package net.hawkelele.quickinfopanel.events.command;
+package net.hawkelele.quickinfopanel.commands;
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.Event;

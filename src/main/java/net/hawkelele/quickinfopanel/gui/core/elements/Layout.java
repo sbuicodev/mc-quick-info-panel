@@ -1,8 +1,12 @@
 package net.hawkelele.quickinfopanel.gui.core.elements;
 
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.hawkelele.quickinfopanel.gui.core.properties.Alignment;
 import net.hawkelele.quickinfopanel.gui.core.properties.Justifying;
 import net.hawkelele.quickinfopanel.gui.core.properties.Direction;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,5 +152,4 @@ public class Layout extends Element {
     public void render() {
         this.render(0, 0);
     }
-
 }

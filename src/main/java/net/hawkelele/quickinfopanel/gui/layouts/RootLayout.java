@@ -1,7 +1,8 @@
-package net.hawkelele.quickinfopanel.gui;
+package net.hawkelele.quickinfopanel.gui.layouts;
 
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
+import net.hawkelele.quickinfopanel.providers.client.OverlayMessageStatusProvider;
 import net.hawkelele.quickinfopanel.registry.LayoutRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -16,6 +17,7 @@ public class RootLayout extends Layout {
                 || client.player == null
                 || client.level == null
                 || client.debugEntries.isOverlayVisible()
+                || OverlayMessageStatusProvider.isDisplaying()
                 || !Config.getInstance().settings().displayMainPanel;
     }
 

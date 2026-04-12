@@ -1,4 +1,4 @@
-package net.hawkelele.quickinfopanel.events.keybinds;
+package net.hawkelele.quickinfopanel.input;
 
 import net.hawkelele.quickinfopanel.QuickInfoPanel;
 import net.hawkelele.quickinfopanel.events.EventHandler;
@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.event.Event;
 
-public class SecondaryToggleKeybindPressed extends EventHandler<ClientTickEvents.EndTick> {
+public class SecondaryPanelToggleKeyPress extends EventHandler<ClientTickEvents.EndTick> {
     private static final KeyMapping keyBinding = KeyMappingHelper.registerKeyMapping(new KeyMapping("key." + QuickInfoPanel.MOD_ID + ".togglealtinfo", // The translation key of the keybinding's name
             InputConstants.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
             GLFW.GLFW_KEY_N, // The keycode of the key
