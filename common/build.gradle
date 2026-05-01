@@ -17,6 +17,8 @@ dependencies {
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.5.3'
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.5.3'
+
+    implementation 'com.google.code.gson:gson:2.14.0'
 }
 
 configurations {
@@ -29,6 +31,13 @@ configurations {
         canBeConsumed = true
     }
 }
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.google.code.gson:gson:2.14.0'
+    }
+}
+
 
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile

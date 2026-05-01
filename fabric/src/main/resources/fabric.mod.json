@@ -16,7 +16,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-          "net.hawkelele.quickinfopanel.ExampleMod"
+            "net.hawkelele.quickinfopanel.QuickInfoPanel"
         ]
     },
     "mixins": [
