@@ -36,5 +36,6 @@ public class Text extends Element {
         GuiGraphicsExtractor context = Graphics.get();
         Font font = Minecraft.getInstance().font;
         context.text(font, text, x, y, CommonColors.WHITE);
+        renderDebugBounds(x, y, 0xFF44FF44);
     }
 }

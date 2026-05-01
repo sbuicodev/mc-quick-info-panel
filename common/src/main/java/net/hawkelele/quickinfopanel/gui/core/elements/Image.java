@@ -37,5 +37,6 @@ public class Image extends Element {
         width = font.lineHeight;
         height = font.lineHeight;
         context.blit(GUI_TEXTURED, Identifier.fromNamespaceAndPath(Constants.MOD_ID, path), x, y, 0, 0, width, height, width, height);
+        renderDebugBounds(x, y, 0xFF4488FF);
     }
 }

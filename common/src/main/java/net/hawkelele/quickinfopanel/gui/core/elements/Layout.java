@@ -126,7 +126,6 @@ public class Layout extends Element {
                 currentX = (getWidth() / 2) - (child.getWidth() / 2);
             }
 
-
             child.render(currentX, currentY);
 
             if (direction == Direction.HORIZONTAL) {
@@ -143,6 +142,8 @@ public class Layout extends Element {
                 }
             }
         }
+
+        renderDebugBounds(x, y, 0xFFFF4444);
     }
 
     public void render() {

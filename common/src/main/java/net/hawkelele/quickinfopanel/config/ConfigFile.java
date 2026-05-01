@@ -39,6 +39,7 @@ public class ConfigFile {
         reader.close();
 
         this.config = config;
+        Config.INSTANCE = config;
         return this.config;
     }
 

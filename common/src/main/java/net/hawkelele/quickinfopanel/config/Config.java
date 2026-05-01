@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Config {
+    public static Config INSTANCE = new Config();
+
     public Map<String, Boolean> panels = new HashMap<String, Boolean>() {{
         put("coordinates", true);
         put("compass", true);
@@ -14,4 +16,6 @@ public class Config {
     }};
 
     public String layout = "default";
+
+    public boolean debugBounds = false;
 }
