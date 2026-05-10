@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.hawkelele.quickinfopanel.Constants;
 import net.hawkelele.quickinfopanel.gui.Graphics;
 import net.hawkelele.quickinfopanel.gui.core.elements.Element;
-import net.hawkelele.quickinfopanel.gui.core.elements.Text;
 import net.hawkelele.quickinfopanel.gui.layouts.RootLayout;
 import net.hawkelele.quickinfopanel.platform.services.IHudHelper;
 import net.minecraft.client.DeltaTracker;

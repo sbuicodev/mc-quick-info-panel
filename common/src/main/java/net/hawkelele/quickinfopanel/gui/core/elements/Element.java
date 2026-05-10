@@ -23,12 +23,13 @@ public abstract class Element {
     }
 
     abstract int getWidth();
+
     abstract int getHeight();
 
     public abstract void render(int x, int y);
 
     protected void renderDebugBounds(int x, int y, int color) {
-        if (!Config.INSTANCE.debugBounds) return;
+        if (!Config.read().debugBounds) return;
 
         GuiGraphicsExtractor context = Graphics.get();
         int w = getWidth();

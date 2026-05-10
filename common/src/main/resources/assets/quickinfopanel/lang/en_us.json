@@ -1,6 +1,6 @@
 {
   "title.quickinfopanel.config": "Quick Info Panel",
-  "key.category.quickinfopanel.main": "Quick Info Panel",
+  "key.category.quickinfopanel.name": "Quick Info Panel",
   "key.quickinfopanel.toggle": "Toggle Quick Info Panel (QIP)",
   "key.quickinfopanel.togglealtinfo": "Toggle extra info",
   "modmenu.quickinfopanel.categories.general": "General",

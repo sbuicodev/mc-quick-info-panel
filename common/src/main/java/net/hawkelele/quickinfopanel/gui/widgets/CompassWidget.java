@@ -1,5 +1,6 @@
 package net.hawkelele.quickinfopanel.gui.widgets;
 
+import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.core.elements.Image;
 import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
 import net.hawkelele.quickinfopanel.gui.core.elements.Text;
@@ -7,6 +8,11 @@ import net.hawkelele.quickinfopanel.providers.client.PlayerDirectionProvider;
 import net.hawkelele.quickinfopanel.services.Compass;
 
 public class CompassWidget extends Layout {
+    @Override
+    public boolean shouldBeHidden() {
+        return !Config.read().panels.getOrDefault("compass", true);
+    }
+
     public CompassWidget() {
         Compass compass = new Compass(new PlayerDirectionProvider());
         this.children(

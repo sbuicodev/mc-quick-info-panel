@@ -1,5 +1,6 @@
 package net.hawkelele.quickinfopanel.gui.widgets;
 
+import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
 import net.hawkelele.quickinfopanel.gui.core.elements.Text;
 import net.hawkelele.quickinfopanel.providers.client.PlayerDimensionProvider;
@@ -13,6 +14,11 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class OppositeCoordinatesWidget extends Layout {
+    @Override
+    public boolean shouldBeHidden() {
+        return !Config.read().panels.getOrDefault("opposite", true);
+    }
+
     private static final Map<String, ChatFormatting> colors = Map.ofEntries(
             entry("minecraft:overworld", ChatFormatting.GREEN),
             entry("minecraft:the_nether", ChatFormatting.GOLD)
