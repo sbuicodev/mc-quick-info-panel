@@ -2,10 +2,7 @@ package net.hawkelele.quickinfopanel.platform;
 
 import net.hawkelele.quickinfopanel.Constants;
 import net.hawkelele.quickinfopanel.gui.Graphics;
-import net.hawkelele.quickinfopanel.gui.core.elements.Text;
-import net.hawkelele.quickinfopanel.gui.layouts.DefaultLayout;
 import net.hawkelele.quickinfopanel.gui.layouts.RootLayout;
-import net.hawkelele.quickinfopanel.gui.panels.MainPanel;
 import net.hawkelele.quickinfopanel.platform.services.IHudHelper;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.neoforged.api.distmarker.Dist;

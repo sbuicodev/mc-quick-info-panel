@@ -3,13 +3,14 @@ package net.hawkelele.quickinfopanel.input;
 import net.hawkelele.quickinfopanel.Constants;
 import net.hawkelele.quickinfopanel.handlers.IClientEventHandler;
 import net.hawkelele.quickinfopanel.handlers.ToggleLayoutDebugHandler;
+import net.hawkelele.quickinfopanel.handlers.ToggleModHandler;
 import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 
-public class ToggleLayoutDebugKeybind implements Keybind {
+public class ToggleModKeybind implements Keybind {
     private final KeyMapping keyMapping = new KeyMapping(
-            "key." + Constants.MOD_ID + ".debug",
-            GLFW.GLFW_KEY_COMMA,
+            "key." + Constants.MOD_ID + ".toggle",
+            GLFW.GLFW_KEY_B,
             Constants.KEYMAPPING_CATEGORY
     );
 
@@ -20,6 +21,6 @@ public class ToggleLayoutDebugKeybind implements Keybind {
 
     @Override
     public IClientEventHandler getHandler() {
-        return new ToggleLayoutDebugHandler();
+        return new ToggleModHandler();
     }
 }

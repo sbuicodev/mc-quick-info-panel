@@ -20,6 +20,11 @@ public class Config {
      * ================ PROPERTIES ================
      */
 
+    public boolean displayMainPanel = true;
+    public boolean displaySecondaryPanel = true;
+    public String layout = "default";
+
+
     public Map<String, Boolean> panels = new HashMap<String, Boolean>() {{
         put("coordinates", true);
         put("compass", true);
@@ -29,7 +34,6 @@ public class Config {
         put("weather", true);
     }};
 
-    public String layout = "default";
 
     public boolean debugBounds = false;
 
@@ -93,6 +97,10 @@ public class Config {
         }
 
         save(change.apply(latestConfig));
+    }
+
+    public static void write(Config config) throws IOException {
+        Config.write(_ -> config);
     }
 
     public static void save(Config config) throws IOException {

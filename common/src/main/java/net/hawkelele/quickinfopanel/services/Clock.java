@@ -1,7 +1,6 @@
 package net.hawkelele.quickinfopanel.services;
 
 import net.hawkelele.quickinfopanel.providers.TimeProvider;
-import org.apache.commons.lang3.StringUtils;
 
 public class Clock {
     private final TimeProvider timeProvider;
@@ -22,10 +21,7 @@ public class Clock {
     public String getCurrentTimeAsClockString() {
         int[] time = getCurrentTime();
 
-        return String.format("%s:%s",
-                StringUtils.leftPad(String.valueOf(time[0]), 2, "0"),
-                StringUtils.leftPad(String.valueOf(time[1]), 2, "0")
-        );
+        return String.format("%02d:%02d", time[0], time[1]);
     }
 
     public String getDayPeriod() {

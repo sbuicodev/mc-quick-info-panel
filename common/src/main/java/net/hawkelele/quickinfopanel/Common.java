@@ -1,17 +1,7 @@
 package net.hawkelele.quickinfopanel;
 
-import com.mojang.blaze3d.platform.InputConstants;
-import net.hawkelele.quickinfopanel.config.Config;
-import net.hawkelele.quickinfopanel.handlers.ToggleLayoutDebugHandler;
 import net.hawkelele.quickinfopanel.platform.Services;
 import net.hawkelele.quickinfopanel.registry.KeybindsRegistry;
-import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
-
-import java.io.IOException;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
 // import and access the vanilla codebase, libraries used by vanilla, and optionally third party libraries that provide
