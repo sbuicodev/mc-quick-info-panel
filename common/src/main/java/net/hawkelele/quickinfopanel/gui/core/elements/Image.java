@@ -11,8 +11,10 @@ import static net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED;
 
 
 public class Image extends Element {
-    protected int width;
-    protected int height;
+    Font font = Minecraft.getInstance().font;
+
+    protected int width = font.lineHeight;
+    protected int height = font.lineHeight;
 
     protected String path;
 
@@ -33,9 +35,6 @@ public class Image extends Element {
     @Override
     public void render(int x, int y) {
         GuiGraphicsExtractor context = Graphics.get();
-        Font font = Minecraft.getInstance().font;
-        width = font.lineHeight;
-        height = font.lineHeight;
         context.blit(GUI_TEXTURED, Identifier.fromNamespaceAndPath(Constants.MOD_ID, path), x, y, 0, 0, width, height, width, height);
         renderDebugBounds(x, y, 0xFF4488FF);
     }

@@ -62,27 +62,27 @@ public class Layout extends Element {
 
     @Override
     public int getWidth() {
-        return Math.max(getContentWidth(), preferredWidth);
+        return !shouldBeHidden() ? Math.max(getContentWidth(), preferredWidth) : 0;
     }
 
     @Override
     public int getHeight() {
-        return Math.max(getContentHeight(), preferredHeight);
+        return !shouldBeHidden() ? Math.max(getContentHeight(), preferredHeight) : 0;
     }
 
     private int getContentWidth() {
         if (direction == Direction.HORIZONTAL) {
-            return children.stream().mapToInt(Element::getWidth).sum() + (gap * (children.size() - 1));
+            return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getWidth).sum() + (gap * (children.size() - 1));
         }
-        return children.stream().mapToInt(Element::getWidth).max().orElse(0);
+        return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getWidth).max().orElse(0);
     }
 
 
     private int getContentHeight() {
         if (direction == Direction.HORIZONTAL) {
-            return children.stream().mapToInt(Element::getHeight).max().orElse(0);
+            return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getHeight).max().orElse(0);
         }
-        return children.stream().mapToInt(Element::getHeight).sum() + (gap * (children.size() - 1));
+        return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getHeight).sum() + (gap * (children.size() - 1));
     }
 
     public Layout reverse() {
