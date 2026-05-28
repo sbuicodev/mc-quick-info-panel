@@ -2,10 +2,8 @@ package net.hawkelele.quickinfopanel.platform;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
-import net.hawkelele.quickinfopanel.handlers.IClientEventHandler;
 import net.hawkelele.quickinfopanel.input.Keybind;
 import net.hawkelele.quickinfopanel.platform.services.IKeybindsHelper;
-import net.minecraft.client.KeyMapping;
 
 public class FabricKeybindsHelper implements IKeybindsHelper {
     @Override
