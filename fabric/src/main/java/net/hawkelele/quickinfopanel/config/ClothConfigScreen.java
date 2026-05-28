@@ -4,6 +4,7 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.hawkelele.quickinfopanel.Constants;
+import net.hawkelele.quickinfopanel.platform.Services;
 import net.hawkelele.quickinfopanel.registry.LayoutRegistry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -58,6 +59,14 @@ public class ClothConfigScreen {
                 .setSaveConsumer(newValue -> config.layout = (newValue))
                 .build()
         );
+
+        if (Services.PLATFORM.isDevelopmentEnvironment()) {
+            general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("settings." + Constants.MOD_ID + ".debug"), config.debugBounds)
+                    .setDefaultValue(false)
+                    .setTooltip(Component.literal("Render element bounds for debugging"))
+                    .setSaveConsumer(newValue -> config.debugBounds = newValue)
+                    .build());
+        }
 
         builder.setSavingRunnable(() -> {
             try {

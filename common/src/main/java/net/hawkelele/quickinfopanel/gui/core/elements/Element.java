@@ -2,6 +2,7 @@ package net.hawkelele.quickinfopanel.gui.core.elements;
 
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.gui.Graphics;
+import net.hawkelele.quickinfopanel.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 
@@ -29,7 +30,7 @@ public abstract class Element {
     public abstract void render(int x, int y);
 
     protected void renderDebugBounds(int x, int y, int color) {
-        if (!Config.read().debugBounds) return;
+        if (!Services.PLATFORM.isDevelopmentEnvironment() || !Config.read().debugBounds) return;
 
         GuiGraphicsExtractor context = Graphics.get();
         int w = getWidth();
