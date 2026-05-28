@@ -4,6 +4,7 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.hawkelele.quickinfopanel.Constants;
+import net.hawkelele.quickinfopanel.config.LayoutPreset;
 import net.hawkelele.quickinfopanel.platform.Services;
 import net.hawkelele.quickinfopanel.registry.LayoutRegistry;
 import net.minecraft.client.gui.screens.Screen;
@@ -53,9 +54,13 @@ public class ClothConfigScreen {
                 .startSelector(
                         Component.translatable("position." + Constants.MOD_ID + ".label"),
                         LayoutRegistry.list(),
-                        config.layout != null ? config.layout : "default"
+                        config.layout != null ? config.layout : LayoutPreset.DEFAULT.id()
                 )
-                .setDefaultValue("default")
+                .setDefaultValue(LayoutPreset.DEFAULT.id())
+                .setTooltip(
+                        Component.translatable("position." + Constants.MOD_ID + ".description"),
+                        Component.translatable("position." + Constants.MOD_ID + ".warning")
+                )
                 .setSaveConsumer(newValue -> config.layout = (newValue))
                 .build()
         );

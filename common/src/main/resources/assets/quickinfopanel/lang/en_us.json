@@ -14,6 +14,8 @@
   "position.quickinfopanel.top-right": "Top Right",
   "position.quickinfopanel.bottom-left": "Bottom Left",
   "position.quickinfopanel.bottom-right": "Bottom Right",
+  "position.quickinfopanel.description": "Choose where the panel stack is anchored on screen.",
+  "position.quickinfopanel.warning": "Bottom layouts may overlap the HUD on small windows or high GUI scale.",
   "settings.quickinfopanel.panels.biome": "Biome",
   "settings.quickinfopanel.panels.biome.description": "Display the current biome",
   "settings.quickinfopanel.panels.compass": "Compass",
