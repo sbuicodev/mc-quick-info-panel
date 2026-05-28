@@ -1,6 +1,7 @@
 package net.hawkelele.quickinfopanel;
 
 import net.hawkelele.quickinfopanel.platform.Services;
+import net.hawkelele.quickinfopanel.registry.CommandsRegistry;
 import net.hawkelele.quickinfopanel.registry.KeybindsRegistry;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
@@ -16,6 +17,7 @@ public class Common {
         Services.HUD.registerHudRenderCallback();
 
         KeybindsRegistry.registerKeybinds();
+        CommandsRegistry.registerCommands();
 
         // It is common for all supported loaders to provide a similar feature that can not be used directly in the
         // common code. A popular way to get around this is using Java's built-in service loader feature to create

@@ -3,6 +3,7 @@ package net.hawkelele.quickinfopanel.platform;
 import net.hawkelele.quickinfopanel.Constants;
 import net.hawkelele.quickinfopanel.platform.services.IConfigHelper;
 import net.hawkelele.quickinfopanel.platform.services.IConfigStore;
+import net.hawkelele.quickinfopanel.platform.services.ICommandsHelper;
 import net.hawkelele.quickinfopanel.platform.services.IHudHelper;
 import net.hawkelele.quickinfopanel.platform.services.IKeybindsHelper;
 import net.hawkelele.quickinfopanel.platform.services.IPlatformHelper;
@@ -13,6 +14,7 @@ public class Services {
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
     public static final IHudHelper HUD = load(IHudHelper.class);
     public static final IKeybindsHelper KEYBINDS = load(IKeybindsHelper.class);
+    public static final ICommandsHelper COMMANDS = load(ICommandsHelper.class);
     public static final IConfigHelper CONFIG_HELPER = load(IConfigHelper.class);
     public static final IConfigStore CONFIG = load(IConfigStore.class);
 
