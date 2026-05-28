@@ -1,7 +1,7 @@
 package net.hawkelele.quickinfopanel.platform;
 
-import net.hawkelele.quickinfopanel.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import net.hawkelele.quickinfopanel.platform.services.IPlatformHelper;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 

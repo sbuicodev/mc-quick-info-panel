@@ -1,7 +1,6 @@
 package net.hawkelele.quickinfopanel.services;
 
 import net.hawkelele.quickinfopanel.providers.DirectionProvider;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 
@@ -27,9 +26,7 @@ public class Compass {
             return "?";
         }
 
-        return String.valueOf(StringUtils
-                .capitalize(direction)
-                .charAt(0));
+        return String.valueOf(Character.toUpperCase(direction.charAt(0)));
     }
 
     public String getIconPath() {
