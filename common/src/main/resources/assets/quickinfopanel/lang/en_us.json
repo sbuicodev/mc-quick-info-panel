@@ -1,8 +1,9 @@
 {
   "title.quickinfopanel.config": "Quick Info Panel",
   "key.category.quickinfopanel.name": "Quick Info Panel",
+  "key.quickinfopanel.debug": "Toggle debug overlay",
   "key.quickinfopanel.toggle": "Toggle Quick Info Panel (QIP)",
-  "key.quickinfopanel.togglealtinfo": "Toggle extra info",
+  "key.quickinfopanel.toggle-alt-info": "Toggle extra info",
   "modmenu.quickinfopanel.categories.general": "General",
   "settings.quickinfopanel.enable": "Enable Quick Info Panel",
   "settings.quickinfopanel.enable.description": "Display quick access info about the player's coordinates and time above the inventory",
@@ -14,6 +15,13 @@
   "position.quickinfopanel.top-right": "Top Right",
   "position.quickinfopanel.bottom-left": "Bottom Left",
   "position.quickinfopanel.bottom-right": "Bottom Right",
+  "settings.quickinfopanel.panels.biome": "Biome",
+  "settings.quickinfopanel.panels.biome.description": "Display the current biome",
+  "settings.quickinfopanel.panels.time": "Time",
+  "settings.quickinfopanel.panels.time.description": "Display the current time",
+  "settings.quickinfopanel.panels.coordinates": "Coordinates",
+  "settings.quickinfopanel.panels.coordinates.description": "Display the current coordinates",
+
 
   "biomes.quickinfopanel.minecraft:the_void": "The Void",
   "biomes.quickinfopanel.minecraft:plains": "Plains",
