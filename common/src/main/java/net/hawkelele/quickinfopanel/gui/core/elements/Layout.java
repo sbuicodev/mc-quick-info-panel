@@ -24,6 +24,10 @@ public class Layout extends Element {
     protected int gap = 0;
     protected boolean reverse = false;
 
+    private List<Element> visibleChildren() {
+        return children.stream().filter(e -> !e.shouldBeHidden()).toList();
+    }
+
     public Layout direction(Direction direction) {
         this.direction = direction;
         return this;
@@ -71,18 +75,20 @@ public class Layout extends Element {
     }
 
     private int getContentWidth() {
+        List<Element> visibleChildren = visibleChildren();
         if (direction == Direction.HORIZONTAL) {
-            return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getWidth).sum() + (gap * (children.size() - 1));
+            return visibleChildren.stream().mapToInt(Element::getWidth).sum() + (gap * Math.max(visibleChildren.size() - 1, 0));
         }
-        return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getWidth).max().orElse(0);
+        return visibleChildren.stream().mapToInt(Element::getWidth).max().orElse(0);
     }
 
 
     private int getContentHeight() {
+        List<Element> visibleChildren = visibleChildren();
         if (direction == Direction.HORIZONTAL) {
-            return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getHeight).max().orElse(0);
+            return visibleChildren.stream().mapToInt(Element::getHeight).max().orElse(0);
         }
-        return children.stream().filter(e -> !e.shouldBeHidden()).mapToInt(Element::getHeight).sum() + (gap * (children.size() - 1));
+        return visibleChildren.stream().mapToInt(Element::getHeight).sum() + (gap * Math.max(visibleChildren.size() - 1, 0));
     }
 
     public Layout reverse() {
@@ -101,10 +107,11 @@ public class Layout extends Element {
             if (justifying == Justifying.END) currentX = getWidth() - getContentWidth();
             if (justifying == Justifying.CENTER) currentX = (getWidth() / 2) - (getContentWidth() / 2);
             if (justifying == Justifying.SPACE_BETWEEN) {
-                int blankSpace = getWidth() - children.stream().mapToInt(Element::getWidth).sum();
+                List<Element> visibleChildren = visibleChildren();
+                int blankSpace = getWidth() - visibleChildren.stream().mapToInt(Element::getWidth).sum();
 
                 if (blankSpace > currentGap) {
-                    currentGap = children.size() > 1 ? blankSpace / (children.size() - 1) : currentGap;
+                    currentGap = visibleChildren.size() > 1 ? blankSpace / (visibleChildren.size() - 1) : currentGap;
                 }
             }
 
@@ -113,15 +120,16 @@ public class Layout extends Element {
             if (justifying == Justifying.CENTER) currentY = (getHeight() / 2) - (getContentHeight() / 2);
             if (alignment == Alignment.CENTER) currentX = (getWidth() / 2) - (getContentWidth() / 2);
             if (justifying == Justifying.SPACE_BETWEEN) {
-                int blankSpace = getHeight() - children.stream().mapToInt(Element::getHeight).sum();
+                List<Element> visibleChildren = visibleChildren();
+                int blankSpace = getHeight() - visibleChildren.stream().mapToInt(Element::getHeight).sum();
 
                 if (blankSpace > currentGap) {
-                    currentGap = children.size() > 1 ? blankSpace / (children.size() - 1) : currentGap;
+                    currentGap = visibleChildren.size() > 1 ? blankSpace / (visibleChildren.size() - 1) : currentGap;
                 }
             }
         }
 
-        for (Element child : children) {
+        for (Element child : visibleChildren()) {
             if (alignment == Alignment.CENTER) {
                 currentX = (getWidth() / 2) - (child.getWidth() / 2);
             }
