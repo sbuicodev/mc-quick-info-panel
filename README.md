@@ -30,3 +30,11 @@ For example if you wanted to remove support for `forge` you would follow the fol
 
 1. Delete the subproject folder. For example, delete `MultiLoader-Template/forge`.
 2. Remove the project from `settings.gradle`. For example, remove `include("forge")`. 
+
+## Releases
+This repository uses a `release-it` flow:
+
+1. Update `gradle.properties` and `CHANGELOG.md`.
+2. Run `npm run release`.
+3. `release-it` updates the changelog entry, builds the loader jars, creates the git commit and tag, and publishes the GitHub Release.
+4. The `after:release` hook publishes the same release to Modrinth.

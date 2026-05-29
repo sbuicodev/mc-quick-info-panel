@@ -1,0 +1,16 @@
+{
+  "name": "mc-quick-info-panel-release-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "modrinth:publish": "tsx scripts/publish-modrinth.ts",
+    "release": "release-it"
+  },
+  "devDependencies": {
+    "@release-it/keep-a-changelog": "^7.0.1",
+    "@types/node": "22.15.30",
+    "release-it": "^20.0.1",
+    "tsx": "4.20.3",
+    "typescript": "5.8.3"
+  }
+}
