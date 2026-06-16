@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
+    "MixinGui",
     "MixinMinecraft"
   ],
   "server": [],
@@ -12,4 +13,3 @@
     "defaultRequire": 1
   }
 }
-
