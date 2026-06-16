@@ -10,7 +10,7 @@ import net.hawkelele.quickinfopanel.services.Weather;
 public class WeatherWidget extends Layout {
     @Override
     public boolean shouldBeHidden() {
-        return !Config.read().panels.getOrDefault("weather", true);
+        return !Config.isPanelEnabled("weather");
     }
 
     public WeatherWidget() {

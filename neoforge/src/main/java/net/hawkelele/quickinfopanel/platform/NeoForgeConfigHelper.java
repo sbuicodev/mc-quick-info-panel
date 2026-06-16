@@ -68,26 +68,35 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
                     .translation("position." + Constants.MOD_ID + ".label")
                     .defineEnum("layout", NeoForgeLayoutPreset.DEFAULT);
 
-            builder.push("panels");
-            coordinates = builder.comment("Display the coordinates")
-                    .translation("settings." + Constants.MOD_ID + ".panels.coordinates")
-                    .define("coordinates", true);
-            compass = builder.comment("Display the compass")
-                    .translation("settings." + Constants.MOD_ID + ".panels.compass")
-                    .define("compass", true);
-            clock = builder.comment("Display the current time")
-                    .translation("settings." + Constants.MOD_ID + ".panels.time")
-                    .define("clock", true);
-            opposite = builder.comment("Display opposite coordinates")
-                    .translation("settings." + Constants.MOD_ID + ".panels.opposite")
-                    .define("opposite", true);
-            biome = builder.comment("Display the current biome")
-                    .translation("settings." + Constants.MOD_ID + ".panels.biome")
-                    .define("biome", true);
-            weather = builder.comment("Display the weather")
-                    .translation("settings." + Constants.MOD_ID + ".panels.weather")
-                    .define("weather", true);
-            builder.pop();
+            if (Config.isSingleElementHidingEnabled()) {
+                builder.push("panels");
+                coordinates = builder.comment("Display the coordinates")
+                        .translation("settings." + Constants.MOD_ID + ".panels.coordinates")
+                        .define("coordinates", true);
+                compass = builder.comment("Display the compass")
+                        .translation("settings." + Constants.MOD_ID + ".panels.compass")
+                        .define("compass", true);
+                clock = builder.comment("Display the current time")
+                        .translation("settings." + Constants.MOD_ID + ".panels.time")
+                        .define("clock", true);
+                opposite = builder.comment("Display opposite coordinates")
+                        .translation("settings." + Constants.MOD_ID + ".panels.opposite")
+                        .define("opposite", true);
+                biome = builder.comment("Display the current biome")
+                        .translation("settings." + Constants.MOD_ID + ".panels.biome")
+                        .define("biome", true);
+                weather = builder.comment("Display the weather")
+                        .translation("settings." + Constants.MOD_ID + ".panels.weather")
+                        .define("weather", true);
+                builder.pop();
+            } else {
+                coordinates = null;
+                compass = null;
+                clock = null;
+                opposite = null;
+                biome = null;
+                weather = null;
+            }
 
             if (Services.PLATFORM.isDevelopmentEnvironment()) {
                 debugBounds = builder.comment("Render debug bounds")
@@ -104,12 +113,14 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
             config.displaySecondaryPanel = displaySecondaryPanel.get();
             config.layout = layout.get().preset.id();
             config.debugBounds = debugBounds.get();
-            config.panels.put("coordinates", coordinates.get());
-            config.panels.put("compass", compass.get());
-            config.panels.put("clock", clock.get());
-            config.panels.put("opposite", opposite.get());
-            config.panels.put("biome", biome.get());
-            config.panels.put("weather", weather.get());
+            if (Config.isSingleElementHidingEnabled()) {
+                config.panels.put("coordinates", coordinates.get());
+                config.panels.put("compass", compass.get());
+                config.panels.put("clock", clock.get());
+                config.panels.put("opposite", opposite.get());
+                config.panels.put("biome", biome.get());
+                config.panels.put("weather", weather.get());
+            }
             return config;
         }
 
@@ -118,12 +129,14 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
             displaySecondaryPanel.set(config.displaySecondaryPanel);
             layout.set(NeoForgeLayoutPreset.fromPreset(LayoutPreset.fromId(config.layout)));
             debugBounds.set(config.debugBounds);
-            coordinates.set(config.panels.getOrDefault("coordinates", true));
-            compass.set(config.panels.getOrDefault("compass", true));
-            clock.set(config.panels.getOrDefault("clock", true));
-            opposite.set(config.panels.getOrDefault("opposite", true));
-            biome.set(config.panels.getOrDefault("biome", true));
-            weather.set(config.panels.getOrDefault("weather", true));
+            if (Config.isSingleElementHidingEnabled()) {
+                coordinates.set(config.panels.getOrDefault("coordinates", true));
+                compass.set(config.panels.getOrDefault("compass", true));
+                clock.set(config.panels.getOrDefault("clock", true));
+                opposite.set(config.panels.getOrDefault("opposite", true));
+                biome.set(config.panels.getOrDefault("biome", true));
+                weather.set(config.panels.getOrDefault("weather", true));
+            }
         }
     }
 

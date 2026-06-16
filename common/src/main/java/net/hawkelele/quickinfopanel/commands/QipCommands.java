@@ -24,18 +24,19 @@ public final class QipCommands {
     }
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context, Commands.CommandSelection selection) {
+        var toggle = Commands.literal("toggle")
+                .then(Commands.literal("main").executes(ctx -> toggle(ctx, ToggleTarget.MAIN)))
+                .then(Commands.literal("secondary").executes(ctx -> toggle(ctx, ToggleTarget.SECONDARY)))
+                .then(Commands.literal("debug").executes(ctx -> toggle(ctx, ToggleTarget.DEBUG)));
+
+        if (Config.isSingleElementHidingEnabled()) {
+            for (String key : Config.PANEL_KEYS) {
+                toggle.then(Commands.literal(key).executes(ctx -> togglePanel(ctx, key)));
+            }
+        }
+
         dispatcher.register(Commands.literal("qip")
-                .then(Commands.literal("toggle")
-                        .then(Commands.literal("main").executes(ctx -> toggle(ctx, ToggleTarget.MAIN)))
-                        .then(Commands.literal("secondary").executes(ctx -> toggle(ctx, ToggleTarget.SECONDARY)))
-                        .then(Commands.literal("debug").executes(ctx -> toggle(ctx, ToggleTarget.DEBUG)))
-                        .then(Commands.literal("coordinates").executes(ctx -> togglePanel(ctx, "coordinates")))
-                        .then(Commands.literal("compass").executes(ctx -> togglePanel(ctx, "compass")))
-                        .then(Commands.literal("clock").executes(ctx -> togglePanel(ctx, "clock")))
-                        .then(Commands.literal("opposite").executes(ctx -> togglePanel(ctx, "opposite")))
-                        .then(Commands.literal("biome").executes(ctx -> togglePanel(ctx, "biome")))
-                        .then(Commands.literal("weather").executes(ctx -> togglePanel(ctx, "weather")))
-                )
+                .then(toggle)
                 .then(Commands.literal("set")
                         .then(Commands.literal("position")
                                 .then(Commands.argument("preset", StringArgumentType.word())
@@ -49,7 +50,10 @@ public final class QipCommands {
     }
 
     private static int sendHelp(CommandContext<CommandSourceStack> ctx) {
-        ctx.getSource().sendSuccess(() -> Component.literal("Usage: /qip toggle <main|secondary|debug|coordinates|compass|clock|opposite|biome|weather> | /qip set position <preset>"), false);
+        String toggleTargets = Config.isSingleElementHidingEnabled()
+                ? "main|secondary|debug|coordinates|compass|clock|opposite|biome|weather"
+                : "main|secondary|debug";
+        ctx.getSource().sendSuccess(() -> Component.literal("Usage: /qip toggle <" + toggleTargets + "> | /qip set position <preset>"), false);
         return 1;
     }
 

@@ -10,7 +10,7 @@ import net.hawkelele.quickinfopanel.providers.client.InGameTimeProvider;
 public class ClockWidget extends Layout {
     @Override
     public boolean shouldBeHidden() {
-        return !Config.read().panels.getOrDefault("clock", true);
+        return !Config.isPanelEnabled("clock");
     }
 
     public ClockWidget() {

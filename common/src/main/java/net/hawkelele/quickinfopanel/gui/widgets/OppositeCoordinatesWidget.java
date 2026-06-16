@@ -16,7 +16,7 @@ import static java.util.Map.entry;
 public class OppositeCoordinatesWidget extends Layout {
     @Override
     public boolean shouldBeHidden() {
-        return !Config.read().panels.getOrDefault("opposite", true);
+        return !Config.isPanelEnabled("opposite");
     }
 
     private static final Map<String, ChatFormatting> colors = Map.ofEntries(

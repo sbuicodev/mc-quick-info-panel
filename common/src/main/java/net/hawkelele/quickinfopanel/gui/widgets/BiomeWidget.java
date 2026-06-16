@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component;
 public class BiomeWidget extends Layout {
     @Override
     public boolean shouldBeHidden() {
-        return !Config.read().panels.getOrDefault("biome", true);
+        return !Config.isPanelEnabled("biome");
     }
 
     public BiomeWidget() {

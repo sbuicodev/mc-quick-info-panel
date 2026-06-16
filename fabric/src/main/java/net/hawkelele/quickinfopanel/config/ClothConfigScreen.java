@@ -39,15 +39,16 @@ public class ClothConfigScreen {
                 .setSaveConsumer(newValue -> config.displaySecondaryPanel = newValue) // Recommended: Called when user save the config
                 .build()); // Builds the option entry for cloth config
 
-        // Specific elements toggles
-        ConfigCategory widgets = builder.getOrCreateCategory(Component.literal("Widgets"));
-        config.panels.forEach((key, value) -> {
-            widgets.addEntry(entryBuilder.startBooleanToggle(Component.translatable("settings." + Constants.MOD_ID + ".enable-" + key), value)
-                    .setDefaultValue(true) // Recommended: Used when user click "Reset"
-                    .setTooltip(Component.translatable("settings." + Constants.MOD_ID + ".enable-" + key + ".description"))
-                    .setSaveConsumer(newValue -> config.panels.put(key, newValue)) // Recommended: Called when user save the config
-                    .build()); // Builds the option entry for cloth config
-        });
+        if (Config.isSingleElementHidingEnabled()) {
+            ConfigCategory widgets = builder.getOrCreateCategory(Component.literal("Widgets"));
+            config.panels.forEach((key, value) -> {
+                widgets.addEntry(entryBuilder.startBooleanToggle(Component.translatable("settings." + Constants.MOD_ID + ".enable-" + key), value)
+                        .setDefaultValue(true) // Recommended: Used when user click "Reset"
+                        .setTooltip(Component.translatable("settings." + Constants.MOD_ID + ".enable-" + key + ".description"))
+                        .setSaveConsumer(newValue -> config.panels.put(key, newValue)) // Recommended: Called when user save the config
+                        .build()); // Builds the option entry for cloth config
+            });
+        }
 
         // position (preset)
         general.addEntry(entryBuilder

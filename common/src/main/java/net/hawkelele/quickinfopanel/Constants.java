@@ -10,4 +10,5 @@ public class Constants {
     public static final String MOD_NAME = "Quick Info Panel";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
     public static final KeyMapping.Category KEYMAPPING_CATEGORY = new KeyMapping.Category(Identifier.fromNamespaceAndPath(Constants.MOD_ID, "name"));
+    public static final boolean ENABLE_SINGLE_ELEMENT_HIDING = false;
 }

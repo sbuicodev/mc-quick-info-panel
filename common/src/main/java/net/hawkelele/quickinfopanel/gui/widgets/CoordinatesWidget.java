@@ -10,7 +10,7 @@ import net.hawkelele.quickinfopanel.services.Coordinates;
 public class CoordinatesWidget extends Layout {
     @Override
     public boolean shouldBeHidden() {
-        return !Config.read().panels.getOrDefault("coordinates", true);
+        return !Config.isPanelEnabled("coordinates");
     }
 
     public CoordinatesWidget() {

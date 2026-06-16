@@ -10,7 +10,7 @@ import net.hawkelele.quickinfopanel.services.Compass;
 public class CompassWidget extends Layout {
     @Override
     public boolean shouldBeHidden() {
-        return !Config.read().panels.getOrDefault("compass", true);
+        return !Config.isPanelEnabled("compass");
     }
 
     public CompassWidget() {
