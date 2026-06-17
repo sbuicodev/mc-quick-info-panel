@@ -11,7 +11,7 @@ public class RootLayout extends Layout {
 
     @Override
     public boolean shouldBeHidden() {
-        return client.options.hideGui
+        return client.gui.hud.isHidden()
                 || client.player == null
                 || client.level == null
                 || client.debugEntries.isOverlayVisible()
