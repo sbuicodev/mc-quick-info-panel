@@ -4,7 +4,6 @@ plugins {
 }
 
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
 }
 
@@ -16,11 +15,6 @@ dependencies {
 
     // ModMenu
     implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
-
-    // Cloth Config
-    api("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_api_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
 }
 
 loom {
