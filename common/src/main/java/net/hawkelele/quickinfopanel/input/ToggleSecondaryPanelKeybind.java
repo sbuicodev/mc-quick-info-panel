@@ -5,12 +5,12 @@ import net.hawkelele.quickinfopanel.handlers.IClientEventHandler;
 import net.hawkelele.quickinfopanel.handlers.ToggleLayoutDebugHandler;
 import net.hawkelele.quickinfopanel.handlers.ToggleSecondaryPanelHandler;
 import net.minecraft.client.KeyMapping;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeycode;
 
 public class ToggleSecondaryPanelKeybind implements Keybind {
     private final KeyMapping keyMapping = new KeyMapping(
             "key." + Constants.MOD_ID + ".togglealtinfo",
-            GLFW.GLFW_KEY_N,
+            SDLKeycode.SDLK_N,
             Constants.KEYMAPPING_CATEGORY
     );
 

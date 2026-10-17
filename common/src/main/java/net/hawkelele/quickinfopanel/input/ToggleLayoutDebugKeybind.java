@@ -4,12 +4,12 @@ import net.hawkelele.quickinfopanel.Constants;
 import net.hawkelele.quickinfopanel.handlers.IClientEventHandler;
 import net.hawkelele.quickinfopanel.handlers.ToggleLayoutDebugHandler;
 import net.minecraft.client.KeyMapping;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeycode;
 
 public class ToggleLayoutDebugKeybind implements Keybind {
     private final KeyMapping keyMapping = new KeyMapping(
             "key." + Constants.MOD_ID + ".debug",
-            GLFW.GLFW_KEY_COMMA,
+            SDLKeycode.SDLK_COMMA,
             Constants.KEYMAPPING_CATEGORY
     );
 
