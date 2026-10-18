@@ -1,12 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## [1.3.0]
 
-### Added
-- Nothing yet.
-
-### Fixed
-- Nothing yet.
+- Added an option to show compass axis inside the compass. Disabled by default.
 
 ## [1.2.10+fabric-26.1.2] - 2026-04-18
 
