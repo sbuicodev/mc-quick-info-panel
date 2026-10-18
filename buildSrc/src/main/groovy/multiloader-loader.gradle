@@ -43,3 +43,9 @@ tasks.named('sourcesJar', Jar) {
     dependsOn(configurations.commonResources)
     from(configurations.commonResources)
 }
+
+// Collects the mod jar into build/release at the root, for the release workflow
+tasks.register('releaseJar', Copy) {
+    from(tasks.named('jar'))
+    into(rootProject.layout.buildDirectory.dir('release'))
+}

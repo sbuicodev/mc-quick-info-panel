@@ -64,16 +64,16 @@ sourceSets.configureEach {
 
 // Publishing, run by the release workflow (.github/workflows/release.yml)
 // The full changelog lives on the Fabric upload; NeoForge only points there.
-def releaseNotesPointer = "Same changes as the Fabric release ${version}."
+def releaseNotesPointer = "Same changes as the Fabric release ${modVersion}."
 
 modrinth {
     token = System.getenv('MODRINTH_TOKEN')
     projectId = modrinth_project_id
-    versionNumber = "${version}+neoforge"
-    versionName = "${mod_name} ${version} (neoforge)"
+    versionNumber = version.toString()
+    versionName = "${mod_name} ${version}"
     versionType = 'release'
     uploadFile = jar
-    gameVersions = [minecraft_version]
+    gameVersions = mcVersions
     loaders = ['neoforge']
     changelog = releaseNotesPointer
 }
@@ -81,11 +81,11 @@ modrinth {
 tasks.register('curseforge', net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = System.getenv('CURSEFORGE_TOKEN')
     def mainFile = upload(curseforge_project_id, jar)
-    mainFile.displayName = "${mod_name} ${version} (neoforge)"
+    mainFile.displayName = "${mod_name} ${version}"
     mainFile.releaseType = 'release'
     mainFile.changelog = releaseNotesPointer
     mainFile.changelogType = 'markdown'
     mainFile.addModLoader('NeoForge')
-    mainFile.addGameVersion(minecraft_version)
+    mcVersions.each { mainFile.addGameVersion(it) }
     mainFile.addJavaVersion("Java ${java_version}")
 }

@@ -66,11 +66,11 @@ def releaseNotes = rootProject.file('release-notes.md')
 modrinth {
     token = System.getenv('MODRINTH_TOKEN')
     projectId = modrinth_project_id
-    versionNumber = "${version}+fabric"
-    versionName = "${mod_name} ${version} (fabric)"
+    versionNumber = version.toString()
+    versionName = "${mod_name} ${version}"
     versionType = 'release'
     uploadFile = jar
-    gameVersions = [minecraft_version]
+    gameVersions = mcVersions
     loaders = ['fabric']
     changelog = releaseNotes.exists() ? releaseNotes.text : ''
     dependencies {
@@ -82,12 +82,12 @@ modrinth {
 tasks.register('curseforge', net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = System.getenv('CURSEFORGE_TOKEN')
     def mainFile = upload(curseforge_project_id, jar)
-    mainFile.displayName = "${mod_name} ${version} (fabric)"
+    mainFile.displayName = "${mod_name} ${version}"
     mainFile.releaseType = 'release'
     mainFile.changelog = releaseNotes.exists() ? releaseNotes.text : ''
     mainFile.changelogType = 'markdown'
     mainFile.addModLoader('Fabric')
-    mainFile.addGameVersion(minecraft_version)
+    mcVersions.each { mainFile.addGameVersion(it) }
     mainFile.addJavaVersion("Java ${java_version}")
     mainFile.addRequirement('fabric-api')
     mainFile.addOptional('modmenu')
