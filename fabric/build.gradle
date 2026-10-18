@@ -1,6 +1,8 @@
 plugins {
     id 'multiloader-loader'
     id 'net.fabricmc.fabric-loom'
+    id 'com.modrinth.minotaur'
+    id 'net.darkhax.curseforgegradle'
 }
 
 repositories {
@@ -55,4 +57,38 @@ sourceSets.configureEach {
             }
         }
     }
+}
+
+// Publishing, run by the release workflow (.github/workflows/release.yml)
+// The full changelog lives on the Fabric upload; NeoForge only points here.
+def releaseNotes = rootProject.file('release-notes.md')
+
+modrinth {
+    token = System.getenv('MODRINTH_TOKEN')
+    projectId = modrinth_project_id
+    versionNumber = "${version}+fabric"
+    versionName = "${mod_name} ${version} (fabric)"
+    versionType = 'release'
+    uploadFile = jar
+    gameVersions = [minecraft_version]
+    loaders = ['fabric']
+    changelog = releaseNotes.exists() ? releaseNotes.text : ''
+    dependencies {
+        required.project 'fabric-api'
+        optional.project 'modmenu'
+    }
+}
+
+tasks.register('curseforge', net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    apiToken = System.getenv('CURSEFORGE_TOKEN')
+    def mainFile = upload(curseforge_project_id, jar)
+    mainFile.displayName = "${mod_name} ${version} (fabric)"
+    mainFile.releaseType = 'release'
+    mainFile.changelog = releaseNotes.exists() ? releaseNotes.text : ''
+    mainFile.changelogType = 'markdown'
+    mainFile.addModLoader('Fabric')
+    mainFile.addGameVersion(minecraft_version)
+    mainFile.addJavaVersion("Java ${java_version}")
+    mainFile.addRequirement('fabric-api')
+    mainFile.addOptional('modmenu')
 }

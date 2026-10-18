@@ -25,3 +25,5 @@ run
 runs
 node_modules
 .DS_Store
+# release workflow
+release-notes.md

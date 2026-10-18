@@ -1,0 +1,75 @@
+# Builds and publishes the mod when a version tag (e.g. v26.3.0) is pushed.
+# The tag must match `version` in gradle.properties, and CHANGELOG.md must
+# have a matching `## [26.3.0]` section, used as the release notes.
+
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify tag matches version
+        id: version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PROP_VERSION="$(grep -E '^version=' gradle.properties | cut -d= -f2- | tr -d '[:space:]')"
+          if [ "$TAG_VERSION" != "$PROP_VERSION" ]; then
+            echo "::error::Tag '$GITHUB_REF_NAME' does not match version '$PROP_VERSION' in gradle.properties"
+            exit 1
+          fi
+          echo "version=$PROP_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Extract changelog
+        run: |
+          awk -v v="${{ steps.version.outputs.version }}" '
+            /^## \[/ { p = index($0, "## [" v "]") == 1; next }
+            p
+          ' CHANGELOG.md > release-notes.md
+          if ! grep -q '[^[:space:]]' release-notes.md; then
+            echo "::error::No '## [${{ steps.version.outputs.version }}]' section in CHANGELOG.md"
+            exit 1
+          fi
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            fabric/build/libs/quickinfopanel-fabric-*-${{ steps.version.outputs.version }}.jar
+            neoforge/build/libs/quickinfopanel-neoforge-*-${{ steps.version.outputs.version }}.jar
+          body_path: release-notes.md
+
+      # NeoForge goes first so the Fabric upload, which carries the full
+      # changelog, ends up on top of the Modrinth changelog page.
+      - name: Publish NeoForge
+        run: ./gradlew :neoforge:modrinth :neoforge:curseforge
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+
+      - name: Publish Fabric
+        run: ./gradlew :fabric:modrinth :fabric:curseforge
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
