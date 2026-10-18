@@ -1,35 +1,46 @@
-# Builds and publishes the mod when a version tag (e.g. v1.3.0) is pushed.
-# The tag must match `version` in gradle.properties, and CHANGELOG.md must
-# have a matching `## [1.3.0]` section, used as the release notes.
-# Each loader jar is named and titled `<version>+<loader>-<minecraft versions>`
-# and tagged with every version in `minecraft_versions`.
+# Builds and publishes every supported Minecraft version when a version tag
+# (e.g. v1.3.0) is pushed on main.
+#
+# Each branch in RELEASE_BRANCHES is built (main at the tagged commit, the
+# others at their latest commit), and its gradle.properties `version` must
+# match the tag. The release notes come from the `## [1.3.0]` section of
+# main's CHANGELOG.md.
+#
+# All jars go on one GitHub release, named `<version>+<loader>-<minecraft
+# versions>`. Each branch's jars are uploaded to Modrinth and CurseForge,
+# tagged with its `minecraft_versions`, and the commit built for it is tagged
+# `v1.3.0+<minecraft versions>`.
 
 name: release
 
 on:
   push:
-    tags: ['v*']
+    # Plain version tags only; the per-branch `v1.3.0+26.2` tags are made here
+    tags: ['v*', '!v*+*']
 
 permissions:
   contents: write
 
+env:
+  # One branch per supported Minecraft version, oldest first. They are
+  # published in this order, so main's uploads end up on top on Modrinth.
+  RELEASE_BRANCHES: '["26.2", "main"]'
+
 jobs:
-  release:
+  notes:
     runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      branches: ${{ steps.version.outputs.branches }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Verify tag matches version
+      - name: Read version
         id: version
         run: |
-          TAG_VERSION="${GITHUB_REF_NAME#v}"
-          PROP_VERSION="$(grep -E '^version=' gradle.properties | cut -d= -f2- | tr -d '[:space:]')"
-          if [ "$TAG_VERSION" != "$PROP_VERSION" ]; then
-            echo "::error::Tag '$GITHUB_REF_NAME' does not match version '$PROP_VERSION' in gradle.properties"
-            exit 1
-          fi
-          echo "version=$PROP_VERSION" >> "$GITHUB_OUTPUT"
+          echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          echo "branches=$RELEASE_BRANCHES" >> "$GITHUB_OUTPUT"
 
       - name: Extract changelog
         run: |
@@ -39,6 +50,33 @@ jobs:
           ' CHANGELOG.md > release-notes.md
           if ! grep -q '[^[:space:]]' release-notes.md; then
             echo "::error::No '## [${{ steps.version.outputs.version }}]' section in CHANGELOG.md"
+            exit 1
+          fi
+
+      - name: Upload release notes
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: release-notes.md
+
+  build:
+    needs: notes
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        branch: ${{ fromJSON(needs.notes.outputs.branches) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.branch == 'main' && github.sha || matrix.branch }}
+
+      - name: Verify version
+        run: |
+          prop() { grep -E "^$1=" gradle.properties | cut -d= -f2- | tr -d '[:space:]'; }
+          VERSION="$(prop version)"
+          if [ "$VERSION" != "${{ needs.notes.outputs.version }}" ]; then
+            echo "::error::Branch '${{ matrix.branch }}' has version '$VERSION' in gradle.properties, expected '${{ needs.notes.outputs.version }}'"
             exit 1
           fi
 
@@ -54,17 +92,68 @@ jobs:
           chmod +x ./gradlew
           ./gradlew build releaseJar
 
-      - name: GitHub Release
-        uses: softprops/action-gh-release@v2
+      # Commit and Minecraft label for the publish job, next to the jars
+      - name: Record build info
+        run: |
+          prop() { grep -E "^$1=" gradle.properties | cut -d= -f2- | tr -d '[:space:]'; }
+          MC_VERSIONS="$(prop minecraft_versions)"
+          MC_FIRST="${MC_VERSIONS%%,*}"
+          MC_LAST="${MC_VERSIONS##*,}"
+          if [ "$MC_FIRST" = "$MC_LAST" ]; then MC_LABEL="$MC_FIRST"; else MC_LABEL="$MC_FIRST-$MC_LAST"; fi
+          {
+            echo "commit=$(git rev-parse HEAD)"
+            echo "mc_label=$MC_LABEL"
+          } > build/release/build-info.env
+
+      - name: Upload jars
+        uses: actions/upload-artifact@v4
         with:
-          files: build/release/*.jar
-          fail_on_unmatched_files: true
-          body_path: release-notes.md
+          name: jars-${{ matrix.branch }}
+          path: build/release/
+          if-no-files-found: error
+
+  # Runs only once every branch has built, so a broken branch publishes nothing
+  publish:
+    needs: [notes, build]
+    runs-on: ubuntu-24.04
+    strategy:
+      max-parallel: 1
+      matrix:
+        branch: ${{ fromJSON(needs.notes.outputs.branches) }}
+    steps:
+      - name: Download build info
+        uses: actions/download-artifact@v4
+        with:
+          name: jars-${{ matrix.branch }}
+          path: dist
+
+      - name: Read build info
+        id: info
+        run: cat dist/build-info.env >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.info.outputs.commit }}
+
+      - name: Download release notes
+        uses: actions/download-artifact@v4
+        with:
+          name: release-notes
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: gradle
 
       # NeoForge goes first so the Fabric upload, which carries the full
       # changelog, ends up on top of the Modrinth changelog page.
       - name: Publish NeoForge
-        run: ./gradlew :neoforge:modrinth :neoforge:curseforge
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :neoforge:modrinth :neoforge:curseforge
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -74,3 +163,32 @@ jobs:
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+
+      - name: Tag built commit
+        run: |
+          TAG="v${{ needs.notes.outputs.version }}+${{ steps.info.outputs.mc_label }}"
+          git tag "$TAG"
+          git push origin "refs/tags/$TAG"
+
+  github-release:
+    needs: [notes, publish]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download jars
+        uses: actions/download-artifact@v4
+        with:
+          pattern: jars-*
+          merge-multiple: true
+          path: dist
+
+      - name: Download release notes
+        uses: actions/download-artifact@v4
+        with:
+          name: release-notes
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.jar
+          fail_on_unmatched_files: true
+          body_path: release-notes.md
