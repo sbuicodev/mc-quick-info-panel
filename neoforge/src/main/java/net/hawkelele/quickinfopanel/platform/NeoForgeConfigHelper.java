@@ -49,6 +49,7 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
         private final ModConfigSpec.ConfigValue<Boolean> displayMainPanel;
         private final ModConfigSpec.ConfigValue<Boolean> displaySecondaryPanel;
         private final ModConfigSpec.EnumValue<NeoForgeLayoutPreset> layout;
+        private final ModConfigSpec.ConfigValue<Boolean> showCompassAxis;
         private final ModConfigSpec.ConfigValue<Boolean> debugBounds;
         private final ModConfigSpec.ConfigValue<Boolean> coordinates;
         private final ModConfigSpec.ConfigValue<Boolean> compass;
@@ -67,6 +68,9 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
             layout = builder.comment("Selected layout. Bottom anchored layouts can overlap with the HUD if the window is too small or GUI scaling is too large.")
                     .translation("position." + Constants.MOD_ID + ".label")
                     .defineEnum("layout", NeoForgeLayoutPreset.DEFAULT);
+            showCompassAxis = builder.comment("Show which axis you face next to the compass letter, e.g. N (Z-)")
+                    .translation("settings." + Constants.MOD_ID + ".compass-axis")
+                    .define("showCompassAxis", false);
 
             if (Config.isSingleElementHidingEnabled()) {
                 builder.push("panels");
@@ -112,6 +116,7 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
             config.displayMainPanel = displayMainPanel.get();
             config.displaySecondaryPanel = displaySecondaryPanel.get();
             config.layout = layout.get().preset.id();
+            config.showCompassAxis = showCompassAxis.get();
             config.debugBounds = debugBounds.get();
             if (Config.isSingleElementHidingEnabled()) {
                 config.panels.put("coordinates", coordinates.get());
@@ -128,6 +133,7 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
             displayMainPanel.set(config.displayMainPanel);
             displaySecondaryPanel.set(config.displaySecondaryPanel);
             layout.set(NeoForgeLayoutPreset.fromPreset(LayoutPreset.fromId(config.layout)));
+            showCompassAxis.set(config.showCompassAxis);
             debugBounds.set(config.debugBounds);
             if (Config.isSingleElementHidingEnabled()) {
                 coordinates.set(config.panels.getOrDefault("coordinates", true));

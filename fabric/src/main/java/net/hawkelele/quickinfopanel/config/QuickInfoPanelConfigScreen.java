@@ -22,6 +22,7 @@ public class QuickInfoPanelConfigScreen extends Screen {
     private Button displayMainPanelButton;
     private Button displaySecondaryPanelButton;
     private Button layoutButton;
+    private Button showCompassAxisButton;
     private Button debugBoundsButton;
     private final LinkedHashMap<String, Button> panelButtons = new LinkedHashMap<>();
 
@@ -55,6 +56,12 @@ public class QuickInfoPanelConfigScreen extends Screen {
         y += ROW_SPACING;
         layoutButton = addRenderableWidget(Button.builder(layoutLabel(), button -> {
             config.layout = nextLayoutPreset().id();
+            refreshMessages();
+        }).bounds(left, y, BUTTON_WIDTH, BUTTON_HEIGHT).build());
+
+        y += ROW_SPACING;
+        showCompassAxisButton = addRenderableWidget(Button.builder(toggleLabel("settings." + Constants.MOD_ID + ".compass-axis", config.showCompassAxis), button -> {
+            config.showCompassAxis = !config.showCompassAxis;
             refreshMessages();
         }).bounds(left, y, BUTTON_WIDTH, BUTTON_HEIGHT).build());
 
@@ -95,7 +102,7 @@ public class QuickInfoPanelConfigScreen extends Screen {
         graphics.centeredText(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
         graphics.text(this.font, Component.translatable("modmenu.quickinfopanel.categories.general"), this.width / 2 - BUTTON_WIDTH / 2, 36, 0xA0A0A0);
         if (Config.isSingleElementHidingEnabled()) {
-            int panelHeaderY = Services.PLATFORM.isDevelopmentEnvironment() ? 144 : 120;
+            int panelHeaderY = Services.PLATFORM.isDevelopmentEnvironment() ? 168 : 144;
             graphics.text(this.font, Component.translatable("quickinfopanel.configuration.panels"), this.width / 2 - BUTTON_WIDTH / 2, panelHeaderY, 0xA0A0A0);
         }
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
@@ -121,6 +128,7 @@ public class QuickInfoPanelConfigScreen extends Screen {
         displayMainPanelButton.setMessage(toggleLabel("settings." + Constants.MOD_ID + ".enable", config.displayMainPanel));
         displaySecondaryPanelButton.setMessage(toggleLabel("settings." + Constants.MOD_ID + ".enable-alt-info", config.displaySecondaryPanel));
         layoutButton.setMessage(layoutLabel());
+        showCompassAxisButton.setMessage(toggleLabel("settings." + Constants.MOD_ID + ".compass-axis", config.showCompassAxis));
         if (debugBoundsButton != null) {
             debugBoundsButton.setMessage(toggleLabel("settings." + Constants.MOD_ID + ".debug", config.debugBounds));
         }
@@ -156,6 +164,7 @@ public class QuickInfoPanelConfigScreen extends Screen {
         copy.displayMainPanel = source.displayMainPanel;
         copy.displaySecondaryPanel = source.displaySecondaryPanel;
         copy.layout = source.layout;
+        copy.showCompassAxis = source.showCompassAxis;
         copy.debugBounds = source.debugBounds;
         copy.panels = new LinkedHashMap<>(source.panels);
         return copy;

@@ -6,6 +6,9 @@ import net.hawkelele.quickinfopanel.gui.core.elements.Layout;
 import net.hawkelele.quickinfopanel.gui.core.elements.Text;
 import net.hawkelele.quickinfopanel.providers.client.PlayerDirectionProvider;
 import net.hawkelele.quickinfopanel.services.Compass;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public class CompassWidget extends Layout {
     @Override
@@ -15,9 +18,14 @@ public class CompassWidget extends Layout {
 
     public CompassWidget() {
         Compass compass = new Compass(new PlayerDirectionProvider());
+        MutableComponent label = Component.literal(compass.getCurrentFacingCardinalDirection());
+        String axis = compass.getFacingAxis();
+        if (Config.read().showCompassAxis && !axis.isEmpty()) {
+            label.append(Component.literal("(" + axis + ")").withStyle(ChatFormatting.GRAY));
+        }
         this.children(
                 new Image(compass.getIconPath()),
-                new Text(compass.getCurrentFacingCardinalDirection())
+                new Text(label)
         ).gap(2);
     }
 }

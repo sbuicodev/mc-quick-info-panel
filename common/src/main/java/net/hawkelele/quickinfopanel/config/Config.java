@@ -15,6 +15,7 @@ public class Config {
     public boolean displaySecondaryPanel = true;
     public String layout = "default";
     public Map<String, Boolean> panels = defaultPanels();
+    public boolean showCompassAxis = false;
     public boolean debugBounds = false;
 
     private static Config latestConfig;
