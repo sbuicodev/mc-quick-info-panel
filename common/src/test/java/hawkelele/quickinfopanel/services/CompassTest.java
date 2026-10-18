@@ -45,4 +45,25 @@ public class CompassTest {
         Assertions.assertEquals("?", compass.getCurrentFacingCardinalDirection());
 
     }
+
+    @Test
+    void testGetFacingAxis() {
+        MockDirectionProvider directionProvider = new MockDirectionProvider();
+        Compass compass = new Compass(directionProvider);
+
+        directionProvider.setCurrentDirection(MockDirectionProvider.NORTH);
+        Assertions.assertEquals("Z-", compass.getFacingAxis());
+
+        directionProvider.setCurrentDirection(MockDirectionProvider.SOUTH);
+        Assertions.assertEquals("Z+", compass.getFacingAxis());
+
+        directionProvider.setCurrentDirection(MockDirectionProvider.WEST);
+        Assertions.assertEquals("X-", compass.getFacingAxis());
+
+        directionProvider.setCurrentDirection(MockDirectionProvider.EAST);
+        Assertions.assertEquals("X+", compass.getFacingAxis());
+
+        directionProvider.setCurrentDirection("unknown direction");
+        Assertions.assertEquals("", compass.getFacingAxis());
+    }
 }

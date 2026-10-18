@@ -8,6 +8,8 @@
   "settings.quickinfopanel.enable.description": "Visualizza rapidamente le informazioni relative alle coordinate e all'ora sopra l'inventario",
   "settings.quickinfopanel.enable-alt-info": "Informazioni extra",
   "settings.quickinfopanel.enable-alt-info.description": "Visualizza informazioni extra sopra le coordinate principali",
+  "settings.quickinfopanel.compass-axis": "Mostra asse sulla bussola",
+  "settings.quickinfopanel.compass-axis.description": "Mostra l'asse verso cui guardi accanto alla lettera della bussola, es. N (Z-)",
   "position.quickinfopanel.label": "Posizione",
   "position.quickinfopanel.default": "Predefinita",
   "position.quickinfopanel.top-left": "In alto a sinistra",

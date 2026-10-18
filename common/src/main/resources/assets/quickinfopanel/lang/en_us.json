@@ -8,6 +8,8 @@
   "settings.quickinfopanel.enable.description": "Display quick access info about the player's coordinates and time above the inventory",
   "settings.quickinfopanel.enable-alt-info": "Enable extra info",
   "settings.quickinfopanel.enable-alt-info.description": "Display extra information above the main coordinates",
+  "settings.quickinfopanel.compass-axis": "Show facing axis on compass",
+  "settings.quickinfopanel.compass-axis.description": "Show which axis you face next to the compass letter, e.g. N (Z-)",
   "position.quickinfopanel.label": "Position",
   "position.quickinfopanel.default": "Default",
   "position.quickinfopanel.top-left": "Top Left",
