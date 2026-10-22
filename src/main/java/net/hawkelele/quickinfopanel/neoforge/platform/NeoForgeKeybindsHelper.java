@@ -19,9 +19,9 @@ import java.util.Set;
 //? if >=1.21.4 {
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 //?} else {
-// NeoForge only picks the bus from the event type from 21.4, so key mappings name the mod bus
+/^// NeoForge only picks the bus from the event type from 21.4, so key mappings name the mod bus
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
-//?}
+^///?}
 public class NeoForgeKeybindsHelper implements IKeybindsHelper {
     private static final Set<Keybind> KEYBINDS = new HashSet<>();
     private static boolean tickListenerRegistered = false;
