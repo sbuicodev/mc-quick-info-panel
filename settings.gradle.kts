@@ -25,6 +25,7 @@ stonecutter {
             for (loader in loaders) version("$version-$loader", version).buildscript("build.$loader.gradle.kts")
         }
 
+        match("1.21.5", "fabric", "neoforge")
         match("1.21.6", "fabric", "neoforge")
         match("1.21.9", "fabric", "neoforge")
         match("1.21.11", "fabric", "neoforge")
