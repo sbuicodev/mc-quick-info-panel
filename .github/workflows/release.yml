@@ -1,80 +1,41 @@
-# Builds and publishes every supported Minecraft version of a release.
+# Builds and publishes every supported Minecraft version when a version tag
+# (e.g. v1.3.1) is pushed.
 #
-# Runs when a version tag (e.g. v1.3.0) is pushed on main, or by hand from the
-# Actions tab ("Run workflow", with the version) to backport an existing
-# release to branches added to RELEASE_BRANCHES later.
+# The tag must match `mod.version` in stonecutter.properties.toml, and
+# CHANGELOG.md must have a matching `## [1.3.1]` section, used as the release
+# notes.
 #
-# Each branch in RELEASE_BRANCHES is built (main at the version tag, the others
-# at their latest commit), and its gradle.properties `version` must match. The
-# release notes come from the `## [1.3.0]` section of CHANGELOG.md at the tag.
-#
-# Branches already released for that version, i.e. with a
-# `v1.3.0+<minecraft versions>` tag, are skipped, so a run only adds what is
-# missing. For the others, the jars are uploaded to Modrinth and CurseForge,
-# tagged with the branch's `minecraft_versions`, added to the `v1.3.0` GitHub
-# release, and the commit built is tagged `v1.3.0+<minecraft versions>`.
+# Every Stonecutter node (Minecraft version × loader) is built from the tagged
+# commit. All jars, named `<version>+<loader>-<minecraft versions>`, go on one
+# GitHub release, and each is uploaded to Modrinth and CurseForge, tagged with
+# its `mod.mc_releases`.
 
 name: release
 
 on:
   push:
-    # Plain version tags only; the per-branch `v1.3.0+26.2` tags are made here
-    tags: ['v*', '!v*+*']
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Released version to build for any branch still missing it (e.g. 1.3.0)'
-        required: true
+    tags: ['v*']
 
 permissions:
   contents: write
 
-env:
-  # One branch per supported Minecraft version, oldest first. They are
-  # published in this order, so main's uploads end up on top on Modrinth.
-  RELEASE_BRANCHES: '["mc/1.21-1.21.1", "mc/1.21.2-1.21.3", "mc/1.21.4", "mc/1.21.5", "mc/1.21.6-1.21.8", "mc/1.21.9-1.21.10", "mc/1.21.11", "mc/26.1-26.1.2", "mc/26.2", "main"]'
-
 jobs:
-  notes:
+  release:
     runs-on: ubuntu-24.04
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-      pending: ${{ steps.pending.outputs.pending }}
     steps:
-      - name: Read version
-        id: version
-        run: |
-          VERSION="${{ inputs.version }}"
-          [ -n "$VERSION" ] || VERSION="${GITHUB_REF_NAME#v}"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: refs/tags/v${{ steps.version.outputs.version }}
-          # All branches and tags, to read each branch's gradle.properties
-          fetch-depth: 0
 
-      - name: Find branches to release
-        id: pending
+      - name: Verify tag matches version
+        id: version
         run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          PENDING='[]'
-          for BRANCH in $(echo "$RELEASE_BRANCHES" | jq -r '.[]'); do
-            if [ "$BRANCH" = main ]; then REF="v$VERSION"; else REF="origin/$BRANCH"; fi
-            MC_VERSIONS="$(git show "$REF:gradle.properties" | grep -E '^minecraft_versions=' | cut -d= -f2- | tr -d '[:space:]')"
-            MC_FIRST="${MC_VERSIONS%%,*}"
-            MC_LAST="${MC_VERSIONS##*,}"
-            if [ "$MC_FIRST" = "$MC_LAST" ]; then MC_LABEL="$MC_FIRST"; else MC_LABEL="$MC_FIRST-$MC_LAST"; fi
-
-            if git rev-parse -q --verify "refs/tags/v$VERSION+$MC_LABEL" > /dev/null; then
-              echo "$BRANCH: already released as v$VERSION+$MC_LABEL, skipping"
-            else
-              echo "$BRANCH: releasing as v$VERSION+$MC_LABEL"
-              PENDING="$(echo "$PENDING" | jq -c --arg b "$BRANCH" --arg l "$MC_LABEL" '. + [{branch: $b, mc_label: $l}]')"
-            fi
-          done
-          echo "pending=$PENDING" >> "$GITHUB_OUTPUT"
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          MOD_VERSION="$(grep -E '^mod\.version *=' stonecutter.properties.toml | sed -E 's/.*"(.*)".*/\1/')"
+          if [ "$TAG_VERSION" != "$MOD_VERSION" ]; then
+            echo "::error::Tag '$GITHUB_REF_NAME' does not match mod.version '$MOD_VERSION' in stonecutter.properties.toml"
+            exit 1
+          fi
+          echo "version=$MOD_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Extract changelog
         run: |
@@ -87,34 +48,7 @@ jobs:
             exit 1
           fi
 
-      - name: Upload release notes
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-notes
-          path: release-notes.md
-
-  build:
-    needs: notes
-    if: needs.notes.outputs.pending != '[]'
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        include: ${{ fromJSON(needs.notes.outputs.pending) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ matrix.branch == 'main' && format('refs/tags/v{0}', needs.notes.outputs.version) || matrix.branch }}
-
-      - name: Verify version
-        run: |
-          prop() { grep -E "^$1=" gradle.properties | cut -d= -f2- | tr -d '[:space:]'; }
-          VERSION="$(prop version)"
-          if [ "$VERSION" != "${{ needs.notes.outputs.version }}" ]; then
-            echo "::error::Branch '${{ matrix.branch }}' has version '$VERSION' in gradle.properties, expected '${{ needs.notes.outputs.version }}'"
-            exit 1
-          fi
-
+      # Gradle runs on 25; the Java 21 nodes get their JDK through toolchains
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -125,98 +59,19 @@ jobs:
       - name: Build
         run: |
           chmod +x ./gradlew
-          ./gradlew build releaseJar
+          ./gradlew build buildAndCollect
 
-      # Commit built, so the publish job uses the same one, next to the jars
-      - name: Record build info
-        run: echo "commit=$(git rev-parse HEAD)" > build/release/build-info.env
-
-      - name: Upload jars
-        uses: actions/upload-artifact@v4
-        with:
-          name: jars-${{ matrix.mc_label }}
-          path: build/release/
-          if-no-files-found: error
-
-  # Runs only once every branch has built, so a broken branch publishes nothing
-  publish:
-    needs: [notes, build]
-    runs-on: ubuntu-24.04
-    strategy:
-      max-parallel: 1
-      matrix:
-        include: ${{ fromJSON(needs.notes.outputs.pending) }}
-    steps:
-      - name: Download build info
-        uses: actions/download-artifact@v4
-        with:
-          name: jars-${{ matrix.mc_label }}
-          path: dist
-
-      - name: Read build info
-        id: info
-        run: cat dist/build-info.env >> "$GITHUB_OUTPUT"
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.info.outputs.commit }}
-
-      - name: Download release notes
-        uses: actions/download-artifact@v4
-        with:
-          name: release-notes
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '25'
-          distribution: 'temurin'
-          cache: gradle
-
-      # NeoForge goes first so the Fabric upload, which carries the full
-      # changelog, ends up on top of the Modrinth changelog page.
-      - name: Publish NeoForge
-        run: |
-          chmod +x ./gradlew
-          ./gradlew :neoforge:modrinth :neoforge:curseforge
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-
-      - name: Publish Fabric
-        run: ./gradlew :fabric:modrinth :fabric:curseforge
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-
-      - name: Tag built commit
-        run: |
-          TAG="v${{ needs.notes.outputs.version }}+${{ matrix.mc_label }}"
-          git tag "$TAG"
-          git push origin "refs/tags/$TAG"
-
-  github-release:
-    needs: [notes, publish]
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Download jars
-        uses: actions/download-artifact@v4
-        with:
-          pattern: jars-*
-          merge-multiple: true
-          path: dist
-
-      - name: Download release notes
-        uses: actions/download-artifact@v4
-        with:
-          name: release-notes
-
-      # Creates the release, or adds the new jars to it on a backport
       - name: GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ needs.notes.outputs.version }}
-          files: dist/*.jar
+          files: build/release/*.jar
           fail_on_unmatched_files: true
           body_path: release-notes.md
+
+      # Stonecutter runs these one node at a time, oldest version first, so the
+      # newest uploads end up on top of the Modrinth and CurseForge file lists.
+      - name: Publish
+        run: ./gradlew modrinth curseforge
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}

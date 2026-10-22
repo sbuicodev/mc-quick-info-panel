@@ -21,20 +21,22 @@ stonecutter {
         // Creates `versions/{version}-{loader}` nodes, built with `build.{loader}.gradle.kts`.
         // Each node is named after the lowest Minecraft version it builds against; the full
         // list of versions a jar supports is `mod.mc_releases` in stonecutter.properties.toml.
+        // NeoForge is listed first so it publishes first, leaving the Fabric upload (with the
+        // full changelog) on top of each version's files.
         fun match(version: String, vararg loaders: String) {
             for (loader in loaders) version("$version-$loader", version).buildscript("build.$loader.gradle.kts")
         }
 
-        match("1.21", "fabric", "neoforge")
-        match("1.21.2", "fabric", "neoforge")
-        match("1.21.4", "fabric", "neoforge")
-        match("1.21.5", "fabric", "neoforge")
-        match("1.21.6", "fabric", "neoforge")
-        match("1.21.9", "fabric", "neoforge")
-        match("1.21.11", "fabric", "neoforge")
-        match("26.1", "fabric", "neoforge")
-        match("26.2", "fabric", "neoforge")
-        match("26.3", "fabric", "neoforge")
+        match("1.21", "neoforge", "fabric")
+        match("1.21.2", "neoforge", "fabric")
+        match("1.21.4", "neoforge", "fabric")
+        match("1.21.5", "neoforge", "fabric")
+        match("1.21.6", "neoforge", "fabric")
+        match("1.21.9", "neoforge", "fabric")
+        match("1.21.11", "neoforge", "fabric")
+        match("26.1", "neoforge", "fabric")
+        match("26.2", "neoforge", "fabric")
+        match("26.3", "neoforge", "fabric")
         vcsVersion = "26.3-fabric"
     }
 }
