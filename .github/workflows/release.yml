@@ -32,7 +32,7 @@ permissions:
 env:
   # One branch per supported Minecraft version, oldest first. They are
   # published in this order, so main's uploads end up on top on Modrinth.
-  RELEASE_BRANCHES: '["26.2", "main"]'
+  RELEASE_BRANCHES: '["1.21-1.21.1", "1.21.2-1.21.3", "1.21.4", "1.21.5", "1.21.6-1.21.8", "1.21.9-1.21.10", "1.21.11", "26.1-26.1.2", "26.2", "main"]'
 
 jobs:
   notes:
