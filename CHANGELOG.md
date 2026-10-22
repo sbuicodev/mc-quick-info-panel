@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.1]
+
+- Added `/qip toggle axis` to show or hide the facing axis on the compass.
+
 ## [1.3.0]
 
 - Added an option to show compass axis inside the compass. Disabled by default.

@@ -27,6 +27,7 @@ public final class QipCommands {
         var toggle = Commands.literal("toggle")
                 .then(Commands.literal("main").executes(ctx -> toggle(ctx, ToggleTarget.MAIN)))
                 .then(Commands.literal("secondary").executes(ctx -> toggle(ctx, ToggleTarget.SECONDARY)))
+                .then(Commands.literal("axis").executes(ctx -> toggle(ctx, ToggleTarget.AXIS)))
                 .then(Commands.literal("debug").executes(ctx -> toggle(ctx, ToggleTarget.DEBUG)));
 
         if (Config.isSingleElementHidingEnabled()) {
@@ -51,8 +52,8 @@ public final class QipCommands {
 
     private static int sendHelp(CommandContext<CommandSourceStack> ctx) {
         String toggleTargets = Config.isSingleElementHidingEnabled()
-                ? "main|secondary|debug|coordinates|compass|clock|opposite|biome|weather"
-                : "main|secondary|debug";
+                ? "main|secondary|axis|debug|coordinates|compass|clock|opposite|biome|weather"
+                : "main|secondary|axis|debug";
         ctx.getSource().sendSuccess(() -> Component.literal("Usage: /qip toggle <" + toggleTargets + "> | /qip set position <preset>"), false);
         return 1;
     }
@@ -63,6 +64,7 @@ public final class QipCommands {
                 switch (target) {
                     case MAIN -> config.displayMainPanel = !config.displayMainPanel;
                     case SECONDARY -> config.displaySecondaryPanel = !config.displaySecondaryPanel;
+                    case AXIS -> config.showCompassAxis = !config.showCompassAxis;
                     case DEBUG -> config.debugBounds = !config.debugBounds;
                 }
                 return config;
@@ -111,6 +113,7 @@ public final class QipCommands {
     private enum ToggleTarget {
         MAIN,
         SECONDARY,
+        AXIS,
         DEBUG
     }
 }
