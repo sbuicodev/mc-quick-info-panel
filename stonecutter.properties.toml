@@ -103,7 +103,8 @@ deps.modmenu = "11.0.5"
 deps.neoforge = "21.0.167"
 
 # 1.20.x: NeoForge reads mods.toml before 1.20.5 and uses loader range [1,) on all of 1.20.x.
-# 1.20.5 differs per loader: the Fabric jar also covers 1.20.6, the NeoForge one doesn't.
+# There's no NeoForge node for 1.20.5: its only build (20.5.21-beta) lacks the moddev bundle
+# ModDevGradle needs. The 1.20.5 Fabric jar covers 1.20.5 and 1.20.6.
 
 ["1.20.6"]
 mod.mc_releases = ["1.20.6"]
@@ -111,14 +112,11 @@ mod.mc_releases = ["1.20.6"]
 deps.neoforge = "20.6.144"
 deps.neoforge_loader_range = "[1,)"
 
-[fabric."1.20.5"]
+["1.20.5"]
 mod.mc_releases = ["1.20.5", "1.20.6"]
+[fabric."1.20.5"]
 deps.fabric_api = "0.97.8+1.20.5"
 deps.modmenu = "10.0.0"
-[neoforge."1.20.5"]
-mod.mc_releases = ["1.20.5"]
-deps.neoforge = "20.5.21-beta"
-deps.neoforge_loader_range = "[1,)"
 
 ["1.20.4"]
 mod.mc_releases = ["1.20.4"]
