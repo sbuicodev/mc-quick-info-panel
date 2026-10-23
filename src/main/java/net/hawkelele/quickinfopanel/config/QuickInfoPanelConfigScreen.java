@@ -1,6 +1,8 @@
-package net.hawkelele.quickinfopanel.fabric.config;
+package net.hawkelele.quickinfopanel.config;
 
-//? if fabric {
+// A vanilla screen: ModMenu opens it on Fabric, and NeoForge uses it before its own
+// config screen exists (1.21)
+//? if fabric || <1.21 {
 import net.hawkelele.quickinfopanel.config.Config;
 import net.hawkelele.quickinfopanel.config.LayoutPreset;
 import net.hawkelele.quickinfopanel.Constants;

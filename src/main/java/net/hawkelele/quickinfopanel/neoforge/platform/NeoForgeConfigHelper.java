@@ -8,6 +8,7 @@ import net.hawkelele.quickinfopanel.platform.Services;
 import net.hawkelele.quickinfopanel.platform.services.IConfigHelper;
 import net.hawkelele.quickinfopanel.platform.services.IConfigStore;
 import net.neoforged.neoforge.common.ModConfigSpec;
+//? if >=1.21
 import net.neoforged.neoforge.common.TranslatableEnum;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -147,7 +148,11 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
         }
     }
 
+    //? if >=1.21 {
     private enum NeoForgeLayoutPreset implements TranslatableEnum {
+    //?} else {
+    /^private enum NeoForgeLayoutPreset {
+    ^///?}
         DEFAULT(LayoutPreset.DEFAULT),
         TOP_LEFT(LayoutPreset.TOP_LEFT),
         TOP_RIGHT(LayoutPreset.TOP_RIGHT),
@@ -169,6 +174,7 @@ public class NeoForgeConfigHelper implements IConfigHelper, IConfigStore {
             return DEFAULT;
         }
 
+        //? if >=1.21
         @Override
         public net.minecraft.network.chat.Component getTranslatedName() {
             return preset.getTranslatedName();
