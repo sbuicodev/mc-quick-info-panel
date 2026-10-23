@@ -17,6 +17,7 @@ import net.hawkelele.quickinfopanel.gui.Graphics;
 import net.hawkelele.quickinfopanel.gui.core.elements.Element;
 import net.hawkelele.quickinfopanel.gui.layouts.RootLayout;
 import net.hawkelele.quickinfopanel.platform.services.IHudHelper;
+//? if >=1.21
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
@@ -40,8 +41,11 @@ public class FabricHudHelper implements IHudHelper {
         public void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
         //?} else if >=1.21.4 {
         /*public void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
-        *///?} else {
+        *///?} else if >=1.21 {
         /*public void onHudRender(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
+        *///?} else {
+        /*// The partial tick is a plain float before 1.21
+        public void onHudRender(GuiGraphicsExtractor graphics, float tickDelta) {
         *///?}
             Graphics.register(graphics);
             rootElement.render(0, 0);

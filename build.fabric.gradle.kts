@@ -19,7 +19,13 @@ val curseforgeProjectId = property("publish.curseforge") as String
 val mcReleases: List<String> = sc.properties.rawOrNull("mod", "mc_releases")?.asList().orEmpty().map { it.toString() }
 val mcLabel = if (mcReleases.size == 1) mcReleases.first() else "${mcReleases.first()}-${mcReleases.last()}"
 val fabricLoaderVersion = property("deps.fabric_loader") as String
-val requiredJava = if (sc.current.parsed >= "26.1") JavaVersion.VERSION_25 else JavaVersion.VERSION_21
+val requiredJava = when {
+    sc.current.parsed >= "26.1" -> JavaVersion.VERSION_25
+    sc.current.parsed >= "1.20.5" -> JavaVersion.VERSION_21
+    else -> JavaVersion.VERSION_17
+}
+// Mixin's compatibility level; JAVA_21 also covers the Java 25 versions
+val mixinJava = if (requiredJava == JavaVersion.VERSION_17) "JAVA_17" else "JAVA_21"
 
 // Full version, used for the jar name, mod metadata and upload titles: 1.3.1+fabric-26.3
 version = "$modVersion+$loader-$mcLabel"
@@ -58,6 +64,7 @@ tasks {
             "credits" to modCredits,
             "description" to modDescription.replace("\n", "\\n"),
             "java_version" to requiredJava.majorVersion,
+            "mixin_java" to mixinJava,
             "fabric_loader_version" to fabricLoaderVersion,
             // >=1.21.6 <=1.21.8
             "fabric_minecraft_version_range" to ">=${mcReleases.first()} <=${mcReleases.last()}",

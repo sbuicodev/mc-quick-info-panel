@@ -43,8 +43,10 @@ public class Image extends Element {
         context.blit(GUI_TEXTURED, Identifier.fromNamespaceAndPath(Constants.MOD_ID, path), x, y, 0, 0, width, height, width, height);
         //?} else if >=1.21.2 {
         /*context.blit(RenderType::guiTextured, Identifier.fromNamespaceAndPath(Constants.MOD_ID, path), x, y, 0, 0, width, height, width, height);
-        *///?} else {
+        *///?} else if >=1.21 {
         /*context.blit(Identifier.fromNamespaceAndPath(Constants.MOD_ID, path), x, y, 0, 0, width, height, width, height);
+        *///?} else {
+        /*context.blit(new Identifier(Constants.MOD_ID, path), x, y, 0, 0, width, height, width, height);
         *///?}
         renderDebugBounds(x, y, 0xFF4488FF);
     }

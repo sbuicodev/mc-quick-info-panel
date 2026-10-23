@@ -18,7 +18,13 @@ val curseforgeProjectId = property("publish.curseforge") as String
 // Every Minecraft version this jar supports, e.g. [1.21.6, 1.21.7, 1.21.8], and their label, e.g. 1.21.6-1.21.8
 val mcReleases: List<String> = sc.properties.rawOrNull("mod", "mc_releases")?.asList().orEmpty().map { it.toString() }
 val mcLabel = if (mcReleases.size == 1) mcReleases.first() else "${mcReleases.first()}-${mcReleases.last()}"
-val requiredJava = if (sc.current.parsed >= "26.1") JavaVersion.VERSION_25 else JavaVersion.VERSION_21
+val requiredJava = when {
+    sc.current.parsed >= "26.1" -> JavaVersion.VERSION_25
+    sc.current.parsed >= "1.20.5" -> JavaVersion.VERSION_21
+    else -> JavaVersion.VERSION_17
+}
+// Mixin's compatibility level; JAVA_21 also covers the Java 25 versions
+val mixinJava = if (requiredJava == JavaVersion.VERSION_17) "JAVA_17" else "JAVA_21"
 val neoforgeVersion = property("deps.neoforge") as String
 val neoforgeLoaderRange = property("deps.neoforge_loader_range") as String
 
@@ -72,11 +78,16 @@ tasks {
             // The mod icon key was renamed from logoFile to iconFile in 26.3
             "logo_key" to if (sc.current.parsed >= "26.3") "iconFile" else "logoFile",
             "neoforge_loader_version_range" to neoforgeLoaderRange,
+            "mixin_java" to mixinJava,
             // [1.21.6] or [1.21.6,1.21.8]
             "minecraft_version_range" to if (mcReleases.size == 1) "[${mcReleases.first()}]" else "[${mcReleases.first()},${mcReleases.last()}]",
         )
         inputs.properties(props)
         filesMatching(listOf("META-INF/neoforge.mods.toml", "pack.mcmeta", "*.mixins.json")) { expand(props) }
+        // NeoForge reads META-INF/mods.toml before 1.20.5
+        if (sc.current.parsed < "1.20.5") {
+            filesMatching("META-INF/neoforge.mods.toml") { path = "META-INF/mods.toml" }
+        }
         exclude("fabric.mod.json")
     }
 

@@ -17,7 +17,11 @@ public class LevelBiomeProvider implements BiomeProvider {
 
         BlockPos playerPosition = client.player.blockPosition();
         Holder<Biome> biomeHolder = client.level.getBiome(playerPosition);
+        //? if >=1.20.5 {
         return biomeHolder.getRegisteredName();
+        //?} else {
+        /*return biomeHolder.unwrapKey().map(key -> key.location().toString()).orElse("[unregistered]");
+        *///?}
     }
 
     @Override
