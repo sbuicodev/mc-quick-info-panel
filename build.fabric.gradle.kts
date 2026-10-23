@@ -33,6 +33,11 @@ base.archivesName = modId
 
 repositories {
     maven("https://maven.terraformersmc.com/releases/") { name = "Terraformers" }
+    // Placeholder API, a dependency of some ModMenu versions (e.g. 9.x for 1.20.4)
+    exclusiveContent {
+        forRepository { maven("https://maven.nucleoid.xyz/") { name = "Nucleoid" } }
+        filter { includeGroup("eu.pb4") }
+    }
 }
 
 dependencies {

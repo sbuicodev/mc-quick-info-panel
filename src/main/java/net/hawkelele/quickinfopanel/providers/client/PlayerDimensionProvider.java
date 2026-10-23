@@ -9,6 +9,10 @@ public class PlayerDimensionProvider implements DimensionProvider {
     @Override
     public String getDimension() {
         assert client.level != null;
+        //? if >=1.20.5 {
         return client.level.dimensionTypeRegistration().getRegisteredName();
+        //?} else {
+        /*return client.level.dimensionTypeRegistration().unwrapKey().map(key -> key.location().toString()).orElse("[unregistered]");
+        *///?}
     }
 }
