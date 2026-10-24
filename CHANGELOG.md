@@ -5,6 +5,7 @@
 - Added `/qip toggle axis` to show or hide the facing axis on the compass.
 - Biomes without a translated name (e.g. new or modded biomes) now show a name built from their id, like "Sulfur Caves", instead of the raw translation key.
 - Added names for the Sulfur Caves and Dappled Forest biomes.
+- Fixed the key bindings on Minecraft 26.3: their default keys (B, N and comma) were mapped to the wrong keys, and two of them showed no label in the Controls screen. If you already played 26.3 with the mod, reset the three Quick Info Panel keys in the Controls screen.
 
 ## [1.3.0]
 

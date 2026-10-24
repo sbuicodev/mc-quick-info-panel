@@ -32,13 +32,6 @@ stonecutter parameters {
         regex(current.parsed >= "26.1") {
             replace("\\bGuiGraphics\\b" to "GuiGraphicsExtractor", "\\bGuiGraphicsExtractor\\b" to "GuiGraphics")
         }
-        // Default key bindings use SDL key codes from 26.3, GLFW before
-        string(current.parsed >= "26.3") {
-            replace("org.lwjgl.glfw.GLFW", "org.lwjgl.sdl.SDLKeycode")
-        }
-        regex(current.parsed >= "26.3") {
-            replace("\\bGLFW\\.GLFW_KEY_(\\w+)" to "SDLKeycode.SDLK_$1", "\\bSDLKeycode\\.SDLK_(\\w+)" to "GLFW.GLFW_KEY_$1")
-        }
     }
 }
 

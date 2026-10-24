@@ -2,15 +2,14 @@ package net.hawkelele.quickinfopanel.input;
 
 import net.hawkelele.quickinfopanel.Constants;
 import net.hawkelele.quickinfopanel.handlers.IClientEventHandler;
-import net.hawkelele.quickinfopanel.handlers.ToggleLayoutDebugHandler;
 import net.hawkelele.quickinfopanel.handlers.ToggleSecondaryPanelHandler;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
-import org.lwjgl.sdl.SDLKeycode;
 
 public class ToggleSecondaryPanelKeybind implements Keybind {
     private final KeyMapping keyMapping = new KeyMapping(
             "key." + Constants.MOD_ID + ".togglealtinfo",
-            SDLKeycode.SDLK_N,
+            InputConstants.KEY_N,
             Constants.KEYMAPPING_CATEGORY
     );
 
