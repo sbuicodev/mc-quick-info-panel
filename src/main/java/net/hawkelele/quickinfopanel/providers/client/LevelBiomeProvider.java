@@ -5,12 +5,14 @@ import net.hawkelele.quickinfopanel.providers.BiomeProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.biome.Biome;
 
 public class LevelBiomeProvider implements BiomeProvider {
     private static final Minecraft client = Minecraft.getInstance();
 
+    @Override
     public String getBiomeId() {
         assert client.level != null;
         assert client.player != null;
@@ -25,8 +27,8 @@ public class LevelBiomeProvider implements BiomeProvider {
     }
 
     @Override
-    public String getBiome() {
-        String id = getBiomeId();
-        return Component.translatable("biomes." + Constants.MOD_ID + "." + id).getString();
+    public String getTranslation(String biomeId) {
+        String key = "biomes." + Constants.MOD_ID + "." + biomeId;
+        return Language.getInstance().has(key) ? Component.translatable(key).getString() : null;
     }
 }
