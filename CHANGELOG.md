@@ -3,6 +3,8 @@
 ## [1.3.1]
 
 - Added `/qip toggle axis` to show or hide the facing axis on the compass.
+- Biomes without a translated name (e.g. new or modded biomes) now show a name built from their id, like "Sulfur Caves", instead of the raw translation key.
+- Added names for the Sulfur Caves and Dappled Forest biomes.
 
 ## [1.3.0]
 
